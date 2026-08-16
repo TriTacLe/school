@@ -1,0 +1,26 @@
+{
+    "id": "0277E40B",
+    "path": "~/vault/school/sta2020s-stats/r/vault.R",
+    "project_path": "vault.R",
+    "type": "r_source",
+    "hash": "2378565363",
+    "contents": "",
+    "dirty": true,
+    "created": 1786445018696.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "15,0",
+        "scrollLine": "5"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1786027488,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1786630621073,
+    "read_only": false,
+    "read_only_alternatives": []
+}

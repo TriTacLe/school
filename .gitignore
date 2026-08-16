@@ -1,0 +1,27 @@
+# Build artifacts
+target/
+build/
+dist/
+out/
+node_modules/
+__pycache__/
+.venv/
+*.o
+*.elf
+
+# Nested code repos keep their own git + remote (cloned separately)
+idatt2104-nettverksprogrammering/IDATT2104-Nettverksprogrammering/
+idatt2106-systemutvikling-2/nettdetektivene/
+eee3096s-embedded-systems-ii/EEE3095S-prac1/
+idatt2104-nettverksprogrammering/idatt2104-frivillig/crdt-collab/
+
+# AI tooling, never tracked
+.claude/
+CLAUDE.md
+DESIGN.md
+.mcp.json
+.playwright-mcp/
+
+# OS junk
+.DS_Store
+._*

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html><head><link rel="stylesheet" href="https://s.brightspace.com/lib/fonts/0.6.1/fonts.css"><link rel="stylesheet" href="https://templates.lcs.brightspace.com/lib/assets/css/styles.min.css"><script>window.addEventListener('message', function(event) { 
+					if( !event.data ) {
+						return;
+					}
+
+					let params;
+					try {
+						params = JSON.parse( event.data );
+					}
+					catch {
+						return;
+					}
+					if( !params.subject || params.subject !== 'lti.frameResize' ) {
+						return;
+					}
+
+					const MAX_FRAME_HEIGHT = 10000;
+					if( !params.height || params.height < 1 || params.height > MAX_FRAME_HEIGHT ) {
+						console.warn( 'Invalid height value received, aborting' );
+						return;
+					}
+					const el = document.getElementsByTagName( 'iframe' );
+					for ( let i=0; i < el.length; i++ ) {
+						if( el[i].contentWindow === event.source ) {
+							el[i].style.height = params.height + 'px';
+
+							console.info( 'Setting iFrame height to ' + params.height );
+
+							if( el[i].getAttribute('lockwidth') !== 'true'){
+								el[i].style.width = '100%';
+								console.info( 'Setting iFrame width to 100%' );
+							}
+						}
+					}
+				});</script><script src="https://s.brightspace.com/lib/bsi/2026.7.210/unbundled/embeds.js" type="module"></script><script>document.addEventListener('DOMContentLoaded', function() {
+					window.D2L.EmbedRenderer.renderEmbeds(document.body);
+				});</script><script src="https://s.brightspace.com/lib/bsi/2026.7.210/unbundled/mathjax.js" type="module"></script><script>document.addEventListener('DOMContentLoaded', function() {
+					if (document.querySelector('math, .d2l-element, .d2l-cplus-layout') || /\$\$|\\\(|\\\[|\\begin{|\\ref{|\\eqref{/.test(document.body.innerHTML)) {
+						document.querySelectorAll('mspace[linebreak="newline"]').forEach(elm => {
+							elm.setAttribute('style', 'display: block; height: 0.5rem;');
+						});
+
+						document.querySelectorAll('math mmultiscripts > none').forEach(elm => {
+							const mrow = document.createElementNS('http://www.w3.org/1998/Math/MathML', 'mrow');
+							elm.replaceWith(mrow);
+						});
+
+						window.D2L.MathJax.loadMathJax({
+							outputScale: 1.5,
+							renderLatex: true,
+							enableMML3Support: false
+						});
+					}
+				});</script><script src="https://s.brightspace.com/lib/bsi/2026.7.210/unbundled/prism.js" type="module"></script><script>document.addEventListener('DOMContentLoaded', function() {
+					document.querySelectorAll('.d2l-code').forEach(code => {
+						window.D2L.Prism.formatCodeElement(code);
+					});
+				});</script><script>document.addEventListener('DOMContentLoaded', async () => {
+				document.querySelectorAll('iframe[src*="quickLink.d2l"][src*="type=lti"]').forEach(iframe => {
+					iframe.style.borderStyle = 'none';
+				});
+			});</script><script>
+					if (window.frameElement !== null && !document.documentElement.hasAttribute('data-oslo')) {
+						const osloSettings = {"batch":"/d2l/api/oslo/batch?languageId=1001","collection":"/d2l/api/oslo/collection?languageId=1001","version":"W/\"20.26.7.27375.639192198648700616\""};
+						document.documentElement.setAttribute('data-oslo', JSON.stringify(osloSettings));
+					}
+				</script><script src="https://s.brightspace.com/lib/bsi/2026.7.210/unbundled/creator.js" type="module"></script><script>document.addEventListener('DOMContentLoaded', async () => {
+					const activities = [];
+					const practices = [];
+					const allPractices = document.querySelectorAll('.d2l-practice');
+					const elements = document.querySelectorAll('.d2l-element');
+					let layouts = [...document.querySelectorAll('.d2l-cplus-layout')];
+					const tables = document.querySelectorAll('table');
+					const contentStylerStyleLinks = document.querySelectorAll('head > link[href="https://templates.lcs.brightspace.com/lib/assets/css/styles.min.css"]');
+					const contentStylerOverides = document.querySelectorAll('head > link[href^="/d2l/le/contentstyler/"][data-override="override"]');
+
+					layouts = layouts.filter((layout) => layout.closest('.d2l-element.mceNonEditable') === null);
+
+					for (const practice of allPractices) {
+						const activityContainer = practice.hasAttribute('data-d2l-activity-href');
+						if (activityContainer) {
+							activities.push(practice);
+						}
+						else {
+							practices.push(practice);
+						}
+					}
+
+					if (layouts.length > 0) {
+						window.D2L.Creator.convertLayouts(layouts);
+					}
+					if (elements.length > 0) {
+						window.D2L.Creator.convertElements(elements, 6606, '/content/');
+					}
+					if (activities.length > 0) {
+						window.D2L.Creator.convertPracticeActivities(activities, 6606, '/content/');
+					}
+					if (practices.length > 0) {
+						window.D2L.Creator.convertPractices(practices, 6606, '/content/');
+					}
+					if (contentStylerStyleLinks.length > 0 && contentStylerOverides.length > 0 && tables.length > 0) {
+						window.D2L.Creator.wrapTables(tables);
+					}
+				});</script><script>function lti_launch( vars, target ) {
+					var query = '';
+					var new_tab = false;
+
+					for(var key in vars) {
+						if(query.length == 0) {
+							query += '?' + key + '=' + encodeURIComponent(vars[key]);
+						}
+						else {
+							query += '&' + key + '=' + encodeURIComponent(vars[key]);
+						}
+					}
+
+					var url = '/d2l/customization/pearsonlti/6606/Launch' + query;(target == '_blank') ? window.open( url, '_blank' ) : location.replace( url );}</script></head><body style="color: rgb(32, 33, 34); font-family: Lato, sans-serif; font-size: 12px;"><p style="margin: 0cm 0cm 8pt; line-height: 115%; font-size: 12pt; font-family: Aptos, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;"></span></p>
+<p data-end="103" data-start="85"><span style="font-size: 24px;"><strong data-end="103" data-start="85">Are you ready?</strong></span></p>
+<p data-end="306" data-start="105">Here are some questions to help guide your preparation. This is not an exhaustive list, and you should not rely on these questions alone. The document is a living resource and may be updated over time.</p>
+<p><span style="font-size: 19px; font-family: Lato, sans-serif;">Experiments:</span></p>
+<ol style="margin-bottom: 0cm; margin-top: 0px;">
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">Why do we do experiments?</span><span style="font-size: 19px; font-family: Lato, sans-serif;"></span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">What are the three principles of experimental design, and why are they important?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">What are the different designs we covered, and how do they differ?</span></li>
+<li style="margin: 0cm 0cm 8pt 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">Define all the terminology used when we talk about experiments.</span></li>
+</ol>
+<p style="margin: 0cm 0cm 8pt 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"></p>
+<p><span style="font-size: 19px; font-family: Lato, sans-serif;">&nbsp;</span></p>
+<p><span style="font-size: 19px; font-family: Lato, sans-serif;">For each design/model:</span></p>
+<ol start="5" style="margin-bottom: 0cm; margin-top: 0px;">
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">What is the treatment structure?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">What is the blocking structure?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">What is the model equation, and what does each term represent?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">What are the assumptions, and how do we check them?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">Based on this model derive the decomposition of sums of squares. What is each sums of squares measuring?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">How do we get average variance estimates?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">Write out the ANOVA table. Can you complete an incomplete ANOVA table?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">What do the mean squares mean?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">What is the F-ratio(s) measuring?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">What is the null distribution for the F-ratio(s)?</span></li>
+<li style="margin: 0cm 0cm 8pt 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">&nbsp;Write down the hypotheses for each F-ratio: in terms of means, effects and words.</span></li>
+</ol>
+<p><span style="font-size: 19px; font-family: Lato, sans-serif;">&nbsp;</span></p>
+<p><span style="font-size: 19px; font-family: Lato, sans-serif;">Overall:</span></p>
+<ol start="16" style="margin-bottom: 0cm; margin-top: 0px;">
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">How do we get an exact p-value or critical value using R?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">How do we get critical values and approximate p-values using tables?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">What is the p-value, and what does it mean when I get an extremely small or large p-value?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">What are contrasts, and how do we perform them? Can you interpret R output of contrasts?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">What is a standard error, and how do we obtain standard errors of treatment means in ANOVA?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">What is ANOVA?</span></li>
+<li style="margin: 0cm 0cm 0cm 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">How do we obtain estimates of model parameters?</span></li>
+<li style="margin: 0cm 0cm 8pt 0px; line-height: 115%; font-size: 19px; font-family: Lato, sans-serif;"><span style="font-size: 19px; font-family: Lato, sans-serif;">Can you identify the design based on a description alone? Based on a dataset? How about based on R output (table of means/effects or ANOVA table)?</span></li>
+</ol></body></html>

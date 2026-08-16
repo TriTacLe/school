@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>6-funksjonsobjekter-og-trådprogrammering</title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/frameworks-f8b9580b3a0820d152c1d3c6f3ebeaa3.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/behaviors-8d9cf3187e56b7b21514050253f9c9b1.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-805c987f1ff712a0161914502c94d38b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+
+    
+
+      <div role="main" class="main-content">
+        <div class="container new-discussion-timeline experiment-repo-nav">
+          <div class="repository-content">
+            <div id="readme" class="readme boxed-group clearfix announce instapaper_body md">
+              
+                <h3>
+                  <span class="octicon octicon-book"></span>
+                  6-funksjonsobjekter-og-trådprogrammering
+                </h3>
+              
+              <article class="markdown-body entry-content" itemprop="text" id="grip-content">
+                <h1>
+<a id="user-content-øving-6" class="anchor" href="#%C3%B8ving-6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Øving 6</h1>
+<ul>
+<li>Oppgave 1 - Jobb videre med sjakkbrett-løsningen deres fra Øving 5:
+<ul>
+<li>lag en klasse <code>ChessBoardPrint</code> som tar seg av utskrift (<code>std::cout</code> kallene) til terminalen
+<ul>
+<li>
+<code>ChessBoardPrint</code> må ha tilgang til <code>ChessBoard</code> instansen, for eksempel i main():
+<code>ChessBoard board; ChessBoardPrint print(board);</code>
+</li>
+<li>I konstruktøren til <code>ChessBoardPrint</code> skal dere definere funksjonsobjektene til <code>ChessBoard</code>
+instansen ved hjelp av lambda uttrykk.</li>
+<li>Utskriften av sjakkbrettet etter et sjakktrekk skal også foregå i <code>ChessBoardPrint</code>.
+<ul>
+<li>Legg til et eget funksjonsobjekt i <code>ChessBoard</code> (for eksempel <code>after_piece_move</code>) som blir
+kjørt etter et trekk er utført. Dette funksjonsobjektet kan du bruke i <code>ChessBoardPrint</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Oppgave 2 - Ta utgangspunkt i
+<a href="https://gitlab.com/ntnu-iini4003/examples6/blob/master/example6.cpp" rel="nofollow">example6</a> og lag en enkel
+web-server som svarer på følgende GET forespørsler:
+<ul>
+<li>
+<code>GET / HTTP/1.1</code>
+<ul>
+<li>I en nettleser (<code>http://localhost:8080</code>) skal følgende tekst vises: Dette er hovedsiden</li>
+</ul>
+</li>
+<li>
+<code>GET /en_side HTTP/1.1</code>
+<ul>
+<li>I en nettleser (<code>http://localhost:8080/en_side</code>) skal følgende tekst vises: Dette er en side</li>
+</ul>
+</li>
+<li>Andre forespørsler skal gi status koden <code>404 Not Found</code>
+</li>
+</ul>
+</li>
+</ul>
+
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+
+  </div>
+  <div>&nbsp;</div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

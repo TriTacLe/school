@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title> </title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_tritanopia-2171ea0f078b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/code-3d7b701fc6eb.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_dimmed-0adfa28f0e68.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_high_contrast-1c8575b36644.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light-5178aee0ee76.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_tritanopia-cdd88f146bf7.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/global-afe5b3f5ff2d.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-251065160b09.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_colorblind-5113d2be20b0.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_colorblind-c96add742484.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark-217d4f9c8e70.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-0e158a2f5ddd.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_high_contrast-290f92f5e867.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+      margin-bottom: 21px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+    <main id="js-repo-pjax-container">
+      <div class="clearfix new-discussion-timeline container-xl px-3 px-md-4 px-lg-5">
+        <div class="repository-content">
+          <div class="clearfix">
+            <div class="Layout Layout--flowRow-until-md Layout--sidebarPosition-end Layout--sidebarPosition-flowRow-end">
+              <div class="Layout-main">
+
+                
+
+                  <div id="readme" class="Box md Box--responsive">
+                    
+                      <div class="Box-header d-flex border-bottom-0 flex-items-center flex-justify-between color-bg-default rounded-top-2">
+                        <div class="d-flex flex-items-center">
+                          <h2 class="Box-title">
+                             
+                          </h2>
+                        </div>
+                      </div>
+                    
+                    <div class="Box-body px-5 pb-5">
+                      <article id="grip-content" class="markdown-body entry-content container-lg">
+                        <h1><a id="user-content-2-pekere-og-referanser" class="anchor" aria-hidden="true" href="#2-pekere-og-referanser"><span aria-hidden="true" class="octicon octicon-link"></span></a>2. Pekere og referanser.</h1>
+<p>Leksjonen gir en innføring i pekere og referanser, samt argumentoverføring.</p>
+<p>Skrevet av Mildrid Ljosland, Else Lervik og Ole Christian Eidheim.</p>
+<p>Eksemplene for denne leksjonen finner du her: <a href="https://gitlab.com/ntnu-iini4003/examples2" rel="nofollow">https://gitlab.com/ntnu-iini4003/examples2</a></p>
+<p>Støttelitteratur:</p>
+<ul>
+<li>Bjarne Stroustrup: A Tour of C++, Second Edition
+<ul>
+<li>kap. 1.7 og 1.9</li>
+</ul>
+</li>
+</ul>
+<h2><a id="user-content-å-lage-og-bruke-en-peker" class="anchor" aria-hidden="true" href="#å-lage-og-bruke-en-peker"><span aria-hidden="true" class="octicon octicon-link"></span></a>Å lage og bruke en peker</h2>
+<p>En peker er en variabel som kan inneholde adressen til en annen variabel. En stjerne * i
+variabeldefinisjonen markerer at vi snakker om en peker.</p>
+<p>Eksempel:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> number;
+<span class="pl-k">int</span> *pointer;
+
+pointer = &amp;number;
+*pointer = <span class="pl-c1">6</span>;</pre></div>
+<hr>
+<p><strong>Merk</strong></p>
+<p>Når <code>&amp;</code>-tegnet står på høyre side av <code>=</code> i en variabeldefinisjon eller i en tilordningssetning,
+betyr det at vi skal finne adressen til det som kommer bak, og la denne adressen være verdien til
+det som står på venstre side (eksempel: <code>int *pointer = &amp;number;</code>).</p>
+<hr>
+<p>Variablene <code>number</code> og <code>pointer</code> er vist på figuren under:</p>
+<p><a target="_blank" rel="noopener noreferrer" href="pekere.png"><img src="pekere.png" alt="" style="max-width: 100%;"></a></p>
+<p><code>int *pointer</code> forteller at variabelen <code>pointer</code> er en peker til en <code>int</code>, slik at den kan inneholde
+adressen til en <code>int</code>-variabel. Ved å skrive <code>pointer = &amp;number</code> gir vi <code>pointer</code> en verdi som
+forteller hvor <code>number</code> er lagret. Hvis <code>number</code> er lagret på adresse <code>100</code>, vil <code>pointer</code> få
+verdien <code>100</code>. <code>*pointer = 6</code> betyr at den adressen som <code>pointer</code> viser til (adresse 100, dvs.
+<code>number</code>), skal få verdien <code>6</code>.</p>
+<ul>
+<li>kalles dereferanseoperatoren, og leses gjerne ”det som variabelen peker til”. I vårt eksempel: Det
+som <code>pointer</code> peker til er en <code>int</code>, og den skal få verdien <code>6</code>.</li>
+</ul>
+<p><code>&amp;</code> er adresseoperatoren og leses "adressen til". I vårt eksempel: <code>pointer</code> får som verdi adressen
+til <code>number</code>.</p>
+<p><code>&amp;</code> og <code>*</code> er motsatte operatorer, de opphever hverandre. Uttrykket <code>*&amp;pointer</code> betyr det samme som
+<code>&amp;*pointer</code> og det samme som <code>pointer</code>.</p>
+<p>Ved å bruke en peker, kan vi bruke en variabel uten å angi navnet på den. <code>*pointer = 6</code> forandrer
+verdien på variabelen <code>number</code>, men gjør ingenting med <code>pointer</code>. Dette kalles indirekte
+adressering, og utnyttes i en del situasjoner.</p>
+<h2><a id="user-content-tabell-som-peker" class="anchor" aria-hidden="true" href="#tabell-som-peker"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tabell som peker</h2>
+<p>I forrige leksjon nevnte vi så vidt at navnet på en tabell er en adresse.</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> table[<span class="pl-c1">10</span>];</pre></div>
+<p>forteller kompilatoren at den skal sette av plass til ti heltall, og at <code>table</code> brukes som
+betegnelse for tabellen.</p>
+<hr>
+<p><strong>Merk</strong></p>
+<p>Når vi skriver bare <code>table</code>, tolkes det som adressen til første element i tabellen.</p>
+<hr>
+<p>Vi kan la en peker peke til et element i tabellen:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> *pointer = &amp;table[<span class="pl-c1">4</span>];</pre></div>
+<p>eller vi kan la pekeren peke til (begynnelsen av) tabellen:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> *pointer= table;</pre></div>
+<p>som er det samme som</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> *pointer= &amp;table[<span class="pl-c1">0</span>];</pre></div>
+<p>Når <code>pointer</code> peker til begynnelsen av <code>table</code>, kan <code>pointer</code> og <code>table</code> brukes om hverandre. Vi kan
+skrive</p>
+<div class="highlight highlight-source-c++"><pre>table[<span class="pl-c1">2</span>] = <span class="pl-c1">5</span>;
+pointer[<span class="pl-c1">3</span>] = <span class="pl-c1">8</span>;    <span class="pl-c"><span class="pl-c">//</span> det samme som table[3] = 8</span>
+*pointer = <span class="pl-c1">0</span>;      <span class="pl-c"><span class="pl-c">//</span> det samme som pointer[0] = 0 og som table[0] = 0</span>
+*table = table[<span class="pl-c1">2</span>]; <span class="pl-c"><span class="pl-c">//</span> det samme som table[0] = table[2]</span></pre></div>
+<p>Bruk den skrivemåten du syns er mest naturlig ut fra sammenhengen.</p>
+<h2><a id="user-content-const-pekere" class="anchor" aria-hidden="true" href="#const-pekere"><span aria-hidden="true" class="octicon octicon-link"></span></a>const-pekere</h2>
+<p>Du er vant med å bruke <code>const</code> for å navngi en konstant, eksempel:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">const</span> <span class="pl-k">int</span> max = <span class="pl-c1">100</span>;</pre></div>
+<p>Vi vil trenge å bruke <code>const</code> i forbindelsen med pekere. Det er med på å gjøre programmene våre
+sikrere.</p>
+<p>Eksempel: Du er kjent med <code>strlen()</code>-funksjonen for å finne lengden av en streng.
+Funksjonsprototypen ser slik ut:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c1">size_t</span> <span class="pl-en">strlen</span>(<span class="pl-k">const</span> <span class="pl-k">char</span> *text);</pre></div>
+<p>Når vi angir en peker på denne måten, betyr det at det som pekeren peker til, er konstant. Vi sier
+at det er en konstantpeker. Kompilatoren vil da passe på at vi ikke prøver å forandre det. Skriver
+vi <code>text[0] = 'A'</code> inni funksjonen, vil vi få kompileringsfeil.</p>
+<p>Merk at pekeren ikke er konstant, det er bare det den peker til, som er det. Dermed er det lov å
+skrive <code>text = &amp;text[1];</code></p>
+<p>Vi kan ikke la en ikke-konstantpeker peke til det samme som en konstant-peker, for da kunne vi
+likevel ha forandret på det som konstantpekeren peker til. Det er altså ikke lov å skrive
+<code>char *pointer = text</code> når <code>text</code> er definert som en konstantpeker, mens
+<code>const char *pointer = text</code> går bra.</p>
+<p>Den motsatte veien går også bra. Det kan aldri skje noe galt om vi sier at en ikke-konstant skal
+betraktes som en konstant, dvs. vi kan la en konstant­peker peke til en variabel. Derfor kan vi godt
+la en variabel være aktuelt argument når det formelle er en konstantpeker.</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">char</span> text[<span class="pl-c1">81</span>];
+cin &gt;&gt; text;
+cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Lengden på teksten er <span class="pl-pds">"</span></span> &lt;&lt; strlen(text);</pre></div>
+<p>For å angi at <code>pointer</code> er en konstant, skriver vi</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> *<span class="pl-k">const</span> pointer = &amp;number;</pre></div>
+<p>Leses: Konstanten <code>pointer</code> er en peker til int. Som andre konstanter, kan en pekerkonstant bare
+initieres, ikke tilordnes verdi. <code>pointer = &amp;number2;</code> er ulovlig. Men det den peker til, kan godt
+forandres:</p>
+<div class="highlight highlight-source-c++"><pre>*pointer = <span class="pl-c1">5</span>;</pre></div>
+<p>gjør at <code>number</code> får verdien <code>5</code>.</p>
+<p>Vi kan også lage en peker som både selv er en konstant, og det den peker til er en konstant:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">const</span> <span class="pl-k">int</span> *<span class="pl-k">const</span> pointer = &amp;number;</pre></div>
+<p>Konstanten <code>pointer</code> er en peker til en konstant heltalls-variabel.</p>
+<h2><a id="user-content-aritmetikk-på-og-sammenlikning-av-pekere" class="anchor" aria-hidden="true" href="#aritmetikk-på-og-sammenlikning-av-pekere"><span aria-hidden="true" class="octicon octicon-link"></span></a>Aritmetikk på, og sammenlikning av pekere</h2>
+<p>Å utføre aritmetiske operasjoner på en adresse har bare begrenset inter­esse. Hva skulle f.eks.
+resultatet bety hvis vi multipliserer to adresser med hverandre?</p>
+<p>Følgende aritmetiske operasjoner er definert:</p>
+<ul>
+<li>Å addere et heltall til, eller subtrahere et heltall fra, en peker.</li>
+<li>Å subtrahere en peker fra en annen.</li>
+</ul>
+<p>Dessuten har vi følgende sammenlikningsoperasjoner:</p>
+<ul>
+<li>Å finne ut om to pekere er like eller ulike</li>
+<li>Å finne ut hvilken av to pekere som er størst eller minst</li>
+</ul>
+<h3><a id="user-content-å-addere-et-heltall-til-en-peker" class="anchor" aria-hidden="true" href="#å-addere-et-heltall-til-en-peker"><span aria-hidden="true" class="octicon octicon-link"></span></a>Å addere et heltall til en peker</h3>
+<p>Når vi adderer 1 til en peker, vil den peke til neste variabel.</p>
+<p>Eksempel:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">double</span> table[<span class="pl-c1">5</span>];
+<span class="pl-k">double</span> *pointer;
+pointer = table;           <span class="pl-c"><span class="pl-c">//</span> pointer peker til table[0]</span>
+*pointer = <span class="pl-c1">0.0</span>;            <span class="pl-c"><span class="pl-c">//</span> table[0] får verdien 0.0</span>
+*(pointer + <span class="pl-c1">1</span>) = *pointer; <span class="pl-c"><span class="pl-c">//</span> table[1] får samme verdi som table[0]</span>
+pointer++;                 <span class="pl-c"><span class="pl-c">//</span> pointer peker til table[1]</span></pre></div>
+<hr>
+<p><strong>Merk</strong></p>
+<p>Når vi adderer et heltall til en peker flytter vi oss så mange variabler som tallet forteller.
+Addisjonen regnes i samme enhet som den datatypen pekeren peker til, uavhengig av hvor mange byte
+denne datatypen bruker.</p>
+<p>Uttrykket <code>*(pointer + N)</code> betyr nøyaktig det samme som uttrykket <code>pointer[N]</code></p>
+<hr>
+<p>Figuren under viser at når pekeren peker til <code>table[0]</code>, vil <code>pointer + 4</code> peke til variabelen fire
+plasser videre i minnet, dvs. <code>table[4]</code>.</p>
+<p><a target="_blank" rel="noopener noreferrer" href="tabell_pekere.png"><img src="tabell_pekere.png" alt="" style="max-width: 100%;"></a></p>
+<p>Følgende program viser hvordan pekeraddisjon virker:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> pekeraddisjon.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-k">const</span> <span class="pl-k">int</span> m = <span class="pl-c1">5</span>;
+  <span class="pl-k">int</span> ints[m];
+  <span class="pl-k">double</span> floats[m];
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>heltallsadresser:<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>;
+  <span class="pl-c"><span class="pl-c">//</span> Adressene skrives ut på heksadesimal form.</span>
+  <span class="pl-k">for</span> (<span class="pl-k">int</span> i = <span class="pl-c1">0</span>; i &lt; m; i++)
+    cout &lt;&lt; (ints + i) &lt;&lt; endl;
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span>flyttallsadresser:<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>;
+  <span class="pl-k">for</span> (<span class="pl-k">int</span> i = <span class="pl-c1">0</span>; i &lt; m; i++)
+    cout &lt;&lt; (floats + i) &lt;&lt; endl;
+}
+
+<span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c">Eksempel utskrift:</span>
+<span class="pl-c"></span>
+<span class="pl-c">heltallsadresser:</span>
+<span class="pl-c">0x7ffee0695970    Vi ser at adressene endrer seg med 4 for</span>
+<span class="pl-c">0x7ffee0695974    hver gang i øker med 1. En variabel av</span>
+<span class="pl-c">0x7ffee0695978    typen int legger beslag på 4 byte.</span>
+<span class="pl-c">0x7ffee069597c</span>
+<span class="pl-c">0x7ffee0695980</span>
+<span class="pl-c"></span>
+<span class="pl-c">flyttallsadresser:</span>
+<span class="pl-c">0x7ffee0695940    En variabel av typen double legger beslag</span>
+<span class="pl-c">0x7ffee0695948    på 8 byte. Dermed øker adressen med 8 hver</span>
+<span class="pl-c">0x7ffee0695950    gang i øker med 1.</span>
+<span class="pl-c">0x7ffee0695958</span>
+<span class="pl-c">0x7ffee0695960</span>
+<span class="pl-c"><span class="pl-c">*/</span></span></pre></div>
+<p>Pekeraddisjon kan utnyttes til å gå gjennom en hel tabell:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">const</span> <span class="pl-k">int</span> length = <span class="pl-c1">10</span>;
+<span class="pl-k">int</span> table[length];
+
+<span class="pl-k">int</span> *pointer = table;
+<span class="pl-k">for</span> (<span class="pl-k">int</span> i = <span class="pl-c1">0</span>; i &lt; length; i++) {
+  *pointer = <span class="pl-c1">0</span>;
+  pointer++;
+}</pre></div>
+<p>Her starter vi med å la <code>pointer</code> peke til element 0. Inni løkka får den variabelen som <code>pointer</code>
+peker til, verdien 0, deretter blir <code>pointer</code> sin verdi økt slik at den peker til neste element.</p>
+<p>Uttrykket <code>*pekeren + 1</code> tolkes som <code>(*pekeren) + 1</code> fordi <code>+</code> har lavere prioritet enn <code>*</code>. Ønsker
+vi verdien av det som <code>pekeren + 1</code> peker til, må vi skrive `*(pekeren</p>
+<ul>
+<li>1)`.</li>
+</ul>
+<h3><a id="user-content-å-subtrahere-to-pekere" class="anchor" aria-hidden="true" href="#å-subtrahere-to-pekere"><span aria-hidden="true" class="octicon octicon-link"></span></a>Å subtrahere to pekere</h3>
+<p>Vi kan finne antall elementer mellom to variabler, ved å ta differansen mellom adressene til dem.</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">const</span> <span class="pl-k">char</span> *text = <span class="pl-s"><span class="pl-pds">"</span>Et eksempel<span class="pl-pds">"</span></span>;
+<span class="pl-k">const</span> <span class="pl-k">char</span> *start = text;
+<span class="pl-k">while</span> (*text != <span class="pl-s"><span class="pl-pds">'</span><span class="pl-cce">\0</span><span class="pl-pds">'</span></span>) text++;
+<span class="pl-k">int</span> length = text - start;
+cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Tekstlengden er lik <span class="pl-pds">"</span></span> &lt;&lt; length &lt;&lt; endl;</pre></div>
+<p>Eksemplet finner lengden til teksten ”Et eksempel”. <code>text</code> og <code>start</code> er begge pekere. Differansen
+mellom dem forteller hvor langt det er mellom adressene de peker til. Som ved addisjon, regnes
+differansen i samme enhet som det pekerne peker til. Hvis <code>tekst - start</code> har verdien <code>2</code>, er det to
+tegn mellom det som <code>start</code> peker til og det som <code>text</code> peker til. Utskriften fra eksemplet blir:</p>
+<div class="highlight highlight-source-c++"><pre>Tekstlengden er lik <span class="pl-c1">11</span></pre></div>
+<h3><a id="user-content-sammenlikning" class="anchor" aria-hidden="true" href="#sammenlikning"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sammenlikning</h3>
+<p>To pekere av samme type kan sammenliknes med hensyn på likhet og ulikhet:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">if</span> (pointer1 == pointer2) ...</pre></div>
+<p>tester om <code>pointer1</code> og <code>pointer2</code> inneholder samme adresse, dvs. peker til den samme variabelen.</p>
+<p><code>if (*pointer1 == *pointer2)</code> tester om det de peker til, er likt.</p>
+<p>Alle pekere kan sammenliknes med <code>0</code>.</p>
+<p>Vi kan også teste om en peker er større eller mindre enn en annen peker. Da vil vi finne ut hvordan
+det de peker til er plassert i forhold til hver­andre i minnet. Vanligvis vil dette bare være
+aktuelt når vi ønsker å teste om et tabellelement er foran eller bak et annet.</p>
+<p>I eksemplet nedenfor definerer vi en tabell og to pekere. Den ene peker til begynnelsen av tabellen,
+og den andre til slutten. Deretter går vi i løkke og øker den første med 1 inntil den er lik den
+andre.</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> sammenlikning.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-k">const</span> <span class="pl-k">int</span> length = <span class="pl-c1">5</span>;
+  <span class="pl-k">int</span> table[length] = {<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>, <span class="pl-c1">5</span>};
+  <span class="pl-k">int</span> *pointer = table;      <span class="pl-c"><span class="pl-c">//</span> begynnelsen av tabellen</span>
+  <span class="pl-k">int</span> *end = &amp;table[length]; <span class="pl-c"><span class="pl-c">//</span> adressen rett etter tabellslutt</span>
+  <span class="pl-k">while</span> (pointer &lt; end) {    <span class="pl-c"><span class="pl-c">//</span> sammenlikning av pekere</span>
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Verdien til slutt er <span class="pl-pds">"</span></span> &lt;&lt; end &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>, til pekeren er <span class="pl-pds">"</span></span> &lt;&lt; pointer &lt;&lt; endl;
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Avstanden mellom pekeren og slutt er <span class="pl-pds">"</span></span> &lt;&lt; (end - pointer) &lt;&lt; endl;
+    pointer++;
+  }
+}
+
+<span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c">Eksempel utskrift:</span>
+<span class="pl-c"></span>
+<span class="pl-c">Verdien til slutt er 0x7fff54afea44, til pekeren er 0x7fff54afea30</span>
+<span class="pl-c">Avstanden mellom pekeren og slutt er 5</span>
+<span class="pl-c">Verdien til slutt er 0x7fff54afea44, til pekeren er 0x7fff54afea34</span>
+<span class="pl-c">Avstanden mellom pekeren og slutt er 4</span>
+<span class="pl-c">Verdien til slutt er 0x7fff54afea44, til pekeren er 0x7fff54afea38</span>
+<span class="pl-c">Avstanden mellom pekeren og slutt er 3</span>
+<span class="pl-c">Verdien til slutt er 0x7fff54afea44, til pekeren er 0x7fff54afea3c</span>
+<span class="pl-c">Avstanden mellom pekeren og slutt er 2</span>
+<span class="pl-c">Verdien til slutt er 0x7fff54afea44, til pekeren er 0x7fff54afea40</span>
+<span class="pl-c">Avstanden mellom pekeren og slutt er 1</span>
+<span class="pl-c"><span class="pl-c">*/</span></span></pre></div>
+<h2><a id="user-content-pekere-må-behandles-med-forsiktighet" class="anchor" aria-hidden="true" href="#pekere-må-behandles-med-forsiktighet"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pekere må behandles med forsiktighet!</h2>
+<p>Når du tar i bruk pekere, vil du fort oppdage at det kan skje mye rart hvis du ikke passer nøye på.</p>
+<hr>
+<p><strong>Advarsel</strong></p>
+<p>Sørg alltid for at en peker peker til noe fornuftig før du bruker den!</p>
+<hr>
+<p>Som for enhver annen variabel, vil det alltid stå en eller annen verdi i pekeren når den opprettes.
+Siden denne verdien tolkes som en adresse, kan den lede hvor som helst i minnet.</p>
+<p>Det kan ha store konsekvenser å forandre på verdien i denne adressen. Du kan ha havnet i det området
+av minnet som styrer program­utføringen. Da kan programmet gjøre merkelige ting "av seg selv", eller
+maskinen kan gå helt i stå. I heldigste fall kan du få en feilmelding. Det vil avhenge av hvilken
+kompilator du bruker.</p>
+<p>Eller du kan ha havnet i dataområdet for programmet ditt, slik at du forandrer verdi på en variabel
+uten å være klar over det.</p>
+<p>I en del tilfeller kan du være "heldig", slik at det ikke skjer noen synlig skade. Men da kan
+problemet dukke opp på et seinere stadium, f.eks. når du skal forandre litt på programmet, eller når
+du skal installere det hos oppdragsgiver ...</p>
+<p>For å unngå å ødelegge noe på denne måten, er det en god regel å la alle pekere initieres til 0 (i
+C++11 kan vi bruke <code>nullptr</code>, som svarer til <code>null</code> i Java – en peker som ikke peker til noe) hvis
+de ikke straks får en annen verdi. Adresse 0 brukes ikke til noe fornuftig, slik at du ikke kan
+ødelegge noe om du legger en verdi her. Men gjør du det, vil du kanskje få en feilmelding som lyder
+"Null pointer assignment" ved slutten av programutføringen. Og da er det helt sikkert en feil i
+programmet.</p>
+<p>0 kan ikke betraktes som et vanlig tall i denne forbindelsen, andre tall enn 0 gir kompileringsfeil.</p>
+<hr>
+<p><strong>Advarsel</strong></p>
+<p>Ikke tro at du kan få en tabell ved å definere en peker!</p>
+<hr>
+<p>En tabell krever mange lagerplasser. Kompilatoren må ha beskjed om hvor mange lagerplasser som skal
+brukes. Hvis du derimot bare definerer en peker, setter kompilatoren bare av plass til pekeren.</p>
+<p>Eksempel: Skriver du</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">char</span> *line;
+<span class="pl-en">strcpy</span>(line, <span class="pl-s"><span class="pl-pds">"</span>Dette er farlig!!<span class="pl-pds">"</span></span>);   <span class="pl-c"><span class="pl-c">//</span> strcpy() kopierer fra 2. til 1.argument,</span>
+                                     <span class="pl-c"><span class="pl-c">//</span> se side 640-641 i boka</span></pre></div>
+<p>vil det settes av plass til pekeren <code>line</code>. Teksten vil bli lagret på den plassen <code>line</code> peker til,
+som kan være hvor som helst siden <code>line</code> ikke har fått noen verdi. Derfor kan den ødelegge andre
+ting, og selv bli ødelagt seinere i programmet.</p>
+<p>Skriver du derimot</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">char</span> *line = <span class="pl-s"><span class="pl-pds">"</span>Dette går ganske bra!<span class="pl-pds">"</span></span>;</pre></div>
+<p>Eller helst</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">const</span> <span class="pl-k">char</span> *line = <span class="pl-s"><span class="pl-pds">"</span>Dette går helt bra!<span class="pl-pds">"</span></span>;</pre></div>
+<p>vet kompilatoren hvor mye plass den skal reservere, slik at tekststrengen blir lagret på et trygt
+sted, og <code>line</code> satt til å peke til den. Men det blir reservert bare akkurat nok plass, så du kan få
+problemer hvis du forlenger teksten seinere i programmet, derfor er det lurt å la den være <code>const</code>.</p>
+<h2><a id="user-content-referanser" class="anchor" aria-hidden="true" href="#referanser"><span aria-hidden="true" class="octicon octicon-link"></span></a>Referanser</h2>
+<p>En <em>referanse</em> er et ekstra navn på en allerede eksisterende variabel.</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> number;
+<span class="pl-k">int</span> &amp;ref = number;
+
+ref = <span class="pl-c1">6</span>;
+number++;</pre></div>
+<p><code>&amp;ref</code> betyr at ref er en referanse. <code>int &amp;ref</code> kan leses "<code>ref</code> er en referanse til en <code>int</code>". Ved
+å skrive <code>int &amp;ref = tallet</code> angir vi at <code>ref</code> skal være et annet navn på <code>number</code>. Da kan vi
+etterpå bruke både <code>ref</code> og <code>number</code> som betegnelse på den samme lagerplassen, slik at begge ender
+med å ha verdien 7 i eksemplet.</p>
+<hr>
+<p>Når &amp;-tegnet står på venstre side av = i en erklæring, får vi en referanse (eksempel: int &amp;ref =
+tallet;). En referanse kan ikke erklæres uten at vi samtidig forteller hvilken variabel den
+refererer til.</p>
+<hr>
+<h2><a id="user-content-argumentoverføring" class="anchor" aria-hidden="true" href="#argumentoverføring"><span aria-hidden="true" class="octicon octicon-link"></span></a>Argumentoverføring</h2>
+<p>Vi har to typer argumentoverføring i C++:</p>
+<ul>
+<li>Verdioverføring: Funksjonen jobber med en kopi av det aktuelle argumentet. Denne metoden brukes
+ved overføring av enkle variabler, dersom disse variablene er inn-argumenter. Metoden brukes også
+ved overføring av tabeller uansett om disse er inn-, inn-/ut- eller ut-argumenter. Da kalles det
+ofte adresseoverføring. (Dette svarer til argumentoverføring, slik du kjenner det i Java.)</li>
+<li>Referanseoverføring: Funksjonen får en referanse til den aktuelle variabelen. Det vil si at
+funksjonen jobber med den samme variabelen som den kallende funksjonen, eventuelt under et annet
+navn. Denne metoden brukes for enkle variabler som er kombinerte inn-/ut-argumenter eller bare
+ut-argumenter. For objekter/strukturer er det vanlig å benytte denne metoden også for
+inn-argumenter, dette for å spare både plass og tid. Slike argumenter må da kvalifiseres med
+<code>const</code>, eksempel <code>const string &amp;navn</code>, slik at en er sikret at funksjonen ikke endrer på verdien.
+Du vil se eksempler på dette i leksjon 3.</li>
+</ul>
+<p>(Referanseoverføring eksisterer ikke i C. Der bruker man adresseoverføring også for enkle variabler
+dersom de skal være ut-argumenter.)</p>
+<p>Vi skal se nærmere på argumentoverføring i lys av det nylig gjennomgåtte stoffet om pekere og
+referanser.</p>
+<h3><a id="user-content-verdioverføring" class="anchor" aria-hidden="true" href="#verdioverføring"><span aria-hidden="true" class="octicon octicon-link"></span></a>Verdioverføring</h3>
+<h4><a id="user-content-eksempel-1" class="anchor" aria-hidden="true" href="#eksempel-1"><span aria-hidden="true" class="octicon octicon-link"></span></a>Eksempel 1</h4>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">const</span> <span class="pl-k">int</span> max_length = <span class="pl-c1">10</span>;
+
+<span class="pl-k">void</span> <span class="pl-en">zero</span>(
+    <span class="pl-k">int</span> number,   <span class="pl-c"><span class="pl-c">//</span> Inn</span>
+    <span class="pl-k">int</span> *table) { <span class="pl-c"><span class="pl-c">//</span> Ut</span>
+
+  <span class="pl-k">for</span> (<span class="pl-k">int</span> teller = <span class="pl-c1">0</span>; teller &lt; number; teller++) {
+    table[teller] = <span class="pl-c1">0</span>;
+  }
+}
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-k">int</span> a_table[max_length];
+  <span class="pl-c1">zero</span>(max_length, a_table);
+}</pre></div>
+<p>Inni funksjonen <code>zero()</code> er <code>table</code> erklært som en peker, men brukes som en tabell.</p>
+<p>I <code>main()</code> er <code>a_table</code> en adresse, og den brukes som aktuelt argument der funksjonen krever en
+peker. Bak kulissene skjer følgende ved kallet:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> number = max_length;
+<span class="pl-k">int</span> *table = a_table;</pre></div>
+<p>Det vil si at formelt argument settes lik aktuelt argument. I begge tilfellene har vi
+verdioverføring, det er verdiene til de aktuelle argumentene som sendes over. Vi ser at
+adresseoverføring er et spesialtilfelle av verdioverføring. De formelle argumentene vil fungere som
+lokale variabler inni funksjonen. Og her er tabell en peker. På grunn av at <code>*(tabell + teller)</code> er
+det samme som <code>table[teller]</code> kan vi inni funksjonen bruke <code>[]</code>-notasjonen. Se figuren under.</p>
+<p><a target="_blank" rel="noopener noreferrer" href="verdioverforing.png"><img src="verdioverforing.png" alt="" style="max-width: 100%;"></a></p>
+<p>Siden <code>table</code> er erklært som en peker, vil det bare settes av plass til denne pekeren inni
+funksjonen. Tar vi <code>sizeof(table)</code> inni funksjonen, får vi beskjed om hvor mye plass en peker til
+<code>int</code> tar, i vår kompilator 4 byte. Hvis vi derimot tar <code>sizeof(a_table)</code> i <code>main()</code>, får vi vite
+hvor mye plass hele tabellen tar, i vårt eksempel 10 * 4 byte. Prøv det gjerne selv!</p>
+<p>Det at en tabell og en peker kan brukes om hverandre, kan vi utnytte til å "lure" funksjonen til å
+tro at tabellen starter et annet sted enn den i virke­ligheten gjør:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> *pointer = &amp;a_table[<span class="pl-c1">3</span>];
+<span class="pl-en">zero</span>(<span class="pl-c1">5</span>, pointer);</pre></div>
+<p>gjør at <code>a_table[3]</code>, <code>a_table[4]</code>, ..., <code>a_table[7]</code> blir nullstilt, mens de andre elementene blir
+stående urørt. Siden funksjonen får overført adressen til <code>a_table[3]</code>, vil den tolke det som om
+tabellen starter der. <code>table[0]</code> vil derfor være <code>a_table[3]</code> og <code>table[1]</code> vil være <code>a_table[4]</code>,
+osv.</p>
+<p>Vi trenger ikke å gå veien om <code>pointer</code>. Vi kan også skrive</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-en">zero</span>(<span class="pl-c1">5</span>, &amp;a_table[<span class="pl-c1">3</span>]);</pre></div>
+<h4><a id="user-content-eksempel-2" class="anchor" aria-hidden="true" href="#eksempel-2"><span aria-hidden="true" class="octicon octicon-link"></span></a>Eksempel 2</h4>
+<p>Her er et eksempel på hvordan vi kan kopiere en tekststreng:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">void</span> <span class="pl-en">copy</span>(<span class="pl-k">const</span> <span class="pl-k">char</span> *from, <span class="pl-k">char</span> *to) {
+  <span class="pl-k">while</span> (*from != <span class="pl-s"><span class="pl-pds">'</span><span class="pl-cce">\0</span><span class="pl-pds">'</span></span>) {
+    *to = *from;
+    from++;
+    to++;
+  }
+  *to = <span class="pl-s"><span class="pl-pds">'</span><span class="pl-cce">\0</span><span class="pl-pds">'</span></span>;
+}</pre></div>
+<p>Vi utnytter at adresseoverføring er verdioverføring. Adressene <code>from</code> og <code>to</code> er verdioverført. Inni
+funksjonen kan de godt endres uten at det har noen innvirkning på de aktuelle argumentene. Bare når
+vi endrer det som pekerne peker til, får det varig virkning.</p>
+<p>Her ser vi også at vi bruker <code>const</code> foran argumentet <code>from</code>. Det betyr at funksjonen ikke kan
+forandre på det denne pekeren peker til. Det er i samsvar med at dette argumentet er et
+inn-argument. Den som bruker funksjonen kan føle seg trygg på at tekststrengen <code>from</code> ikke blir
+forandret.</p>
+<h3><a id="user-content-referanseoverføring" class="anchor" aria-hidden="true" href="#referanseoverføring"><span aria-hidden="true" class="octicon octicon-link"></span></a>Referanseoverføring</h3>
+<p>Vi bruker referanser ved ut-argumenter i funksjoner:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> bytt_verdi.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">void</span> <span class="pl-en">swap</span>(<span class="pl-k">int</span> &amp;number_a, <span class="pl-k">int</span> &amp;number_b) {
+  <span class="pl-k">int</span> help = number_a;
+  number_a = number_b;
+  number_b = help;
+}
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-k">int</span> number1;
+  <span class="pl-k">int</span> number2;
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Skriv to tall: <span class="pl-pds">"</span></span>;
+  cin &gt;&gt; number1 &gt;&gt; number2;
+
+  <span class="pl-k">if</span> (number1 &gt; number2) {
+    <span class="pl-c1">swap</span>(number1, number2);
+  }
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>I rekkefølge: <span class="pl-pds">"</span></span> &lt;&lt; number1 &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span> &lt;&lt; number2 &lt;&lt; endl;
+}</pre></div>
+<p>Det som skjer idet funksjonen kalles, er at de formelle argumentene initieres til de aktuelle
+argumentene. Det fungerer som om vi hadde skrevet setningene</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> &amp;number_a = number1;
+<span class="pl-k">int</span> &amp;number_b = number2;</pre></div>
+<p><code>number_a</code> og <code>number_b</code> blir referanser, og det de refererer til, er <code>number1</code> og <code>number2</code>. Så når
+<code>number_a</code> får verdien <code>number_b</code> inne i funksjonen, så vil også <code>number1</code> få denne verdien, siden
+det er den samme variabelen. (I motsetning til ved verdi­overføring, da ville vi fått setningen
+<code>int number_a = number1</code>, slik at det ble to forskjellige variabler.)</p>
+
+                      </article>
+                    </div>
+                  </div>
+
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

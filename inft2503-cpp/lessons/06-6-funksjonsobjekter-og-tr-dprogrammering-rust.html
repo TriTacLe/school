@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>6-funksjonsobjekter-og-trådprogrammering</title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/frameworks-f8b9580b3a0820d152c1d3c6f3ebeaa3.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/behaviors-8d9cf3187e56b7b21514050253f9c9b1.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-805c987f1ff712a0161914502c94d38b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+
+    
+
+      <div role="main" class="main-content">
+        <div class="container new-discussion-timeline experiment-repo-nav">
+          <div class="repository-content">
+            <div id="readme" class="readme boxed-group clearfix announce instapaper_body md">
+              
+                <h3>
+                  <span class="octicon octicon-book"></span>
+                  6-funksjonsobjekter-og-trådprogrammering
+                </h3>
+              
+              <article class="markdown-body entry-content" itemprop="text" id="grip-content">
+                <h1>
+<a id="user-content-funksjonsobjekter-og-trådprogrammering-i-rust" class="anchor" href="#funksjonsobjekter-og-tr%C3%A5dprogrammering-i-rust" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Funksjonsobjekter og trådprogrammering i Rust</h1>
+<h2>
+<a id="user-content-funksjonsobjekter" class="anchor" href="#funksjonsobjekter" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Funksjonsobjekter</h2>
+<p>Vi demonstrerer bruk av funksjonsobjekter i et eksempel der vi implementerer skallet til et GUI
+bibliotek. Biblioteket inneholder kun klassene for et Vindu, <code>Window</code>, og komponenter (<em>widgets</em>)
+som kan plasseres i vinduet: <code>Image</code> og <code>Button</code>.</p>
+<h3>
+<a id="user-content-eksempel-med-overbruk-av-polymorfi" class="anchor" href="#eksempel-med-overbruk-av-polymorfi" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Eksempel med overbruk av polymorfi</h3>
+<p>Før i tiden ble funksjonalitet for eksempel til en knapp lagt til en egen klasse (se <code>MyButton</code>) som
+arvet fra en abstrakt <code>Button</code> klasse:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>memory<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>vector<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">class</span> <span class="pl-en">Widget</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-k">virtual</span> <span class="pl-k">void</span> <span class="pl-en">draw</span>() = 0;
+
+  <span class="pl-k">virtual</span> <span class="pl-en">~Widget</span>() {}
+};
+
+<span class="pl-k">class</span> <span class="pl-en">Image</span> : <span class="pl-k">public</span> <span class="pl-en">Widget</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">Image</span>(std::string file_) : file(std::move(file_)) {}
+
+  std::string file;
+
+  <span class="pl-k">void</span> <span class="pl-en">draw</span>() <span class="pl-k">override</span> {
+    std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Draw image from file: <span class="pl-pds">"</span></span> &lt;&lt; file &lt;&lt; std::endl;
+  }
+};
+
+<span class="pl-k">class</span> <span class="pl-en">Button</span> : <span class="pl-k">public</span> <span class="pl-en">Widget</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">Button</span>(std::string label_) : label(std::move(label_)) {}
+
+  std::string label;
+
+  <span class="pl-k">void</span> <span class="pl-en">draw</span>() <span class="pl-k">override</span> {
+    std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Draw button labeled: <span class="pl-pds">"</span></span> &lt;&lt; label &lt;&lt; std::endl;
+    std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>This happens when the button is clicked:<span class="pl-pds">"</span></span> &lt;&lt; std::endl;
+    <span class="pl-c1">on_click</span>();
+  }
+
+  <span class="pl-k">virtual</span> <span class="pl-k">void</span> <span class="pl-en">on_click</span>() = 0;
+};
+
+<span class="pl-k">class</span> <span class="pl-en">MyButton</span> : <span class="pl-k">public</span> <span class="pl-en">Button</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">MyButton</span>() : Button(<span class="pl-s"><span class="pl-pds">"</span>Click me<span class="pl-pds">"</span></span>) {}
+
+  <span class="pl-k">void</span> <span class="pl-en">on_click</span>() <span class="pl-k">override</span> {
+    std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Button was clicked<span class="pl-pds">"</span></span> &lt;&lt; std::endl;
+  }
+};
+
+<span class="pl-k">class</span> <span class="pl-en">Window</span> {
+<span class="pl-k">public:</span>
+  std::vector&lt;std::unique_ptr&lt;Widget&gt;&gt; widgets;
+
+  <span class="pl-k">void</span> <span class="pl-en">show</span>() {
+    <span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;widget : widgets) {
+      widget-&gt;<span class="pl-c1">draw</span>();
+    }
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  Window window;
+
+  window.<span class="pl-smi">widgets</span>.<span class="pl-c1">emplace_back</span>(<span class="pl-k">new</span> <span class="pl-c1">Image</span>(<span class="pl-s"><span class="pl-pds">"</span>image.png<span class="pl-pds">"</span></span>));
+
+  window.<span class="pl-smi">widgets</span>.<span class="pl-c1">emplace_back</span>(<span class="pl-k">new</span> <span class="pl-c1">MyButton</span>());
+
+  window.<span class="pl-c1">show</span>();
+}</pre></div>
+<hr>
+<p>Legg spesielt merke til for eksempel <code>Image</code>-konstruktøren:
+<code>Image(std::string file_) : file(std::move(file_)) {}</code>. Når en skal lagre et objekt i en klasse fra
+et konstruktør argument er det mest effektivt å flytte dataen til datamedlemmet med <code>std::move</code>.
+Ofte kan en unngå dette ved å ikke ha med konstruktører, og i stedet for opprette en ny instanse
+slik:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">class</span> <span class="pl-en">Image</span> {
+<span class="pl-k">public:</span>
+  std::string file;
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-k">auto</span> image1 = Image{<span class="pl-s"><span class="pl-pds">"</span>image.png<span class="pl-pds">"</span></span>};
+  <span class="pl-c"><span class="pl-c">//</span> or</span>
+  Image image2{<span class="pl-s"><span class="pl-pds">"</span>image.png<span class="pl-pds">"</span></span>};
+}</pre></div>
+<p>, men dette går ikke når for eksempel <code>Image</code> arver en annen klasse (<code>Widget</code>).</p>
+<hr>
+<p>Det første kodeeksempelet ville vært svært vanskelig å implementere i Rust.</p>
+<h3>
+<a id="user-content-eksempelet-i-c-med-funksjonsobjekt" class="anchor" href="#eksempelet-i-c-med-funksjonsobjekt" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Eksempelet i C++ med funksjonsobjekt</h3>
+<p>Med funksjonsobjekter kan vi slippe å lage en ny klasse for å implementere en knapp:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>functional<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>memory<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>vector<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">class</span> <span class="pl-en">Widget</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-k">virtual</span> <span class="pl-k">void</span> <span class="pl-en">draw</span>() = 0;
+
+  <span class="pl-k">virtual</span> <span class="pl-en">~Widget</span>() {}
+};
+
+<span class="pl-k">class</span> <span class="pl-en">Image</span> : <span class="pl-k">public</span> <span class="pl-en">Widget</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">Image</span>(std::string file_) : file(std::move(file_)) {}
+
+  std::string file;
+
+  <span class="pl-k">void</span> <span class="pl-en">draw</span>() <span class="pl-k">override</span> {
+    std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Draw image from file: <span class="pl-pds">"</span></span> &lt;&lt; file &lt;&lt; std::endl;
+  }
+};
+
+<span class="pl-k">class</span> <span class="pl-en">Button</span> : <span class="pl-k">public</span> <span class="pl-en">Widget</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">Button</span>(std::string label_, std::function&lt;<span class="pl-k">void</span>()&gt; on_click_) : label(std::move(label_)), on_click(std::move(on_click_)) {}
+
+  std::string label;
+  std::function&lt;<span class="pl-k">void</span>()&gt; on_click;
+
+  <span class="pl-k">void</span> <span class="pl-en">draw</span>() <span class="pl-k">override</span> {
+    std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Draw button labeled: <span class="pl-pds">"</span></span> &lt;&lt; label &lt;&lt; std::endl;
+    <span class="pl-k">if</span> (on_click) {
+      std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>This happens when the button is clicked:<span class="pl-pds">"</span></span> &lt;&lt; std::endl;
+      <span class="pl-c1">on_click</span>();
+    }
+  }
+};
+
+<span class="pl-k">class</span> <span class="pl-en">Window</span> {
+<span class="pl-k">public:</span>
+  std::vector&lt;std::unique_ptr&lt;Widget&gt;&gt; widgets;
+
+  <span class="pl-k">void</span> <span class="pl-en">show</span>() {
+    <span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;widget : widgets) {
+      widget-&gt;<span class="pl-c1">draw</span>();
+    }
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  Window window;
+
+  window.<span class="pl-smi">widgets</span>.<span class="pl-c1">emplace_back</span>(<span class="pl-k">new</span> <span class="pl-c1">Image</span>(<span class="pl-s"><span class="pl-pds">"</span>image.png<span class="pl-pds">"</span></span>));
+
+  window.<span class="pl-smi">widgets</span>.<span class="pl-c1">emplace_back</span>(<span class="pl-k">new</span> <span class="pl-bu">Button</span>(
+      <span class="pl-s"><span class="pl-pds">"</span>Click me<span class="pl-pds">"</span></span>,
+      [] {
+        std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Button was clicked<span class="pl-pds">"</span></span> &lt;&lt; std::endl;
+      }));
+
+  window.<span class="pl-c1">show</span>();
+}</pre></div>
+<p>Her legger vi funksjonaliteten til knappen når den legges til i vinduet i <code>main()</code>-funksjonen.</p>
+<h3>
+<a id="user-content-eksempelet-i-rust-med-funksjonsobjekt" class="anchor" href="#eksempelet-i-rust-med-funksjonsobjekt" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Eksempelet i Rust med funksjonsobjekt</h3>
+<p>Forrige eksempel med bruk av funksjonsobjekter i C++ kan programmeres så og si direkte i Rust:</p>
+<div class="highlight highlight-source-c++"><pre>trait Drawable {
+    fn <span class="pl-smi">draw</span>(self: &amp;Self) -&gt; ();
+}
+
+<span class="pl-k">struct</span> <span class="pl-en">Image</span> {
+    file: String,
+}<span class="pl-ii"></span>
+
+impl Drawable <span class="pl-k">for</span> Image {
+    fn <span class="pl-en">draw</span>(&amp;self) {
+        println!(<span class="pl-s"><span class="pl-pds">"</span>Draw image from file: {}<span class="pl-pds">"</span></span>, self.<span class="pl-smi">file</span>);
+    }
+}<span class="pl-ii"></span>
+
+<span class="pl-k">struct</span> <span class="pl-en">Button</span> {
+    label: String,
+    on_click: Box&lt;dyn <span class="pl-en">Fn</span>() -&gt; ()&gt;,
+}
+
+impl Drawable <span class="pl-k">for</span> Button {
+    fn <span class="pl-smi">draw</span>(&amp;self) {
+        println!(<span class="pl-s"><span class="pl-pds">"</span>Draw button labeled: {}<span class="pl-pds">"</span></span>, self.<span class="pl-smi">label</span>);
+        println!(<span class="pl-s"><span class="pl-pds">"</span>This happens when the button is clicked:<span class="pl-pds">"</span></span>);
+        (self.<span class="pl-smi">on_click</span>)();
+    }
+}
+
+<span class="pl-k">struct</span> <span class="pl-en">Window</span> {
+    widgets: Vec&lt;Box&lt;dyn Drawable&gt;&gt;,
+}<span class="pl-ii"></span>
+
+impl Window {
+    fn <span class="pl-en">show</span>(self: &amp;Self) {
+        <span class="pl-k">for</span> widget in &amp;self.<span class="pl-smi">widgets</span> {
+            widget.<span class="pl-c1">draw</span>();
+        }
+    }
+}<span class="pl-ii"></span>
+
+fn <span class="pl-en">main</span>() {
+    let mut window = Window {
+        widgets: <span class="pl-c1">Vec::new</span>(),
+    };
+
+    window.<span class="pl-smi">widgets</span>.<span class="pl-c1">push</span>(<span class="pl-c1">Box::new</span>(Image {
+        file: <span class="pl-c1">String::from</span>(<span class="pl-s"><span class="pl-pds">"</span>image.png<span class="pl-pds">"</span></span>),
+    }));
+
+    window.<span class="pl-smi">widgets</span>.<span class="pl-c1">push</span>(<span class="pl-c1">Box::new</span>(<span class="pl-bu">Button</span> {
+        label: <span class="pl-c1">String::from</span>(<span class="pl-s"><span class="pl-pds">"</span>Click me<span class="pl-pds">"</span></span>),
+        on_click: <span class="pl-c1">Box::new</span>(|| {
+            println!(<span class="pl-s"><span class="pl-pds">"</span>Button was clicked<span class="pl-pds">"</span></span>);
+        }),
+    }));
+
+    window.<span class="pl-c1">show</span>();
+}</pre></div>
+<p>I Rust kan funksjonsobjekter bli lagret i typen <code>Box&lt;dyn Fn() -&gt; ()&gt;</code>, og anonyme funksjoner har
+skrivemåten <code>|| {}</code>. Parametre kan gis mellom <code>|</code> symbolene.</p>
+<h2>
+<a id="user-content-trådprogrammering" class="anchor" href="#tr%C3%A5dprogrammering" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Trådprogrammering</h2>
+<p>Vi skal demonstrere trådprogrammering i Rust med mutex, og skal gjøre om følgende C++ kode:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>chrono<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>mutex<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>thread<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>unordered_map<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  std::unordered_map&lt;std::string, std::string&gt; results;
+  std::mutex results_mutex;
+
+  std::thread <span class="pl-smi">t1</span>([&amp;results, &amp;results_mutex, url = <span class="pl-s"><span class="pl-pds">"</span>https://www.ntnu.no/<span class="pl-pds">"</span></span>] {
+    <span class="pl-c"><span class="pl-c">//</span> Simulate getting result from url</span>
+    <span class="pl-c1">std::this_thread::sleep_for</span>(<span class="pl-c1">std::chrono::seconds</span>(<span class="pl-c1">1</span>));
+
+    std::lock_guard&lt;std::mutex&gt; <span class="pl-c1">lock</span>(results_mutex);
+    results[url] = <span class="pl-s"><span class="pl-pds">"</span>Velkommen til NTNU<span class="pl-pds">"</span></span>;
+  });
+
+  std::thread <span class="pl-smi">t2</span>([&amp;results, &amp;results_mutex, url = <span class="pl-s"><span class="pl-pds">"</span>https://www.mit.edu/<span class="pl-pds">"</span></span>] {
+    <span class="pl-c"><span class="pl-c">//</span> Simulate getting result from url</span>
+    <span class="pl-c1">std::this_thread::sleep_for</span>(<span class="pl-c1">std::chrono::seconds</span>(<span class="pl-c1">1</span>));
+
+    std::lock_guard&lt;std::mutex&gt; <span class="pl-c1">lock</span>(results_mutex);
+    results[url] = <span class="pl-s"><span class="pl-pds">"</span>Welcome to MIT<span class="pl-pds">"</span></span>;
+  });
+
+  t1.<span class="pl-c1">join</span>();
+  t2.<span class="pl-c1">join</span>();
+
+  std::cout &lt;&lt; results[<span class="pl-s"><span class="pl-pds">"</span>https://www.ntnu.no/<span class="pl-pds">"</span></span>] &lt;&lt; std::endl;
+  std::cout &lt;&lt; results[<span class="pl-s"><span class="pl-pds">"</span>https://www.mit.edu/<span class="pl-pds">"</span></span>] &lt;&lt; std::endl;
+}</pre></div>
+<p>Eksempelet over kan ikke skrives om til Rust direkte, siden Rust bruker en utvidet <code>Mutex</code> klasse
+som i tillegg inneholder verdien en vil beskytte. En slik klasse kan vi også programmere i C++:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>chrono<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>mutex<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>thread<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>unordered_map<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-c"><span class="pl-c">//</span>/ Similar to Mutex class in Rust.</span>
+<span class="pl-c"><span class="pl-c">//</span>/ data and mutex combined, where the data cannot be access without locking the mutex.</span>
+<span class="pl-k">template </span>&lt;<span class="pl-k">typename</span> T&gt;
+<span class="pl-k">class</span> <span class="pl-en">Mutex</span> {
+  <span class="pl-c"><span class="pl-c">//</span> T equals std::unordered_map&lt;std::string, std::string&gt; in the example in main()</span>
+  T data;
+  std::mutex mutex;
+
+<span class="pl-k">public:</span>
+  <span class="pl-k">class</span> <span class="pl-en">Locked</span> {
+    T &amp;data;
+    <span class="pl-c"><span class="pl-c">//</span>/ Store lock as pointer so that one can write: auto lock = results-&gt;lock();</span>
+    <span class="pl-c"><span class="pl-c">//</span>/ One cannot move or copy a std::lock_guard&lt;std::mutex&gt; object, but a pointer to this object can be moved/copied.</span>
+    std::unique_ptr&lt;std::lock_guard&lt;std::mutex&gt;&gt; lock;
+
+  <span class="pl-k">public:</span>
+    <span class="pl-en">Locked</span>(T &amp;data_, std::mutex &amp;mutex_) : data(data_), lock(<span class="pl-k">new</span> std::lock_guard&lt;std::mutex&gt;(mutex_)) {
+    }
+
+    <span class="pl-c"><span class="pl-c">//</span>/ Implements the *operator for data access</span>
+    T &amp;<span class="pl-k">operator</span>*() {
+      <span class="pl-k">return</span> data;
+    }
+  };
+
+  <span class="pl-c"><span class="pl-c">//</span>/ Returns instance of Locked and locks the instance's mutex.</span>
+  Locked <span class="pl-en">lock</span>() {
+    <span class="pl-k">return</span> <span class="pl-c1">Locked</span>(data, mutex);
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-c"><span class="pl-c">//</span> Mutex: data and mutex combined, where the data cannot be access without locking the mutex</span>
+  <span class="pl-k">auto</span> results = std::make_shared&lt;Mutex&lt;std::unordered_map&lt;std::string, std::string&gt;&gt;&gt;();
+
+  std::thread <span class="pl-smi">t1</span>([results <span class="pl-c"><span class="pl-c">/*</span> Makes copy of results <span class="pl-c">*/</span></span>, url = <span class="pl-s"><span class="pl-pds">"</span>https://www.ntnu.no/<span class="pl-pds">"</span></span>] {
+    <span class="pl-c"><span class="pl-c">//</span> Simulate getting result from url</span>
+    <span class="pl-c1">std::this_thread::sleep_for</span>(<span class="pl-c1">std::chrono::seconds</span>(<span class="pl-c1">1</span>));
+
+    <span class="pl-c"><span class="pl-c">//</span> Access the data by locking the Mutex object</span>
+    <span class="pl-k">auto</span> lock = results-&gt;<span class="pl-c1">lock</span>();
+    (*lock).<span class="pl-c1">emplace</span>(url, <span class="pl-s"><span class="pl-pds">"</span>Velkommen til NTNU<span class="pl-pds">"</span></span>);
+
+    <span class="pl-c"><span class="pl-c">//</span> The Mutex object is unlocked at end of scope</span>
+  });
+
+  std::thread <span class="pl-smi">t2</span>([results <span class="pl-c"><span class="pl-c">/*</span> Makes copy of results <span class="pl-c">*/</span></span>, url = <span class="pl-s"><span class="pl-pds">"</span>https://www.mit.edu/<span class="pl-pds">"</span></span>] {
+    <span class="pl-c"><span class="pl-c">//</span> Simulate getting result from url</span>
+    <span class="pl-c1">std::this_thread::sleep_for</span>(<span class="pl-c1">std::chrono::seconds</span>(<span class="pl-c1">1</span>));
+
+    <span class="pl-c"><span class="pl-c">//</span> Access the data by locking the Mutex object</span>
+    <span class="pl-k">auto</span> lock = results-&gt;<span class="pl-c1">lock</span>();
+    (*lock).<span class="pl-c1">emplace</span>(url, <span class="pl-s"><span class="pl-pds">"</span>Welcome to MIT<span class="pl-pds">"</span></span>);
+
+    <span class="pl-c"><span class="pl-c">//</span> The Mutex object is unlocked at end of scope</span>
+  });
+
+  t1.<span class="pl-c1">join</span>();
+  t2.<span class="pl-c1">join</span>();
+
+  <span class="pl-c"><span class="pl-c">//</span> Cannot access data without calling lock(), even though locking is unnecessary.</span>
+  <span class="pl-k">auto</span> lock = results-&gt;<span class="pl-c1">lock</span>();
+  std::cout &lt;&lt; (*lock)[<span class="pl-s"><span class="pl-pds">"</span>https://www.ntnu.no/<span class="pl-pds">"</span></span>] &lt;&lt; std::endl;
+  std::cout &lt;&lt; (*lock)[<span class="pl-s"><span class="pl-pds">"</span>https://www.mit.edu/<span class="pl-pds">"</span></span>] &lt;&lt; std::endl;
+}</pre></div>
+<p>Rust koden blir da svært likt forrige eksempel:</p>
+<div class="highlight highlight-source-rust"><pre><span class="pl-k">use</span> std<span class="pl-k">::</span>collections<span class="pl-k">::</span>HashMap;
+<span class="pl-k">use</span> std<span class="pl-k">::</span>sync<span class="pl-k">::</span>{Arc, Mutex};
+<span class="pl-k">use</span> std<span class="pl-k">::</span>{thread, time};
+
+<span class="pl-k">fn</span> <span class="pl-en">main</span>() {
+    <span class="pl-c">// Arc: tilsvarer shared_ptr i C++</span>
+    <span class="pl-c">// Mutex: data and mutex combined, where the data cannot be access without locking the mutex</span>
+    <span class="pl-k">let</span> results <span class="pl-k">=</span> Arc<span class="pl-k">::</span><span class="pl-en">new</span>(Mutex<span class="pl-k">::</span><span class="pl-en">new</span>(HashMap<span class="pl-k">::</span><span class="pl-k">&lt;</span><span class="pl-k">String</span>, <span class="pl-k">String</span><span class="pl-k">&gt;</span><span class="pl-k">::</span><span class="pl-en">new</span>()));
+
+    <span class="pl-k">let</span> results_copy <span class="pl-k">=</span> results.<span class="pl-en">clone</span>();
+    <span class="pl-k">let</span> url <span class="pl-k">=</span> <span class="pl-s">"https://www.ntnu.no/"</span>.<span class="pl-en">to_string</span>();
+    <span class="pl-k">let</span> t1 <span class="pl-k">=</span> thread<span class="pl-k">::</span><span class="pl-en">spawn</span>(<span class="pl-k">move</span> <span class="pl-k">||</span> {
+        <span class="pl-c">// results_copy is moved here</span>
+
+        <span class="pl-c">// Simulate getting result from url</span>
+        thread<span class="pl-k">::</span><span class="pl-en">sleep</span>(time<span class="pl-k">::</span>Duration<span class="pl-k">::</span><span class="pl-en">from_secs</span>(<span class="pl-c1">1</span>));
+
+        <span class="pl-c">// Access the data by locking the Mutex object</span>
+        <span class="pl-k">let</span> <span class="pl-k">mut</span> lock <span class="pl-k">=</span> results_copy.<span class="pl-en">lock</span>().<span class="pl-en">unwrap</span>();
+        (<span class="pl-k">*</span>lock).<span class="pl-en">insert</span>(url, <span class="pl-s">"Velkommen til NTNU"</span>.<span class="pl-en">to_string</span>());
+
+        <span class="pl-c">// The Mutex object is unlocked at end of scope</span>
+    });
+
+    <span class="pl-k">let</span> results_copy <span class="pl-k">=</span> results.<span class="pl-en">clone</span>();
+    <span class="pl-k">let</span> url <span class="pl-k">=</span> <span class="pl-s">"https://www.mit.edu/"</span>.<span class="pl-en">to_string</span>();
+    <span class="pl-k">let</span> t2 <span class="pl-k">=</span> thread<span class="pl-k">::</span><span class="pl-en">spawn</span>(<span class="pl-k">move</span> <span class="pl-k">||</span> {
+        <span class="pl-c">// results_copy is moved here</span>
+
+        <span class="pl-c">// Simulate getting result from url</span>
+        thread<span class="pl-k">::</span><span class="pl-en">sleep</span>(time<span class="pl-k">::</span>Duration<span class="pl-k">::</span><span class="pl-en">from_secs</span>(<span class="pl-c1">1</span>));
+
+        <span class="pl-c">// Access the data by locking the Mutex object</span>
+        <span class="pl-k">let</span> <span class="pl-k">mut</span> lock <span class="pl-k">=</span> results_copy.<span class="pl-en">lock</span>().<span class="pl-en">unwrap</span>();
+        (<span class="pl-k">*</span>lock).<span class="pl-en">insert</span>(url, <span class="pl-s">"Welcome to MIT"</span>.<span class="pl-en">to_string</span>());
+
+        <span class="pl-c">// The Mutex object is unlocked at end of scope</span>
+    });
+
+    t1.<span class="pl-en">join</span>();
+    t2.<span class="pl-en">join</span>();
+
+    <span class="pl-c">// Cannot access data without calling lock(), even though locking is unnecessary.</span>
+    <span class="pl-k">let</span> lock <span class="pl-k">=</span> results.<span class="pl-en">lock</span>().<span class="pl-en">unwrap</span>();
+    <span class="pl-c1">println!</span>(<span class="pl-s">"{}"</span>, (<span class="pl-k">*</span>lock)[<span class="pl-s">"https://www.ntnu.no/"</span>]);
+    <span class="pl-c1">println!</span>(<span class="pl-s">"{}"</span>, (<span class="pl-k">*</span>lock)[<span class="pl-s">"https://www.mit.edu/"</span>]);
+}</pre></div>
+<p>I stedet for å spesifisere hva som skal fanges av den anonyme funksjonen i Rust, <code>move || {}</code>, blir
+objekter som blir brukt inne denne anonyme funksjonen automatisk fanget. Uttrykket <code>move</code> gjør at
+objektene som blir brukt inne i den anonyme funksjonen blir flyttet i stedet for å bli referert til.</p>
+
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+
+  </div>
+  <div>&nbsp;</div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

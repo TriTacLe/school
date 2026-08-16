@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title> </title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_tritanopia-2171ea0f078b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/code-3d7b701fc6eb.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_dimmed-0adfa28f0e68.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_high_contrast-1c8575b36644.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light-5178aee0ee76.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_tritanopia-cdd88f146bf7.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/global-afe5b3f5ff2d.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-251065160b09.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_colorblind-5113d2be20b0.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_colorblind-c96add742484.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark-217d4f9c8e70.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-0e158a2f5ddd.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_high_contrast-290f92f5e867.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+      margin-bottom: 21px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+    <main id="js-repo-pjax-container">
+      <div class="clearfix new-discussion-timeline container-xl px-3 px-md-4 px-lg-5">
+        <div class="repository-content">
+          <div class="clearfix">
+            <div class="Layout Layout--flowRow-until-md Layout--sidebarPosition-end Layout--sidebarPosition-flowRow-end">
+              <div class="Layout-main">
+
+                
+
+                  <div id="readme" class="Box md Box--responsive">
+                    
+                      <div class="Box-header d-flex border-bottom-0 flex-items-center flex-justify-between color-bg-default rounded-top-2">
+                        <div class="d-flex flex-items-center">
+                          <h2 class="Box-title">
+                             
+                          </h2>
+                        </div>
+                      </div>
+                    
+                    <div class="Box-body px-5 pb-5">
+                      <article id="grip-content" class="markdown-body entry-content container-lg">
+                        <h1><a id="user-content-øving-1-grunnleggende-c" class="anchor" aria-hidden="true" href="#øving-1-grunnleggende-c"><span aria-hidden="true" class="octicon octicon-link"></span></a>Øving 1: Grunnleggende C++</h1>
+<p>Ved innlevering av en øving gjør følgende:</p>
+<ul>
+<li>Dobbeltsjekk at du ikke har advarsler i kildekoden
+<ul>
+<li>Advarselflaggene <code>-Wall -Wextra</code> skal være slått på (standard i juCi++)</li>
+</ul>
+</li>
+<li>Slett <code>build</code>-mappen i C++ prosjektet</li>
+<li>Pakk prosjektmappen i <code>tar.gz</code> formatet, for eksempel med navnet <code>solution1.tar.gz</code>.</li>
+<li>Lever inn <code>tar.gz</code>-filen i Blackboard</li>
+</ul>
+<h2><a id="user-content-oppgave" class="anchor" aria-hidden="true" href="#oppgave"><span aria-hidden="true" class="octicon octicon-link"></span></a>Oppgave</h2>
+<p>Du skal jobbe med et program som leser inn temperaturer for en periode og teller opp antallet i tre
+intervaller: under 10 grader, mellom 10 og 20 grader (inkludert 10 og 20 grader), og over 20 grader.</p>
+<p>Lengden på perioden setter du som en konstant:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">const</span> <span class="pl-k">int</span> length = <span class="pl-c1">5</span>;</pre></div>
+<p>Oppgaven skal løses på to måter, og du skal levere en .cpp-fil med et fullstendig program for hver
+enkelt av de to måtene.</p>
+<p><strong>a)</strong> Les inn temperaturene (datatype <code>double</code>) fra brukeren. Bruk ikke tabeller, og lag heller
+ikke egne funksjoner. Brukergrensesnittet kan se slik ut:</p>
+<pre><code>Du skal skrive inn 5 temperaturer.
+Temperatur nr 1: 10
+Temperatur nr 2: 14
+Temperatur nr 3: 20
+Temperatur nr 4: 25
+Temperatur nr 5: 8
+Antall under 10 er 1
+Antall mellom 10 og 20 er 3
+Antall over 20 er 1
+</code></pre>
+<p><strong>b)</strong> Les inn temperaturene fra en fil og lagre dem i en tabell før du begynner opptellingen.
+Innlesingen fra fil skal ligge i en funksjon med følgende <em>prototyp</em> (<em>deklarasjon</em>):</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">void</span> <span class="pl-en">read_temperatures</span>(<span class="pl-k">double</span> temperatures[], <span class="pl-k">int</span> length);</pre></div>
+<p>Denne skal du sette opp foran <code>main()</code>, mens funksjonsdefinisjonen skal plasseres etter <code>main()</code> i
+filen din:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">void</span> <span class="pl-en">read_temperatures</span>(<span class="pl-k">double</span> temperatures[], <span class="pl-k">int</span> length) {
+   <span class="pl-c"><span class="pl-c">//</span> her plasserer du koden i funksjonen, vi sier at vi definerer funksjonen</span>
+}</pre></div>
+<p>Du kaller funksjonen på følgende måte fra <code>main()</code>:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-en">read_temperatures</span>(temperatures, length);</pre></div>
+<p>Funksjonen skal åpne filen, lese inn temperaturene og lagre dem i tabellen <code>temperatures</code>, og
+endelig lukke filen.</p>
+<p>Kompilatoren forholder seg til funksjonsdeklarasjonen, mens lenkeren trenger funksjonsdefinisjonen.
+Det er også mulig å plassere funksjonsdefinisjonen foran <code>main()</code> (i stedet for prototypen), fordi
+en definisjon også er en deklarasjon (men en deklarasjon er ikke en definisjon). Filene du
+inkluderer med <code>#include</code> inneholder i hovedsak funksjonsprotyper.</p>
+
+                      </article>
+                    </div>
+                  </div>
+
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

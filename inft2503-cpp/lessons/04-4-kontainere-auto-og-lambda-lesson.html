@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title> </title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_tritanopia-2171ea0f078b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/code-3d7b701fc6eb.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_dimmed-0adfa28f0e68.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_high_contrast-1c8575b36644.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light-5178aee0ee76.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_tritanopia-cdd88f146bf7.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/global-afe5b3f5ff2d.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-251065160b09.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_colorblind-5113d2be20b0.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_colorblind-c96add742484.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark-217d4f9c8e70.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-0e158a2f5ddd.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_high_contrast-290f92f5e867.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+      margin-bottom: 21px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+    <main id="js-repo-pjax-container">
+      <div class="clearfix new-discussion-timeline container-xl px-3 px-md-4 px-lg-5">
+        <div class="repository-content">
+          <div class="clearfix">
+            <div class="Layout Layout--flowRow-until-md Layout--sidebarPosition-end Layout--sidebarPosition-flowRow-end">
+              <div class="Layout-main">
+
+                
+
+                  <div id="readme" class="Box md Box--responsive">
+                    
+                      <div class="Box-header d-flex border-bottom-0 flex-items-center flex-justify-between color-bg-default rounded-top-2">
+                        <div class="d-flex flex-items-center">
+                          <h2 class="Box-title">
+                             
+                          </h2>
+                        </div>
+                      </div>
+                    
+                    <div class="Box-body px-5 pb-5">
+                      <article id="grip-content" class="markdown-body entry-content container-lg">
+                        <h1><a id="user-content-4-konteinere-auto-og-lambda" class="anchor" aria-hidden="true" href="#4-konteinere-auto-og-lambda"><span aria-hidden="true" class="octicon octicon-link"></span></a>4. Konteinere, auto og lambda</h1>
+<p>STL er C++ sitt bibliotek for å håndtere data-konteinere. I denne leksjonen konsentrerer vi oss om
+vektorer som er den mest brukte konteineren. Andre konteinere brukes omtrent på samme måte. Bruken
+avhenger imidlertid til en viss grad av hva vi putter inn i konteineren. Vi ser på to eksempler:
+data av en primitiv datatype (tall), og objekter av en klasse (klassen Flate fra en tidligere
+leksjon). Vi skal også se på STL algoritmer, nøkkelordet auto, og anonyme funksjoner.</p>
+<p>Skrevet av Else Lervik, Ole Christian Eidheim.</p>
+<p>Eksemplene for denne leksjonen finner du her: <a href="https://gitlab.com/ntnu-iini4003/examples4" rel="nofollow">https://gitlab.com/ntnu-iini4003/examples4</a></p>
+<p>Støttelitteratur:</p>
+<ul>
+<li>Bjarne Stroustrup: A Tour of C++, Second Edition
+<ul>
+<li>kap. 1.4.2 (auto), 6.3.3 (lambda), 11 (konteinere),</li>
+</ul>
+</li>
+</ul>
+<h2><a id="user-content-hva-er-stl" class="anchor" aria-hidden="true" href="#hva-er-stl"><span aria-hidden="true" class="octicon octicon-link"></span></a>Hva er STL?</h2>
+<p>Standard Template Library (STL) er en del av C++ sitt standardbibliotek. Som navnet sier er det et
+template bibliotek, det vil si at du angir datatypen når du skal bruke de enkelte delene av
+biblioteket.</p>
+<p>Biblioteket består av tre deler:</p>
+<p><strong>Konteinere</strong></p>
+<p>Dette er beholdere for data. Typen container sier hvordan data er organisert. Eksempler er de kjente
+datastrukturer som vektor (dynamisk tabell), sett og kart (assosiativ tabell). Du finner en oversikt
+over STL-konteinerne i boka side 476-477. På engelsk er de viktigste konteinerne som følger:
+<code>vector</code>, unordered_set og unordered_map. Disse tre er pensum, og etter du har lest gjennom denne
+leksjonen, kan du se på eksempel bruk av unordered_set og unordered_map her:
+<a href="http://www.cplusplus.com/reference/unordered_set/unordered_set/find/" rel="nofollow">http://www.cplusplus.com/reference/unordered_set/unordered_set/find/</a> og
+<a href="http://www.cplusplus.com/reference/unordered_map/unordered_map/find/" rel="nofollow">http://www.cplusplus.com/reference/unordered_map/unordered_map/find/</a>.</p>
+<p>En vektor (tenk ikke matematikk!) ligner på en tabell, men den er laget slik at vi ikke trenger å
+tenke på at den kan bli overfylt. Dersom den blir full, utvider den seg selv. Vi skal bruke vektorer
+både på enkle tall og på objekter.</p>
+<hr>
+<p><em>Java-programmerere:</em></p>
+<p>C++'s <code>vector</code> svarer til Java-klassen <code>ArrayList</code>. Men i Java blir kjøretiden mye dårligere når en
+går fra en lavnivå tabell til ArrayList. I C++ er det ingen forskjell om en bruker en lavnivå tabell
+eller <code>vector</code>. Bruk derfor <code>vector</code> i stedet for en tabell når du programmerer i C++.</p>
+<hr>
+<p><strong>Iteratorer</strong></p>
+<p>En iterator lar oss forflytte oss fra element til element i konteineren.</p>
+<p><strong>Algoritmer</strong></p>
+<p>En algoritme gjør noe med datainnholdet i en konteiner. Vi har algoritmer for sortering, søking,
+kopiering, med mer. Algoritmene er i utgangspunktet fristilt fra konteinerne. Iteratorene danner
+bindeleddet mellom konteinere og algoritmer. Vi sender inn iteratorer som argumenter til
+algoritmene. Dermed vet algoritmen hvilke data den skal jobbe med.</p>
+<h2><a id="user-content-konteineren-vektor" class="anchor" aria-hidden="true" href="#konteineren-vektor"><span aria-hidden="true" class="octicon octicon-link"></span></a>Konteineren vektor</h2>
+<h3><a id="user-content-en-vektor-fylt-med-tall" class="anchor" aria-hidden="true" href="#en-vektor-fylt-med-tall"><span aria-hidden="true" class="octicon octicon-link"></span></a>En vektor fylt med tall</h3>
+<p>Følgende program lager en vektor, fyller den opp med positive tall lest inn fra brukeren, sorterer
+dem og skriver dem ut.</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> example1.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>algorithm<span class="pl-pds">&gt;</span></span> <span class="pl-c"><span class="pl-c">//</span> header-fil for algoritmer</span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>vector<span class="pl-pds">&gt;</span></span> <span class="pl-c"><span class="pl-c">//</span> header-fil for vector</span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  vector&lt;<span class="pl-k">int</span>&gt; numbers; <span class="pl-c"><span class="pl-c">//</span> oppretter en vektor av heltall</span>
+
+  <span class="pl-k">int</span> number;
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Skriv positive tall (avslutt med 0): <span class="pl-pds">"</span></span>;
+  cin &gt;&gt; number;
+
+  <span class="pl-k">while</span> (number &gt; <span class="pl-c1">0</span>) {
+    numbers.<span class="pl-c1">emplace_back</span>(number); <span class="pl-c"><span class="pl-c">//</span> legger inn det nye tallet bakerst</span>
+    cin &gt;&gt; number;
+  }
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Du har skrevet <span class="pl-pds">"</span></span> &lt;&lt; numbers.<span class="pl-c1">size</span>() &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> tall<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  <span class="pl-k">for</span> (<span class="pl-c1">size_t</span> i = <span class="pl-c1">0</span>; i &lt; numbers.<span class="pl-c1">size</span>(); i++) {
+    cout &lt;&lt; numbers[i] &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span>; <span class="pl-c"><span class="pl-c">//</span> henter ut et og et tall ved indeksering</span>
+  }
+  cout &lt;&lt; endl;
+}</pre></div>
+<p>Medlemsfunksjonen <code>emplace_back()</code> legger inn et tall bakerst i vektoren. Vektorer fungerer mest
+effektivt hvis vi kan legge inn nye data bakerst.</p>
+<p>Det fins også en <code>emplace()</code>-funksjon som kan brukes. Den bruker iteratorer for å fortelle hvor det
+nye elementet skal plasseres. Dette er en tyngre funksjon enn emplace_back().</p>
+<p><code>size()</code> (størrelsen) gir oss antall tall lagt inn i vektoren. Vektoren er implementert som en
+tabell, og lagringsplassene ligger ved siden av hverandre i minnet. Vektoren har til enhver tid en
+kapasitet som er større eller lik <code>size()</code>. Kapasiteten begynner med 1, deretter utvides den ved
+behov, og det i større og større bolker (for eksempel dobling, men det er kompilatoravhengig).</p>
+<p>Du kan finne vektorens kapasitet ved å sende meldingen <code>capacity()</code> til <code>numbers</code>-objektet. Det fins
+funksjoner som lar brukeren bestemme kapasiteten og kapasitetsøkningen.</p>
+<p>Også for vektorer er <code>[]</code>-operatoren overloadet. Vi kan bruke den både på venstre og på høyre side
+av tilordningstegnet. På venstre side må du imidlertid bare bruke indeksering for elementer som
+allerede er lagt inn i vektoren, eksempel (jamfør <code>string</code>-objekter, der det samme gjelder):</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">for</span> (<span class="pl-c1">size_t</span> i = <span class="pl-c1">0</span>; i &lt; numbers.size(); ++i) {
+  numbers[i] += <span class="pl-c1">100</span>;
+}</pre></div>
+<p>Du kan altså ikke bruke indeksering til å legge inn nye elementer bakerst i vektoren.</p>
+<h3><a id="user-content-en-vektor-fylt-med-objekter" class="anchor" aria-hidden="true" href="#en-vektor-fylt-med-objekter"><span aria-hidden="true" class="octicon octicon-link"></span></a>En vektor fylt med objekter</h3>
+<p>Vi skal legge <code>Surface</code>-objekter inn i vektoren. Koden kan se slik ut:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> surface.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>vector<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">class</span> <span class="pl-en">Surface</span> {
+<span class="pl-k">public:</span>
+  string name;
+  <span class="pl-k">double</span> length;
+  <span class="pl-k">double</span> width;
+
+  <span class="pl-en">Surface</span>(<span class="pl-k">const</span> string &amp;name_, <span class="pl-k">double</span> length_, <span class="pl-k">double</span> width_)
+      : name(name_), length(length_), width(width_) {}
+
+  <span class="pl-k">double</span> <span class="pl-en">get_area</span>() <span class="pl-k">const</span> {
+    <span class="pl-k">return</span> length * width;
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  vector&lt;Surface&gt; surfaces;
+
+  surfaces.<span class="pl-c1">emplace_back</span>(<span class="pl-s"><span class="pl-pds">"</span>aaa<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>, <span class="pl-c1">3</span>);
+  surfaces.<span class="pl-c1">emplace_back</span>(<span class="pl-s"><span class="pl-pds">"</span>bbb<span class="pl-pds">"</span></span>, <span class="pl-c1">1</span>, <span class="pl-c1">1</span>);
+  surfaces.<span class="pl-c1">emplace_back</span>(<span class="pl-s"><span class="pl-pds">"</span>ccc<span class="pl-pds">"</span></span>, <span class="pl-c1">2</span>, <span class="pl-c1">2</span>);
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Antall flater: <span class="pl-pds">"</span></span> &lt;&lt; surfaces.<span class="pl-c1">size</span>() &lt;&lt; endl;
+
+  <span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;surface : surfaces)
+    cout &lt;&lt; surface.<span class="pl-smi">name</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> areal: <span class="pl-pds">"</span></span> &lt;&lt; surface.<span class="pl-c1">get_area</span>() &lt;&lt; endl;
+}</pre></div>
+<p>Her er både definisjonen og implementasjonen av klassen <code>Surface</code> lagt i samme fil som
+<code>main</code>-funksjonen for å gjøre eksempelet enklere. I tillegg har vi gått bort i fra bruk av enkle
+get- og set-funksjoner, og i stedet satt datamedlemmene som <code>public</code>. Ofte er dette greit, og
+samtidig fører det til at klassene er enklere å lese. Derimot er ikke dette alltid lurt å gjøre, og
+en bør tenke seg om før en velger å lage en klasse slik. Dere kan likevel trygt skrive øvinger og
+levere eksamen med denne forenklet måten å skrive klasser på. Men om dere skal skrive et bibliotek
+eller et større program senere, etter dette kurset, så kan det være lurt å dele opp klassene
+(.h/.hpp og .cpp filer), og være ekstra forsiktig med hvilke datamedlemmer dere har som public.</p>
+<p>Vektor-metoden <code>emplace_back</code> tar konstruktør-parameterne til <code>Surface</code> som parametere. Dette gjør
+at vi slipper å skrive for eksempel <code>surfaces.emplace_back(Surface(”aaa”, 3, 3))</code>.</p>
+<h3><a id="user-content-iterasjon-av-vektor-elementene-og-nøkkelordet-auto" class="anchor" aria-hidden="true" href="#iterasjon-av-vektor-elementene-og-nøkkelordet-auto"><span aria-hidden="true" class="octicon octicon-link"></span></a>Iterasjon av vektor elementene, og nøkkelordet auto</h3>
+<p>Å gå gjennom elementene i en vektor kan gjøres på flere måter. Vi har allerede sett denne måten:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">for</span> (<span class="pl-c1">size_t</span> i = <span class="pl-c1">0</span>; i &lt; surfaces.size(); ++i) {
+  cout &lt;&lt; surfaces[i].<span class="pl-smi">name</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> areal: <span class="pl-pds">"</span></span> &lt;&lt; surfaces[i].<span class="pl-c1">get_area</span>() &lt;&lt; endl;
+}</pre></div>
+<p>En kan også gjøre det slik:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">for</span> (Surface &amp;surface : surfaces) {
+  cout &lt;&lt; surface.<span class="pl-smi">name</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> areal: <span class="pl-pds">"</span></span> &lt;&lt; surface.<span class="pl-c1">get_area</span>() &lt;&lt; endl;
+}</pre></div>
+<p>Faktisk så kan vi gjøre løkken over enda litt enklere ved å bruke nøkkelordet <code>auto</code>. Vi lar da
+kompilatoren finne ut hvilken klasse objektet <code>surface</code> tilhører:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;surface : surfaces) {
+  cout &lt;&lt; surface.<span class="pl-smi">name</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> areal: <span class="pl-pds">"</span></span> &lt;&lt; surface.<span class="pl-c1">get_area</span>() &lt;&lt; endl;
+}</pre></div>
+<p>En kan bruke <code>auto</code> også i andre tilfeller, for eksempel:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">auto</span> area = surface.get_area();</pre></div>
+<p>Variabelen <code>area</code> blir her satt til å være samme typen som <code>get_area()</code> returnerer. Bruken av <code>auto</code>
+gjør at en ofte slipper å skrive datatypen mer enn en gang.</p>
+<p>Vi kommer til å se på enda en måte å gå gjennom elementene i en vektor når vi kommer til iteratorer.</p>
+<h2><a id="user-content-iteratorer" class="anchor" aria-hidden="true" href="#iteratorer"><span aria-hidden="true" class="octicon octicon-link"></span></a>Iteratorer</h2>
+<p>Iteratorer fungerer først og fremst som et bindeledd mellom konteinerne og algoritmene. (Nesten)
+alle konteinere har medlemsfunksjonene <code>begin()</code> og <code>end()</code>. Funksjonen <code>begin()</code> returnerer en
+iterator til første element i konteineren, <code>end()</code> returnerer en iterator til elementet etter det
+siste(!). Dette gjør det mulig å skrive løkker slik:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">for</span> (<span class="pl-k">auto</span> it = surfaces.begin(); it != surfaces.end(); ++it)</pre></div>
+<p>Dersom vi ønsker å iterere bare en del av vektoren skriver vi for eksempel:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">for</span> (<span class="pl-k">auto</span> it = surfaces.begin() + <span class="pl-c1">2</span>; it != surfaces.end() - <span class="pl-c1">1</span>; ++it)</pre></div>
+<p>Her går vi fra og med element med indeks <code>2</code>, og opp til og med det nest siste elementet.</p>
+<p>En iterator fungerer som en slags peker til de enkelte elementene i en konteiner. Vi kan for
+eksempel bruke dereferanseoperatoren (<code>*</code>) til å hente ut det aktuelle elementet.</p>
+<p>Følgende løkke løper gjennom <code>surface</code>-vektoren fra eksemplet foran, og skriver ut hvert enkelt
+element:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">for</span> (<span class="pl-k">auto</span> it = surfaces.begin(); it != surfaces.end(); ++it)
+  cout &lt;&lt; (*it).name &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> areal: <span class="pl-pds">"</span></span> &lt;&lt; (*it).get_area() &lt;&lt; endl;</pre></div>
+<p>I stedet for å skrive <code>(*it).name</code> kan vi bruke operatoren <code>-&gt;</code> slik:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">for</span> (<span class="pl-k">auto</span> it = surfaces.begin(); it != surfaces.end(); ++it)
+  cout &lt;&lt; it-&gt;name &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> areal: <span class="pl-pds">"</span></span> &lt;&lt; it-&gt;<span class="pl-en">get_area</span>() &lt;&lt; endl;</pre></div>
+<p>Vi bruker forresten <code>++it</code> i stedet for <code>it++</code>. Grunnen til dette er at <code>it++</code> returnerer den gamle
+verdien til <code>it</code> i tillegg til at <code>it</code> blir økt. Kompilatoren må da passe på å ha to verdier av <code>it</code>
+lagret; den gamle og den nye verdien. Når vi skriver <code>++it</code> trenger kompilatoren kun en verdi av
+iteratoren <code>it</code>, altså den nye verdien av <code>it</code> blir returnert. C++ burde egentlig hete ++C!</p>
+<h2><a id="user-content-algoritmer-og-lambda-uttrykk" class="anchor" aria-hidden="true" href="#algoritmer-og-lambda-uttrykk"><span aria-hidden="true" class="octicon octicon-link"></span></a>Algoritmer og Lambda-uttrykk</h2>
+<h3><a id="user-content-algoritmen-sort" class="anchor" aria-hidden="true" href="#algoritmen-sort"><span aria-hidden="true" class="octicon octicon-link"></span></a>Algoritmen sort</h3>
+<p>Som nevnt tidligere i leksjonen, så er algoritmer en del av STL. Det finnes mange slike
+STL-funksjoner. Noen av dem er tema i en senere leksjon. Før det, skal vi se nærmere på
+STL-funksjonen <code>sort</code>:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> example2.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>vector<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  vector&lt;<span class="pl-k">int</span>&gt; numbers;
+
+  numbers.<span class="pl-c1">emplace_back</span>(<span class="pl-c1">3</span>);
+  numbers.<span class="pl-c1">emplace_back</span>(<span class="pl-c1">1</span>);
+  numbers.<span class="pl-c1">emplace_back</span>(<span class="pl-c1">2</span>);
+
+  <span class="pl-c1">sort</span>(numbers.<span class="pl-c1">begin</span>(), numbers.<span class="pl-c1">end</span>());
+
+  <span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;number : numbers)
+    cout &lt;&lt; number &lt;&lt; endl;
+}
+<span class="pl-c"><span class="pl-c">/*</span> Kjøring:</span>
+<span class="pl-c">1</span>
+<span class="pl-c">2</span>
+<span class="pl-c">3</span>
+<span class="pl-c"><span class="pl-c">*/</span></span></pre></div>
+<p>På grunn av at algoritmen <code>sort</code> tar iteratorer som parametere, kan algoritmen brukes på flere ulike
+konteinerne på lignende måte.</p>
+<p>Vi kan også bruke algoritmen på objektet <code>surface</code> av typen <code>vector&lt;Surface&gt;</code> på følgende måte:</p>
+<div class="highlight highlight-source-c++"><pre>...
+<span class="pl-k">bool</span> <span class="pl-en">compare</span>(<span class="pl-k">const</span> Surface &amp;a, <span class="pl-k">const</span> Surface &amp;b) {
+  <span class="pl-k">return</span> a.<span class="pl-c1">get_area</span>() &lt; b.<span class="pl-c1">get_area</span>();
+}
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  ...
+  <span class="pl-c1">sort</span>(surface.<span class="pl-c1">begin</span>(), surface.<span class="pl-c1">end</span>(), compare);
+}</pre></div>
+<p>Siden kompilatoren ikke vet hvordan vi vil sortere flatene, må vi oppgi en funksjon som definerer
+hvordan en sammenligner to flater. I tilfellet over så blir flatene sortert etter stigende areal. Vi
+kunne også sortert etter for eksempel bredde (<code>width</code>) ved å skrive <code>compare</code> funksjonen slik:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">bool</span> <span class="pl-en">compare</span>(<span class="pl-k">const</span> Surface &amp;a, <span class="pl-k">const</span> Surface &amp;b) {
+  <span class="pl-k">return</span> a.<span class="pl-smi">width</span> &lt; b.<span class="pl-smi">width</span>;
+}</pre></div>
+<h3><a id="user-content-lambda-uttrykk" class="anchor" aria-hidden="true" href="#lambda-uttrykk"><span aria-hidden="true" class="octicon octicon-link"></span></a>Lambda-uttrykk</h3>
+<p>I stedet for å skrive en egen <code>compare</code>-funksjon, kan vi bruke en anonym funksjon som parameter til
+<code>sort</code>-algoritmen. Vi lager den anonyme funksjonen med et <em>lambda</em>-uttrykk:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-en">sort</span>(surfaces.begin(), surfaces.end(), [](<span class="pl-k">const</span> Surface &amp;a, <span class="pl-k">const</span> Surface &amp;b) {
+  <span class="pl-k">return</span> a.<span class="pl-c1">get_area</span>() &lt; b.<span class="pl-c1">get_area</span>();
+});</pre></div>
+<p>Den anonyme funksjonen som defineres gjennom <em>lambda</em>-uttrykket
+<code>[](const Surface &amp;a, const Surface &amp;b) {...}</code> har samme parametere som <code>compare</code> funksjonen.
+Kompilatoren finner også ut at den returnerer <code>bool</code>. Derimot kan vi spesifisere retur type ved å
+for eksempel skrive:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-en">sort</span>(surfaces.begin(), surfaces.end(), [](<span class="pl-k">const</span> Surface &amp;a, <span class="pl-k">const</span> Surface &amp;b) -&gt; bool {
+  <span class="pl-k">return</span> a.<span class="pl-c1">get_area</span>() &lt; b.<span class="pl-c1">get_area</span>();
+});</pre></div>
+<p>Du lurer sikkert på hva <code>[]</code> betyr. Her kan en derimot spesifisere hva en ønsker å overføre til den
+anonyme funksjonen (på engelsk: <em>capture-list</em>) uavhengig av parametre funksjonen har. En kan
+overføre både referanser og kopier. Vi kan også kalle anonyme funksjoner som vanlige funksjoner ved
+hjelp av <code>()</code>-operatoren. I følgende eksempel overfører vi en referanse og kaller funksjonen to
+ganger, før og etter variabelen <code>number</code> får verdien <code>2</code>:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-k">int</span> number=<span class="pl-c1">1</span>;
+  <span class="pl-k">auto</span> print_number=[&amp;number]() { <span class="pl-c"><span class="pl-c">//</span> number blir her tilgjengelig i funksjonen gjennom en referanse</span>
+    cout &lt;&lt; number &lt;&lt; endl;
+  };
+  <span class="pl-c1">print_number</span>();
+  number=<span class="pl-c1">2</span>;
+  <span class="pl-c1">print_number</span>();
+}
+<span class="pl-c"><span class="pl-c">/*</span> Utskrift:</span>
+<span class="pl-c">1</span>
+<span class="pl-c">2</span>
+<span class="pl-c"><span class="pl-c">*/</span></span></pre></div>
+<p>Den anonyme funksjonen <code>print_number</code> endrer på denne måten oppførsel når <code>number</code> blir endret.
+Dette kan av og til være ønskelig. Vi kan også overføre en kopi av <code>number</code>:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-k">int</span> number=<span class="pl-c1">1</span>;
+  <span class="pl-k">auto</span> print_number=[number]() { <span class="pl-c"><span class="pl-c">//</span> number blir her kopiert til funksjonen</span>
+    cout &lt;&lt; number &lt;&lt; endl;
+  };
+  <span class="pl-c1">print_number</span>();
+  number=<span class="pl-c1">2</span>;
+  <span class="pl-c1">print_number</span>();
+}
+<span class="pl-c"><span class="pl-c">/*</span> Utskrift:</span>
+<span class="pl-c">1</span>
+<span class="pl-c">1</span>
+<span class="pl-c"><span class="pl-c">*/</span></span></pre></div>
+<p>Et litt større eksempel med bruk av anonyme funksjoner sammen med GUI biblioteket gtkmm finner du på
+<a href="https://gitlab.com/ntnu-iini4003/gtkmm-example" rel="nofollow">https://gitlab.com/ntnu-iini4003/gtkmm-example</a>. Her blir klasse instansen <code>this</code> overført til
+anonyme funksjoner som definerer hva som skal utføres når de ulike GUI elementene blir brukt.
+Instansen <code>this</code> blir overført for å kunne bruke datamedlemmene i de anonyme funksjonene (følg
+instruksjonene i lenken over for å kjøre eksempelet):</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>gtkmm.h<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">class</span> <span class="pl-en">Window</span> : <span class="pl-k">public</span> <span class="pl-en">Gtk</span>::Window {
+<span class="pl-k">public:</span>
+  Gtk::VBox vbox;
+  Gtk::Entry entry;
+  Gtk::Button button;
+  Gtk::Label label;
+
+  <span class="pl-en">Window</span>() {
+    button.<span class="pl-c1">set_label</span>(<span class="pl-s"><span class="pl-pds">"</span>Click here<span class="pl-pds">"</span></span>);
+
+    vbox.<span class="pl-c1">pack_start</span>(entry);  <span class="pl-c"><span class="pl-c">//</span>Add the widget entry to vbox</span>
+    vbox.<span class="pl-c1">pack_start</span>(button); <span class="pl-c"><span class="pl-c">//</span>Add the widget button to vbox</span>
+    vbox.<span class="pl-c1">pack_start</span>(label);  <span class="pl-c"><span class="pl-c">//</span>Add the widget label to vbox</span>
+
+    <span class="pl-c1">add</span>(vbox);  <span class="pl-c"><span class="pl-c">//</span>Add vbox to window</span>
+    <span class="pl-c1">show_all</span>(); <span class="pl-c"><span class="pl-c">//</span>Show all widgets</span>
+
+    entry.<span class="pl-c1">signal_changed</span>().<span class="pl-c1">connect</span>([<span class="pl-c1">this</span>]() {
+      label.<span class="pl-c1">set_text</span>(<span class="pl-s"><span class="pl-pds">"</span>Entry now contains: <span class="pl-pds">"</span></span> + entry.<span class="pl-c1">get_text</span>());
+    });
+
+    entry.<span class="pl-c1">signal_activate</span>().<span class="pl-c1">connect</span>([<span class="pl-c1">this</span>]() {
+      label.<span class="pl-c1">set_text</span>(<span class="pl-s"><span class="pl-pds">"</span>Entry activated<span class="pl-pds">"</span></span>);
+    });
+
+    button.<span class="pl-c1">signal_clicked</span>().<span class="pl-c1">connect</span>([<span class="pl-c1">this</span>]() {
+      label.<span class="pl-c1">set_text</span>(<span class="pl-s"><span class="pl-pds">"</span>Button clicked<span class="pl-pds">"</span></span>);
+    });
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  Gtk::Main gtk_main;
+  Window window;
+  gtk_main.<span class="pl-c1">run</span>(window);
+}</pre></div>
+
+                      </article>
+                    </div>
+                  </div>
+
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

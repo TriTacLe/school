@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>6-funksjonsobjekter-og-trådprogrammering</title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/frameworks-f8b9580b3a0820d152c1d3c6f3ebeaa3.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/behaviors-8d9cf3187e56b7b21514050253f9c9b1.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-805c987f1ff712a0161914502c94d38b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+
+    
+
+      <div role="main" class="main-content">
+        <div class="container new-discussion-timeline experiment-repo-nav">
+          <div class="repository-content">
+            <div id="readme" class="readme boxed-group clearfix announce instapaper_body md">
+              
+                <h3>
+                  <span class="octicon octicon-book"></span>
+                  6-funksjonsobjekter-og-trådprogrammering
+                </h3>
+              
+              <article class="markdown-body entry-content" itemprop="text" id="grip-content">
+                <h1>
+<a id="user-content-leksjon-6-funksjonsobjekter-og-trådprogrammering" class="anchor" href="#leksjon-6-funksjonsobjekter-og-tr%C3%A5dprogrammering" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Leksjon 6: Funksjonsobjekter og trådprogrammering</h1>
+<p>Skrevet av Ole Christian Eidheim</p>
+<p>Eksemplene for denne leksjonen finner du her: <a href="https://gitlab.com/ntnu-iini4003/examples6" rel="nofollow">https://gitlab.com/ntnu-iini4003/examples6</a></p>
+<p>Denne leksjonen bygger videre på øving 5. Det anbefales derfor at dere gjør denne øvingen før dere
+leser videre.</p>
+<h2>
+<a id="user-content-funksjonsobjekter" class="anchor" href="#funksjonsobjekter" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Funksjonsobjekter</h2>
+<p>Vi har før sett på bruken av anonyme funksjoner som ble definert ved hjelp av <em>lambda uttrykk</em>
+(<code>[](){}</code>):</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-k">auto</span> add = [](<span class="pl-k">int</span> a, <span class="pl-k">int</span> b) {
+    <span class="pl-k">return</span> a + b;
+  };
+  cout &lt;&lt; <span class="pl-c1">add</span>(<span class="pl-c1">2</span>, <span class="pl-c1">2</span>) &lt;&lt; endl;
+}</pre></div>
+<p>Vi kan også skrive dette slik:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>functional<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  function&lt;<span class="pl-c1">int</span>(<span class="pl-k">int</span>, <span class="pl-k">int</span>)&gt; add = [](<span class="pl-k">int</span> a, <span class="pl-k">int</span> b) {
+    <span class="pl-k">return</span> a + b;
+  };
+  cout &lt;&lt; <span class="pl-c1">add</span>(<span class="pl-c1">2</span>, <span class="pl-c1">2</span>) &lt;&lt; endl;
+}</pre></div>
+<p>Siden funksjoner er minneområder der instruksjonene til funksjonen ligger, kan en lagre pekerne til
+starten av disse minneområdet i <em>funksjonsobjekter</em>. I tilfellet over heter dette objektet <code>add</code> som
+er av typen <code>std::function</code>. Dette kan vi utnytte for å plassere kode, som ikke hører hjemme i
+klassen, utenfor klassen.</p>
+<p>I øving 5 for eksempel, blir <code>std::cout</code> brukt til å skrive ut om et sjakktrekk er gyldig eller
+ikke. Bruken av <code>std::cout</code> var dermed hardkodet i <code>ChessBoard</code> klassen. Dersom vi senere vil lage
+et grafisk grensesnitt mot <code>ChessBoard</code> klassen, blir det vanskelig gjenbruke denne klassen. Vi kan
+i stedet legge til <code>std::function</code> objekter i <code>ChessBoard</code> som en bruker i de tilfellene en kanskje
+vil utføre ekstra operasjoner fra en annen plass i kildekoden, altså utenfor <code>ChessBoard</code> klassen.
+For eksempel slik (se example1.cpp):</p>
+<div class="highlight highlight-source-c++"><pre>...
+
+<span class="pl-k">class</span> <span class="pl-en">ChessBoard</span> {
+
+...
+
+  function&lt;<span class="pl-k">void</span>(<span class="pl-k">const</span> Piece &amp;piece, <span class="pl-k">const</span> string &amp;from, <span class="pl-k">const</span> string &amp;to)&gt; on_piece_move;
+  function&lt;<span class="pl-k">void</span>(<span class="pl-k">const</span> Piece &amp;piece, <span class="pl-k">const</span> string &amp;square)&gt; on_piece_removed;
+  function&lt;<span class="pl-k">void</span>(Color color)&gt; on_lost_game;
+  function&lt;<span class="pl-k">void</span>(<span class="pl-k">const</span> Piece &amp;piece, <span class="pl-k">const</span> string &amp;from, <span class="pl-k">const</span> string &amp;to)&gt; on_piece_move_invalid;
+  function&lt;<span class="pl-k">void</span>(<span class="pl-k">const</span> string &amp;square)&gt; on_piece_move_missing;
+
+  <span class="pl-c"><span class="pl-c">//</span>/ Move a chess piece if it is a valid move</span>
+  <span class="pl-k">bool</span> <span class="pl-en">move_piece</span>(<span class="pl-k">const</span> std::string &amp;from, <span class="pl-k">const</span> std::string &amp;to) {
+    <span class="pl-k">int</span> from_x = from[<span class="pl-c1">0</span>] - <span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>;
+    <span class="pl-k">int</span> from_y = <span class="pl-c1">stoi</span>(<span class="pl-c1">string</span>() + from[<span class="pl-c1">1</span>]) - <span class="pl-c1">1</span>;
+    <span class="pl-k">int</span> to_x = to[<span class="pl-c1">0</span>] - <span class="pl-s"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>;
+    <span class="pl-k">int</span> to_y = <span class="pl-c1">stoi</span>(<span class="pl-c1">string</span>() + to[<span class="pl-c1">1</span>]) - <span class="pl-c1">1</span>;
+
+    <span class="pl-k">auto</span> &amp;piece_from = squares[from_x][from_y];
+    <span class="pl-k">if</span> (piece_from) {
+      <span class="pl-k">if</span> (piece_from-&gt;<span class="pl-c1">valid_move</span>(from_x, from_y, to_x, to_y)) {
+        <span class="pl-k">if</span> (on_piece_move)
+          <span class="pl-c1">on_piece_move</span>(*piece_from, from, to);
+        <span class="pl-k">auto</span> &amp;piece_to = squares[to_x][to_y];
+        <span class="pl-k">if</span> (piece_to) {
+          <span class="pl-k">if</span> (piece_from-&gt;<span class="pl-smi">color</span> != piece_to-&gt;<span class="pl-smi">color</span>) {
+            <span class="pl-k">if</span> (on_piece_removed)
+              <span class="pl-c1">on_piece_removed</span>(*piece_to, to);
+            <span class="pl-k">if</span> (<span class="pl-k">auto</span> king = <span class="pl-k">dynamic_cast</span>&lt;King *&gt;(piece_to.<span class="pl-c1">get</span>())) {
+              <span class="pl-k">if</span> (on_lost_game)
+                <span class="pl-c1">on_lost_game</span>(king-&gt;<span class="pl-smi">color</span>);
+            }
+          } <span class="pl-k">else</span> {
+            <span class="pl-k">if</span> (on_piece_move_invalid)
+              <span class="pl-c1">on_piece_move_invalid</span>(*piece_from, from, to);
+            <span class="pl-k">return</span> <span class="pl-c1">false</span>;
+          }
+        }
+        piece_to = <span class="pl-c1">move</span>(piece_from);
+        <span class="pl-k">return</span> <span class="pl-c1">true</span>;
+      } <span class="pl-k">else</span> {
+        <span class="pl-k">if</span> (on_piece_move_invalid)
+          <span class="pl-c1">on_piece_move_invalid</span>(*piece_from, from, to);
+        <span class="pl-k">return</span> <span class="pl-c1">false</span>;
+      }
+    } <span class="pl-k">else</span> {
+      <span class="pl-k">if</span> (on_piece_move_missing)
+        <span class="pl-c1">on_piece_move_missing</span>(from);
+      <span class="pl-k">return</span> <span class="pl-c1">false</span>;
+    }
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  ChessBoard board;
+
+  board.<span class="pl-smi">on_piece_move</span> = [](<span class="pl-k">const</span> ChessBoard::Piece &amp;piece, <span class="pl-k">const</span> string &amp;from, <span class="pl-k">const</span> string &amp;to) {
+    cout &lt;&lt; piece.<span class="pl-c1">type</span>() &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> is moving from <span class="pl-pds">"</span></span> &lt;&lt; from &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> to <span class="pl-pds">"</span></span> &lt;&lt; to &lt;&lt; endl;
+  };
+  board.<span class="pl-smi">on_piece_removed</span> = [](<span class="pl-k">const</span> ChessBoard::Piece &amp;piece, <span class="pl-k">const</span> string &amp;square) {
+    cout &lt;&lt; piece.<span class="pl-c1">type</span>() &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> is being removed from <span class="pl-pds">"</span></span> &lt;&lt; square &lt;&lt; endl;
+  };
+  board.<span class="pl-smi">on_lost_game</span> = [](ChessBoard::Color color) {
+    <span class="pl-k">if</span> (color == ChessBoard::Color::WHITE)
+      cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Black<span class="pl-pds">"</span></span>;
+    <span class="pl-k">else</span>
+      cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>White<span class="pl-pds">"</span></span>;
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> won the game<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  };
+  board.<span class="pl-smi">on_piece_move_invalid</span> = [](<span class="pl-k">const</span> ChessBoard::Piece &amp;piece, <span class="pl-k">const</span> string &amp;from, <span class="pl-k">const</span> string &amp;to) {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>can not move <span class="pl-pds">"</span></span> &lt;&lt; piece.<span class="pl-c1">type</span>() &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> from <span class="pl-pds">"</span></span> &lt;&lt; from &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> to <span class="pl-pds">"</span></span> &lt;&lt; to &lt;&lt; endl;
+  };
+  board.<span class="pl-smi">on_piece_move_missing</span> = [](<span class="pl-k">const</span> string &amp;square) {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>no piece at <span class="pl-pds">"</span></span> &lt;&lt; square &lt;&lt; endl;
+  };
+
+...
+
+}</pre></div>
+<p>Om vi kaller et <code>std::function</code> objekt som ikke er definert, får vi <code>std::bad_function_call</code>
+exception. Dette er grunnen til at vi for eksempel skriver:
+<code>if (on_piece_move) on_piece_move(*piece, from, to);</code>. Det er ikke gitt at programmet som bruker
+<code>ChessBoard</code> klassen har definert <code>on_piece_move</code> funksjonsobjektet. Dette kan for eksempel være
+tilfellet når en lager en test av klassen.</p>
+<p>Du lurer kanskje på hva vitsen er i å legge til slike funksjonsobjekter? Det fører til mer skriving,
+men gevinsten blir synlig når en lager et større program. Et eksempel kan være at vi tenker at vi
+har to klasser; en klasse <code>ChessBoardDraw</code> som tar seg av tegning og animasjoner relatert til
+sjakkbrettet, og en klasse <code>ChessBoardSound</code> som tar seg av lyder i sjakkspillet. Vi kan da definere
+for eksempel <code>on_piece_move</code> på følgende måte:</p>
+<div class="highlight highlight-source-c++"><pre>ChessBoard board;
+ChessBoardDraw <span class="pl-en">draw</span>(board.squares); <span class="pl-c"><span class="pl-c">//</span> En tegne klasse må ha tilgang til brikkene på de ulike rutene</span>
+ChessBoardSound sound;
+
+board.on_piece_move = [&amp;draw, &amp;sound](<span class="pl-k">const</span> ChessBoard::Piece &amp;piece, <span class="pl-k">const</span> string &amp;from, <span class="pl-k">const</span> string &amp;to) {
+  draw.<span class="pl-c1">move_piece</span>(piece, from, to);
+  sound.<span class="pl-c1">move_piece</span>(piece); <span class="pl-c"><span class="pl-c">//</span> Kanskje vi vil ha ulike lyder for flytting av de ulike brikkene</span>
+};
+
+...</pre></div>
+<p>Vi har dermed en sjakkbrett-klasse som er fullstendig uavhengig av både tegning og lyder, og når
+noen ser på kildekoden så er det ingen tvil om hvor tegningen finner sted. I tillegg, om vi vil lage
+tester, vil vi ikke lage tester for tegning eller lyder (normalt sett), men å lage tester for
+<code>ChessBoard</code> klassen sammen med de ulike <code>Piece</code>-subklassene gir mening.</p>
+<p>Til slutt kan det sies at kildekoden til Øving 5, med forbedringene skissert over, likevel har
+forbedringspotensiale, men vi lar dette ligge for å ikke komplisere eksempelet ytterligere.</p>
+<p>Det viktigste er å forstå bruken av funksjonsobjekter som et moderne alternativ til, og som ofte er
+bedre enn, å lage virtuelle funksjoner som må implementeres i en subklasse. I gamle dager ville vi
+ha laget <code>virtual void on_piece_move</code> for eksempel, og vi måtte lage en subklasse av <code>ChessBoard</code>
+for å implementere denne metoden. Se for eksempel igjen på
+<a href="https://gitlab.com/ntnu-ifud1048/gtkmm-example/blob/master/main.cpp" rel="nofollow">https://gitlab.com/ntnu-ifud1048/gtkmm-example/blob/master/main.cpp</a>, der programmet er skrevet på
+noen få linjer. Før i tiden hadde vi laget subklasser av både <code>Gtk::Entry</code> og <code>Gtk::Button</code> for å
+definere hva som skal skje ved endring, aktivering og klikk. Nå står vi derimot fritt til å legge
+implementasjonene der vi vil, og der de måtte høre hjemme, ved hjelp av funksjonsobjekter. I
+tillegg, som et resultat at vi nå typisk jobber med færre klasser, er at klassestrukturen gir
+lettere mening for andre programmerere.</p>
+<p>Som oppsummering, for eksempel med utgangspunkt i
+<a href="https://gitlab.com/ntnu-ifud1048/gtkmm-example/blob/master/main.cpp" rel="nofollow">https://gitlab.com/ntnu-ifud1048/gtkmm-example/blob/master/main.cpp</a>, dersom en skal lage en ny type
+knapp så gir det mening å subklasse <code>Gtk::Button</code>, men om en vil legge til funksjoner som hva som
+skal skje ved klikk på en vanlig knapp, bør en bruke <code>button.signal_clicked().connect()</code> (som
+tilsvarer bruken av funksjonsobjekter).</p>
+<h2>
+<a id="user-content-trådprogrammering" class="anchor" href="#tr%C3%A5dprogrammering" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Trådprogrammering</h2>
+<p>Slik lager vi en tråd i C++:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>thread<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  thread <span class="pl-smi">a_thread</span>([] {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>from a_thread<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  });
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>from main thread<span class="pl-pds">"</span></span> &lt;&lt; endl;
+
+  a_thread.<span class="pl-c1">join</span>(); <span class="pl-c"><span class="pl-c">//</span>Her venter til at a_thread er fullført</span>
+}
+<span class="pl-c"><span class="pl-c">//</span> Eksempel utskrift:</span>
+<span class="pl-c"><span class="pl-c">//</span> message from main thread</span>
+<span class="pl-c"><span class="pl-c">//</span> message from a_thread</span></pre></div>
+<p>For å jobbe med tråder i Linux må en fortsatt (2016) legge til <code>-pthread</code> i <code>CMAKE_CXX_FLAGS</code> i
+CMakeLists.txt (se CMakeLists.txt i eksempelkoden).</p>
+<p>La oss si at vi oppretter tråden i en funksjon og vil legge til en melding til tråden:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>thread<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-c"><span class="pl-c">//</span> to demonstrate the problem, we need to move the below calls to another stack frame (away from main()):</span>
+<span class="pl-k">void</span> <span class="pl-en">f</span>() {
+  string <span class="pl-smi">message</span>(<span class="pl-s"><span class="pl-pds">"</span>some message<span class="pl-pds">"</span></span>);
+  thread <span class="pl-smi">a_thread</span>([&amp;message] {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>message from a_thread: <span class="pl-pds">"</span></span> &lt;&lt; message &lt;&lt; endl;
+  });
+  a_thread.<span class="pl-c1">detach</span>(); <span class="pl-c"><span class="pl-c">//</span> the thread will execute independently from the rest of the program</span>
+                     <span class="pl-c"><span class="pl-c">//</span> even when the thread object a_thread goes out of scope</span>
+}
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-c1">f</span>();
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>from main thread<span class="pl-pds">"</span></span> &lt;&lt; endl;
+
+  <span class="pl-c1">this_thread::sleep_for</span>(50ms); <span class="pl-c"><span class="pl-c">//</span> wait 50 ms before return from main()</span>
+}
+<span class="pl-c"><span class="pl-c">//</span> Eksempel utskrift (kjør programmet flere ganger):</span>
+<span class="pl-c"><span class="pl-c">//</span> sh: line 1: 23025 Segmentation fault</span></pre></div>
+<p>Problemet her er at <code>message</code> kanskje blir frigjort fra minnet før <code>a_thread</code> fullfører. Vi kunne
+laget en kopi av <code>message</code> (av typen <code>std::string</code>) når vi fanger objektet i tråden
+(<code>thread a_thread([message] {</code>), men det ønsker vi som regel ikke. Alternativet er å bruke
+referansetelling gjennom <code>std::shared_ptr</code> (i stedet for å bruke <code>std::string</code> direkte), der en
+teller antall kopier av et <code>std::shared_ptr</code> objekt som inneholder meldingen (se example2.cpp):</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>memory<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>thread<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-c"><span class="pl-c">//</span> to demonstrate the problem, we need to move the below calls to another stack frame (away from main()):</span>
+<span class="pl-k">void</span> <span class="pl-en">f</span>() {
+  shared_ptr&lt;string&gt; <span class="pl-c1">message</span>(<span class="pl-k">new</span> <span class="pl-c1">string</span>(<span class="pl-s"><span class="pl-pds">"</span>some message<span class="pl-pds">"</span></span>));  <span class="pl-c"><span class="pl-c">//</span> message pointer count is increased by one</span>
+  thread <span class="pl-smi">a_thread</span>([message] {                              <span class="pl-c"><span class="pl-c">//</span> message pointer count is increased by one</span>
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>message from a_thread: <span class="pl-pds">"</span></span> &lt;&lt; *message &lt;&lt; endl;
+  });                                                      <span class="pl-c"><span class="pl-c">//</span> message pointer count is decreased by one</span>
+  a_thread.<span class="pl-c1">detach</span>();
+}                                                          <span class="pl-c"><span class="pl-c">//</span> message pointer count is decreased by one</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-c1">f</span>();
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>from main thread<span class="pl-pds">"</span></span> &lt;&lt; endl;
+
+  <span class="pl-c1">this_thread::sleep_for</span>(50ms); <span class="pl-c"><span class="pl-c">//</span> wait 50ms before return from main()</span>
+}
+<span class="pl-c"><span class="pl-c">//</span> Eksempel utskrift (kjør programmet flere ganger):</span>
+<span class="pl-c"><span class="pl-c">//</span> from main thread</span>
+<span class="pl-c"><span class="pl-c">//</span> message from a_thread: some message</span></pre></div>
+<p>Når pekertelleren til <code>message</code> (som er av typen <code>std::shared_ptr</code>) går til 0, slettes <code>message</code>
+objektet. <code>message</code> inneholder en peker til et <code>std::string</code> objekt som ligger i <em>heapen</em>. Dette
+<code>std::string</code> objektet inneholder <code>"some message"</code>, men når <code>message</code> slettes, blir også
+<code>std::string</code> objektet frigjort fra minnet.</p>
+<p>I stedet for:</p>
+<div class="highlight highlight-source-c++"><pre>shared_ptr&lt;string&gt; <span class="pl-en">message</span>(<span class="pl-k">new</span> string(<span class="pl-s"><span class="pl-pds">"</span>some message<span class="pl-pds">"</span></span>));</pre></div>
+<p>er det ofte vanlig å skrive (som ved <code>unique_ptr</code>):</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">auto</span> message = make_shared&lt;string&gt;(<span class="pl-s"><span class="pl-pds">"</span>some message<span class="pl-pds">"</span></span>);</pre></div>
+<h3>
+<a id="user-content-mutex" class="anchor" href="#mutex" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Mutex</h3>
+<p>Om flere tråder jobber med samme ressursene, må en passe på at de ikke endrer og leser fra
+variablene eller objektene samtidig:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>mutex<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>thread<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>vector<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  string message;
+
+  vector&lt;thread&gt; threads;
+  <span class="pl-k">for</span> (<span class="pl-k">int</span> c = <span class="pl-c1">0</span>; c &lt; <span class="pl-c1">4</span>; ++c) {
+    threads.<span class="pl-c1">emplace_back</span>([c, &amp;message] {
+      message += <span class="pl-s"><span class="pl-pds">"</span>thread <span class="pl-pds">"</span></span> + <span class="pl-c1">to_string</span>(c) + <span class="pl-s"><span class="pl-pds">"</span> says hello<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>;
+    });
+  }
+
+  <span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;thread : threads)
+    thread.<span class="pl-c1">join</span>();
+
+  cout &lt;&lt; message &lt;&lt; endl;
+}
+<span class="pl-c"><span class="pl-c">//</span> Mulig utskrift:</span>
+<span class="pl-c"><span class="pl-c">//</span> malloc: *** error for object 0x7fb968600080: double free</span></pre></div>
+<p>Vi bruker da mutex'er for å låse lese/skrive tilgangen til objektene:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>mutex<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>thread<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>vector<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  string message;
+
+  vector&lt;thread&gt; threads;
+  <span class="pl-k">for</span> (<span class="pl-k">int</span> c = <span class="pl-c1">0</span>; c &lt; <span class="pl-c1">4</span>; ++c) {
+    threads.<span class="pl-c1">emplace_back</span>([c, &amp;message] {
+      <span class="pl-k">static</span> mutex message_mutex;            <span class="pl-c"><span class="pl-c">//</span> We can declare the mutex as static if it is not needed elsewhere</span>
+      lock_guard&lt;mutex&gt; <span class="pl-c1">lock</span>(message_mutex); <span class="pl-c"><span class="pl-c">//</span> The message_mutex is locked upon construction of lock, and</span>
+                                             <span class="pl-c"><span class="pl-c">//</span> the mutex is unlocked when lock is destroyed at the end of scope,</span>
+                                             <span class="pl-c"><span class="pl-c">//</span> including when an exception is thrown</span>
+      message += <span class="pl-s"><span class="pl-pds">"</span>thread <span class="pl-pds">"</span></span> + <span class="pl-c1">to_string</span>(c) + <span class="pl-s"><span class="pl-pds">"</span> says hello<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>;
+    });
+  }
+
+  <span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;thread : threads)
+    thread.<span class="pl-c1">join</span>();
+
+  cout &lt;&lt; message;
+}
+<span class="pl-c"><span class="pl-c">//</span> Mulig utskrift:</span>
+<span class="pl-c"><span class="pl-c">//</span> thread 0 says hello</span>
+<span class="pl-c"><span class="pl-c">//</span> thread 3 says hello</span>
+<span class="pl-c"><span class="pl-c">//</span> thread 2 says hello</span>
+<span class="pl-c"><span class="pl-c">//</span> thread 1 says hello</span></pre></div>
+<p>I stedet for å bruke <code>message_mutex.lock()</code> og <code>message_mutex.unlock()</code>, er det tryggere å utnytte
+seg av <code>lock_guard</code> objekter som tar seg av låsing og opplåsing av mutex'er automatisk. En slipper
+da å ta hensyn til om en <em>exception</em> blir utløst. En annen kommentar til kildekoden over, er om
+bruken av <code>static</code>. Objekter som er deklarert som <code>static</code> blir kun initialisert en gang og lever
+til programmet avsluttes. Derimot trenger ikke et <code>static</code> objekt å bli initialisert før en trenger
+det, om en i det hele tatt trenger objektet. Dette vil variere med bruken av programmet, men uansett
+så garanterer C/C++ at initialisering av <code>static</code> objekter er trygt selv i tråder (<em>thread safe</em>).</p>
+<p>Denne egenskapen til <code>static</code> blir brukt i C++ for å lage <em>singleton</em> klasser (<em>singleton</em> klasse:
+det finnes maks en instanse av klassen):</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">class</span> <span class="pl-en">SingletonClass</span> {
+  <span class="pl-en">SingletonClass</span>() {} <span class="pl-c"><span class="pl-c">//</span> Constructor is private, the static get() method must be used to get/create the instance</span>
+
+<span class="pl-k">public:</span>
+  <span class="pl-k">static</span> SingletonClass &amp;<span class="pl-en">get</span>() {
+    <span class="pl-k">static</span> SingletonClass instance;
+    <span class="pl-k">return</span> instance;
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-c1">SingletonClass::get</span>(); <span class="pl-c"><span class="pl-c">//</span> An instance of SingletonClass is created and returned</span>
+  <span class="pl-c1">SingletonClass::get</span>(); <span class="pl-c"><span class="pl-c">//</span> The already created instance is returned</span>
+}</pre></div>
+<h4>
+<a id="user-content-reference-counted-singleton-classes-ikke-pensum" class="anchor" href="#reference-counted-singleton-classes-ikke-pensum" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reference-counted singleton classes (<strong>ikke pensum</strong>)</h4>
+<p>For interesserte så kan vi også legge til <em>singleton</em> klasser der instansen blir slettet når den
+ikke lenger er i bruk:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>memory<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>mutex<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">class</span> <span class="pl-en">ReferenceCountedSingletonClass</span> {
+  <span class="pl-en">ReferenceCountedSingletonClass</span>() {}
+
+<span class="pl-k">public:</span>
+  <span class="pl-c"><span class="pl-c">//</span>/If an instance is already in use, return cached instance, otherwise return a new instance.</span>
+  <span class="pl-k">static</span> shared_ptr&lt;ReferenceCountedSingletonClass&gt; <span class="pl-en">get</span>() {
+    <span class="pl-k">static</span> weak_ptr&lt;ReferenceCountedSingletonClass&gt; cache;
+    <span class="pl-k">static</span> mutex cache_mutex;
+    lock_guard&lt;mutex&gt; <span class="pl-c1">lock</span>(cache_mutex); <span class="pl-c"><span class="pl-c">//</span> Needed to make this get() method thread safe</span>
+    <span class="pl-k">auto</span> instance = cache.<span class="pl-c1">lock</span>();
+    <span class="pl-k">if</span> (!instance)
+      cache = instance = shared_ptr&lt;ReferenceCountedSingletonClass&gt;(<span class="pl-k">new</span> <span class="pl-c1">ReferenceCountedSingletonClass</span>());
+    <span class="pl-k">return</span> instance;
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  {
+    <span class="pl-k">auto</span> s1 = <span class="pl-c1">ReferenceCountedSingletonClass::get</span>(); <span class="pl-c"><span class="pl-c">//</span> Instance is created</span>
+    <span class="pl-k">auto</span> s2 = <span class="pl-c1">ReferenceCountedSingletonClass::get</span>(); <span class="pl-c"><span class="pl-c">//</span> Already created instance is returned</span>
+  }                                                  <span class="pl-c"><span class="pl-c">//</span> instance is destroyed</span>
+  <span class="pl-k">auto</span> s3 = <span class="pl-c1">ReferenceCountedSingletonClass::get</span>();   <span class="pl-c"><span class="pl-c">//</span> Instance is created</span>
+}</pre></div>
+<p>Denne teknikken er brukt for eksempel i <a href="https://gitlab.com/ntnu-tdat3023/sfml-modern-opengl-example" rel="nofollow">https://gitlab.com/ntnu-tdat3023/sfml-modern-opengl-example</a>
+for oppretting av grafikkort shadere, som blir slettet når de ikke lenger trengs for å frigjøre
+ressurser på grafikkortet.</p>
+<h3>
+<a id="user-content-asynkron-tjeneste" class="anchor" href="#asynkron-tjeneste" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Asynkron tjeneste</h3>
+<p>Av og til kan det være ønskelig å sende oppgaver til en asynkron tjeneste i stedet for å jobbe med
+tråder manuelt. Vi kan også velge hvor mange tråder som skal bli brukt til å utføre oppgavene våre,
+og i noen tilfeller vil vi faktisk at oppgavene skal kun bli kjørt i en tråd. Boost.Asio er et
+bibliotek som gjør dette mulig. Nedenfor lager vi en asynkron tjeneste med 4 tråder eller 4
+<em>arbeidere</em> (<em>workers</em>) (se example3.cpp):</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>boost/asio.hpp<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>thread<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>vector<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">class</span> <span class="pl-en">Workers</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-c"><span class="pl-c">//</span>/ Provides asynchronous service</span>
+  boost::asio::io_service service;
+
+<span class="pl-k">private:</span>
+  <span class="pl-c"><span class="pl-c">//</span>/ See Workers-constructor. Makes service.run() wait for tasks through service.post</span>
+  boost::asio::io_service::work work;
+  vector&lt;thread&gt; threads;
+
+<span class="pl-k">public:</span>
+  <span class="pl-en">Workers</span>(<span class="pl-c1">size_t</span> number_of_threads) : work(service) {
+    <span class="pl-k">for</span> (<span class="pl-c1">size_t</span> c = <span class="pl-c1">0</span>; c &lt; number_of_threads; ++c) {
+      threads.<span class="pl-c1">emplace_back</span>([<span class="pl-c1">this</span>] {
+        service.<span class="pl-c1">run</span>(); <span class="pl-c"><span class="pl-c">//</span> Wait for, and execute, tasks until service.stop() is called</span>
+      });
+    }
+  }
+
+  <span class="pl-c"><span class="pl-c">//</span>/ Stop the workers</span>
+  <span class="pl-k">void</span> <span class="pl-en">stop</span>() {
+    service.<span class="pl-c1">stop</span>();
+    <span class="pl-c"><span class="pl-c">//</span> Wait for the threads to finish</span>
+    <span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;thread : threads) {
+      thread.<span class="pl-c1">join</span>();
+    }
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  Workers <span class="pl-smi">workers</span>(<span class="pl-c1">4</span>); <span class="pl-c"><span class="pl-c">//</span> Use 4 workers (worker threads)</span>
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Press enter to exit<span class="pl-pds">"</span></span> &lt;&lt; endl;
+
+  <span class="pl-c"><span class="pl-c">//</span> Give tasks to the workers:</span>
+  workers.<span class="pl-smi">service</span>.<span class="pl-c1">post</span>([&amp;workers] {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>task A is being performed by a worker<span class="pl-pds">"</span></span> &lt;&lt; endl;
+
+    <span class="pl-c"><span class="pl-c">//</span> One can post new tasks inside a post:</span>
+    workers.<span class="pl-smi">service</span>.<span class="pl-c1">post</span>([] {
+      cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>task B is being performed by a worker<span class="pl-pds">"</span></span> &lt;&lt; endl;
+    });
+  });
+  workers.<span class="pl-smi">service</span>.<span class="pl-c1">post</span>([] {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>task C is being performed by a worker<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  });
+
+  string line;
+  <span class="pl-c1">getline</span>(cin, line); <span class="pl-c"><span class="pl-c">//</span> stop when enter is pressed</span>
+  workers.<span class="pl-c1">stop</span>();
+}
+<span class="pl-c"><span class="pl-c">//</span> Mulig utskrift (ikke alltid like ryddig!):</span>
+<span class="pl-c"><span class="pl-c">//</span> Press enter to exit</span>
+<span class="pl-c"><span class="pl-c">//</span> task A is being performed by a worker</span>
+<span class="pl-c"><span class="pl-c">//</span> task C is being performed by a worker</span>
+<span class="pl-c"><span class="pl-c">//</span> task B is being performed by a worker</span></pre></div>
+<p>Legg spesielt merke til at <code>post</code>-kallene er asynkrone, altså at de returnerer umiddelbart.
+Utskriften blir heller ikke alltid like ryddig (kjør eksempelet flere ganger), siden utskriften blir
+utført parallelt i de ulike trådene.</p>
+<p>Vi kan til og med snu det hele på hodet, og bruke <code>Workers</code> klassen over til å utføre funksjoner,
+som er kalt fra ulike tråder, sekvensielt i en tråd (se example4.cpp):</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  Workers <span class="pl-smi">worker</span>(<span class="pl-c1">1</span>); <span class="pl-c"><span class="pl-c">//</span> Use only 1 worker (1 worker thread)</span>
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Press enter to exit<span class="pl-pds">"</span></span> &lt;&lt; endl;
+
+  std::vector&lt;thread&gt; threads;
+  <span class="pl-k">for</span> (<span class="pl-c1">size_t</span> c = <span class="pl-c1">0</span>; c &lt; <span class="pl-c1">4</span>; ++c) {
+    threads.<span class="pl-c1">emplace_back</span>([&amp;worker, c] {
+      <span class="pl-c"><span class="pl-c">//</span> Do some heavy work here</span>
+      <span class="pl-c1">this_thread::sleep_for</span>(1s); <span class="pl-c"><span class="pl-c">//</span> Simulate heavy work taking 1 second</span>
+
+      <span class="pl-c"><span class="pl-c">//</span> Send the result to worker</span>
+      <span class="pl-k">auto</span> result = make_shared&lt;string&gt;(<span class="pl-s"><span class="pl-pds">"</span>some result from thread <span class="pl-pds">"</span></span> + <span class="pl-c1">to_string</span>(c));
+      worker.<span class="pl-smi">service</span>.<span class="pl-c1">post</span>([result] {
+        <span class="pl-c"><span class="pl-c">//</span> This function is guaranteed to run sequentially (1 thread)</span>
+        <span class="pl-c"><span class="pl-c">//</span> because worker is running only one worker thread</span>
+        cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>The result was: <span class="pl-pds">"</span></span> &lt;&lt; *result &lt;&lt; endl;
+      });
+    });
+  }
+
+  string line;
+  <span class="pl-c1">getline</span>(cin, line); <span class="pl-c"><span class="pl-c">//</span> stop when enter is pressed</span>
+  worker.<span class="pl-c1">stop</span>();
+
+  <span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;thread : threads)
+    thread.<span class="pl-c1">join</span>();
+}
+<span class="pl-c"><span class="pl-c">//</span> Mulig utskrift:</span>
+<span class="pl-c"><span class="pl-c">//</span> Press enter to exit</span>
+<span class="pl-c"><span class="pl-c">//</span> The result was: some result from thread 0</span>
+<span class="pl-c"><span class="pl-c">//</span> The result was: some result from thread 2</span>
+<span class="pl-c"><span class="pl-c">//</span> The result was: some result from thread 1</span>
+<span class="pl-c"><span class="pl-c">//</span> The result was: some result from thread 3</span></pre></div>
+<p>Det eneste som kan endre seg i utskriften av example4.cpp, er hvilken tråd nummer resultatet kom
+fra. Og dette uten å bruke <code>mutex</code> låsing.</p>
+<p>Mange biblioteker utnytter seg av å utføre visse oppgaver i en tråd, i en hendelses løkke (<em>event
+loop</em>). Node.js, som bruker libuv (C-bibliotek) gjør det slik, og de fleste GUI bibliotekene lar deg
+programmere i en tråd. Dette for å unngå alle problemene som kan oppstå ved å jobbe med flere
+tråder. Noen tyngre operasjoner blir derimot utført i <em>worker threads</em>, for eksempel filbehandling
+og kommunikasjon over nettverk, men resultatet blir sendt tilbake til hendelses løkken som kjører i
+en tråd (se example5.cpp):</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  Workers <span class="pl-smi">event_loop</span>(<span class="pl-c1">1</span>);
+  Workers <span class="pl-smi">worker_threads</span>(<span class="pl-c1">5</span>);
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Press enter to exit<span class="pl-pds">"</span></span> &lt;&lt; endl;
+
+  event_loop.<span class="pl-smi">service</span>.<span class="pl-c1">post</span>([&amp;event_loop, &amp;worker_threads] {
+    <span class="pl-c"><span class="pl-c">//</span> Event loop starts here (think of this as the main() of the event loop)</span>
+
+    <span class="pl-c"><span class="pl-c">//</span> Do some heavy work in a worker_thread</span>
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Starting heavy work from a worker thread here<span class="pl-pds">"</span></span> &lt;&lt; endl;
+    worker_threads.<span class="pl-smi">service</span>.<span class="pl-c1">post</span>([&amp;event_loop] {
+      <span class="pl-c"><span class="pl-c">//</span> Simulate heavy work taking 2 seconds</span>
+      <span class="pl-c1">this_thread::sleep_for</span>(2s);
+      <span class="pl-c"><span class="pl-c">//</span> When done, send result to event loop:</span>
+      <span class="pl-k">auto</span> result = make_shared&lt;string&gt;(<span class="pl-s"><span class="pl-pds">"</span>Some result<span class="pl-pds">"</span></span>);
+      event_loop.<span class="pl-smi">service</span>.<span class="pl-c1">post</span>([result] {
+        <span class="pl-c"><span class="pl-c">//</span> Do something with the result in the event loop</span>
+        cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Result from a worker thread: <span class="pl-pds">"</span></span> &lt;&lt; *result &lt;&lt; endl;
+      });
+    });
+
+    <span class="pl-c"><span class="pl-c">//</span> Do some heavy work in another worker_thread</span>
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Starting heavy work from another worker thread here<span class="pl-pds">"</span></span> &lt;&lt; endl;
+    worker_threads.<span class="pl-smi">service</span>.<span class="pl-c1">post</span>([&amp;event_loop] {
+      <span class="pl-c"><span class="pl-c">//</span> Simulate heavy work taking 1 second</span>
+      <span class="pl-c1">this_thread::sleep_for</span>(1s);
+      <span class="pl-c"><span class="pl-c">//</span> When done, send result to event loop:</span>
+      <span class="pl-k">auto</span> result = make_shared&lt;string&gt;(<span class="pl-s"><span class="pl-pds">"</span>Some another result<span class="pl-pds">"</span></span>);
+      event_loop.<span class="pl-smi">service</span>.<span class="pl-c1">post</span>([result] {
+        <span class="pl-c"><span class="pl-c">//</span> Do something with the result in the event loop</span>
+        cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Result from another worker thread: <span class="pl-pds">"</span></span> &lt;&lt; *result &lt;&lt; endl;
+      });
+    });
+  });
+
+  string line;
+  <span class="pl-c1">getline</span>(cin, line); <span class="pl-c"><span class="pl-c">//</span> stop when enter is pressed</span>
+  worker_threads.<span class="pl-c1">stop</span>();
+  event_loop.<span class="pl-c1">stop</span>();
+}
+<span class="pl-c"><span class="pl-c">//</span> Output</span>
+<span class="pl-c"><span class="pl-c">//</span> Starting heavy work from a worker thread here</span>
+<span class="pl-c"><span class="pl-c">//</span> Starting heavy work from another worker thread here</span>
+<span class="pl-c"><span class="pl-c">//</span> Result from another worker thread: Some another result</span>
+<span class="pl-c"><span class="pl-c">//</span> Result from a worker thread: Some result</span></pre></div>
+<p>Eksempelet over viser hvordan Node.js i bunn og grunn fungerer. Vi kunne faktisk fortsett og
+implementert en ny Node.js kjerne i C++ med Boost.Asio.</p>
+<p>I stedet skal vi se på hvordan vi kan relativt enkelt lage en svært effektiv nettverksapplikasjon
+som kjører i en tråd (ofte kjappere enn å bruke flere tråder), men likevel støtter mer enn 1
+samtidige oppkoblinger (se example6.cpp):</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>boost/asio.hpp<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">boost</span>::asio::ip<span class="pl-k">;</span>
+
+<span class="pl-k">class</span> <span class="pl-en">EchoServer</span> {
+<span class="pl-k">private:</span>
+  <span class="pl-k">class</span> <span class="pl-en">Connection</span> {
+  <span class="pl-k">public:</span>
+    tcp::socket socket;
+    <span class="pl-en">Connection</span>(boost::asio::io_service &amp;io_service) : socket(io_service) {}
+  };
+
+  boost::asio::io_service io_service;
+
+  tcp::endpoint endpoint;
+  tcp::acceptor acceptor;
+
+  <span class="pl-k">void</span> <span class="pl-en">handle_request</span>(shared_ptr&lt;Connection&gt; connection) {
+    <span class="pl-k">auto</span> read_buffer = make_shared&lt;boost::asio::streambuf&gt;();
+    <span class="pl-c"><span class="pl-c">//</span> Read from client until newline ("\r\n")</span>
+    <span class="pl-c1">async_read_until</span>(connection-&gt;<span class="pl-smi">socket</span>, *read_buffer, <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\r\n</span><span class="pl-pds">"</span></span>,
+                     [<span class="pl-c1">this</span>, connection, read_buffer](<span class="pl-k">const</span> boost::<span class="pl-c1">system</span>::error_code &amp;ec, <span class="pl-c1">size_t</span>) {
+      <span class="pl-c"><span class="pl-c">//</span> If not error:</span>
+      <span class="pl-k">if</span> (!ec) {
+        <span class="pl-c"><span class="pl-c">//</span> Retrieve message from client as string:</span>
+        istream <span class="pl-smi">read_stream</span>(read_buffer.<span class="pl-c1">get</span>());
+        std::string message;
+        <span class="pl-c1">getline</span>(read_stream, message);
+        message.<span class="pl-c1">pop_back</span>(); <span class="pl-c"><span class="pl-c">//</span> Remove "\r" at the end of message</span>
+
+        <span class="pl-c"><span class="pl-c">//</span> Close connection when "exit" is retrieved from client</span>
+        <span class="pl-k">if</span> (message == <span class="pl-s"><span class="pl-pds">"</span>exit<span class="pl-pds">"</span></span>)
+          <span class="pl-k">return</span>;
+
+        cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Message from a connected client: <span class="pl-pds">"</span></span> &lt;&lt; message &lt;&lt; endl;
+
+        <span class="pl-k">auto</span> write_buffer = make_shared&lt;boost::asio::streambuf&gt;();
+        ostream <span class="pl-smi">write_stream</span>(write_buffer.<span class="pl-c1">get</span>());
+
+        <span class="pl-c"><span class="pl-c">//</span> Add message to be written to client:</span>
+        write_stream &lt;&lt; message &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\r\n</span><span class="pl-pds">"</span></span>;
+
+        <span class="pl-c"><span class="pl-c">//</span> Write to client</span>
+        <span class="pl-c1">async_write</span>(connection-&gt;<span class="pl-smi">socket</span>, *write_buffer,
+                    [<span class="pl-c1">this</span>, connection, write_buffer](<span class="pl-k">const</span> boost::<span class="pl-c1">system</span>::error_code &amp;ec, <span class="pl-c1">size_t</span>) {
+          <span class="pl-c"><span class="pl-c">//</span> If not error:</span>
+          <span class="pl-k">if</span> (!ec)
+            <span class="pl-c1">handle_request</span>(connection);
+        });
+      }
+    });
+  }
+
+  <span class="pl-k">void</span> <span class="pl-en">accept</span>() {
+    <span class="pl-c"><span class="pl-c">//</span> The (client) connection is added to the lambda parameter and handle_request</span>
+    <span class="pl-c"><span class="pl-c">//</span> in order to keep the object alive for as long as it is needed.</span>
+    <span class="pl-k">auto</span> connection = make_shared&lt;Connection&gt;(io_service);
+
+    <span class="pl-c"><span class="pl-c">//</span> Accepts a new (client) connection. On connection, immediately start accepting a new connection</span>
+    acceptor.<span class="pl-c1">async_accept</span>(connection-&gt;<span class="pl-smi">socket</span>, [<span class="pl-c1">this</span>, connection](<span class="pl-k">const</span> boost::<span class="pl-c1">system</span>::error_code &amp;ec) {
+      <span class="pl-c1">accept</span>();
+      <span class="pl-c"><span class="pl-c">//</span> If not error:</span>
+      <span class="pl-k">if</span> (!ec) {
+        <span class="pl-c1">handle_request</span>(connection);
+      }
+    });
+  }
+
+<span class="pl-k">public:</span>
+  <span class="pl-en">EchoServer</span>() : endpoint(tcp::v4(), <span class="pl-c1">8080</span>), acceptor(io_service, endpoint) {}
+
+  <span class="pl-k">void</span> <span class="pl-en">start</span>() {
+    <span class="pl-c1">accept</span>();
+
+    io_service.<span class="pl-c1">run</span>();
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  EchoServer echo_server;
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Starting echo server<span class="pl-pds">"</span></span> &lt;&lt; endl
+       &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Connect in a terminal with: telnet localhost 8080. Type 'exit' to end connection.<span class="pl-pds">"</span></span> &lt;&lt; endl;
+
+  echo_server.<span class="pl-c1">start</span>();
+}
+</pre></div>
+<p>I eksempelet over, så returnerer <code>async_...</code> funksjonene umiddelbart, og lambda parameterne (de
+anonyme funksjonene) blir kjørt når de ulike <code>async</code> funksjonene har fullført handlingene sine. Alle
+de ulike <code>shared_ptr</code> objektene (<code>connection</code>, <code>read_buffer</code> og <code>write_buffer</code>) blir kopiert for å
+holde de ulike ressursene i live til de ikke trengs lenger. Litt nytt er det også med strømmer og
+buffere, men bufferne (<code>boost::asio::streambuf</code> objektene) inneholder data'en som enten er mottatt
+eller skal bli sendt, mens strømmene (<code>istream</code> og <code>ostream</code> objektene) lar oss lese fra og skrive
+til bufferne. Det kan også se ut som at vi har rekursive funksjonskall, men dette er trygt siden de
+asynkrone funksjonene returnerer umiddelbart og <em>scopet</em> av funksjonene som blir kalt på nytt
+(rekursivt) avsluttes og <em>stack frame</em>'en blir dermed frigjort. Vi står også fritt til å opprette
+tråder om vi trenger å utføre tyngre operasjoner, men da må vi passe på å ta vare på <code>connection</code>
+objektet gjennom å kopiere dette objektet videre som vist over.</p>
+
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+
+  </div>
+  <div>&nbsp;</div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

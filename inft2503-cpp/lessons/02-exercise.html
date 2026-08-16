@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title> </title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_tritanopia-2171ea0f078b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/code-3d7b701fc6eb.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_dimmed-0adfa28f0e68.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_high_contrast-1c8575b36644.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light-5178aee0ee76.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_tritanopia-cdd88f146bf7.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/global-afe5b3f5ff2d.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-251065160b09.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_colorblind-5113d2be20b0.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_colorblind-c96add742484.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark-217d4f9c8e70.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-0e158a2f5ddd.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_high_contrast-290f92f5e867.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+      margin-bottom: 21px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+    <main id="js-repo-pjax-container">
+      <div class="clearfix new-discussion-timeline container-xl px-3 px-md-4 px-lg-5">
+        <div class="repository-content">
+          <div class="clearfix">
+            <div class="Layout Layout--flowRow-until-md Layout--sidebarPosition-end Layout--sidebarPosition-flowRow-end">
+              <div class="Layout-main">
+
+                
+
+                  <div id="readme" class="Box md Box--responsive">
+                    
+                      <div class="Box-header d-flex border-bottom-0 flex-items-center flex-justify-between color-bg-default rounded-top-2">
+                        <div class="d-flex flex-items-center">
+                          <h2 class="Box-title">
+                             
+                          </h2>
+                        </div>
+                      </div>
+                    
+                    <div class="Box-body px-5 pb-5">
+                      <article id="grip-content" class="markdown-body entry-content container-lg">
+                        <h1><a id="user-content-øving-2-pekere-og-referanser" class="anchor" aria-hidden="true" href="#øving-2-pekere-og-referanser"><span aria-hidden="true" class="octicon octicon-link"></span></a>Øving 2: Pekere og referanser</h1>
+<p>Ved innlevering av en øving gjør følgende:</p>
+<ul>
+<li>Dobbeltsjekk at du ikke har advarsler i kildekoden
+<ul>
+<li>Advarselflaggene <code>-Wall -Wextra</code> skal være slått på (standard i juCi++)</li>
+</ul>
+</li>
+<li>Slett <code>build</code>-mappen i C++ prosjektet</li>
+<li>Pakk prosjektmappen i <code>tar.gz</code> formatet, for eksempel med navnet <code>solution2.tar.gz</code>.</li>
+<li>Lever inn <code>tar.gz</code>-filen i Blackboard</li>
+</ul>
+<p>Oppgave 2 og 3 er teorioppgaver. Disse besvares i Blackboard eller i markdown- eller pdf-fil som
+leveres i Blackboard.</p>
+<h2><a id="user-content-oppgave-1" class="anchor" aria-hidden="true" href="#oppgave-1"><span aria-hidden="true" class="octicon octicon-link"></span></a>Oppgave 1</h2>
+<p>Du skal tegne, resonnere og programmere i denne oppgaven. Lever inn kodeprosjektet etter at oppgave
+<strong>b)</strong> er utført. Du trenger ikke levere inn tegninger.</p>
+<p><strong>a)</strong> Følgende er gitt:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> i = <span class="pl-c1">3</span>;
+<span class="pl-k">int</span> j = <span class="pl-c1">5</span>;
+<span class="pl-k">int</span> *p = &amp;i;
+<span class="pl-k">int</span> *q = &amp;j;</pre></div>
+<p>Tegn opp variablene med innhold etter at disse definisjonene er utført.</p>
+<p>Lag et lite program som skriver ut både adressen til, og innholdet av disse fire variablene. Ved
+utskrift av adressen (eksempelvis, adressen til variabelen <code>j</code>: <code>cout &lt;&lt; &amp;j</code>) får du skrevet ut
+adressen i 16-tallsystemet.</p>
+<p>Stemmer utskriften med tegningen din?</p>
+<p><strong>b)</strong> Vi går ut fra at variablene har innholdet fra oppgave a. Hva blir skrevet ut når følgende
+programbit utføres?</p>
+<div class="highlight highlight-source-c++"><pre>*p = <span class="pl-c1">7</span>;
+*q += <span class="pl-c1">4</span>;
+*q = *p + <span class="pl-c1">1</span>;
+p = q;
+cout &lt;&lt; *p &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span> &lt;&lt; *q &lt;&lt; endl;</pre></div>
+<p>Tegn gjerne opp variablene etter hver enkelt setning. Utvid programmet fra <strong>a)</strong>, og sjekk at det
+stemmer med tegningen din.</p>
+<h2><a id="user-content-oppgave-2---teorioppgave" class="anchor" aria-hidden="true" href="#oppgave-2---teorioppgave"><span aria-hidden="true" class="octicon octicon-link"></span></a>Oppgave 2 - teorioppgave</h2>
+<p>Hva vil skje hvis du skriver:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">char</span> *line = <span class="pl-c1">nullptr</span>;   <span class="pl-c"><span class="pl-c">//</span> eller char *line = 0;</span>
+<span class="pl-en">strcpy</span>(line, <span class="pl-s"><span class="pl-pds">"</span>Dette er en tekst<span class="pl-pds">"</span></span>);</pre></div>
+<h2><a id="user-content-oppgave-3---teorioppgave" class="anchor" aria-hidden="true" href="#oppgave-3---teorioppgave"><span aria-hidden="true" class="octicon octicon-link"></span></a>Oppgave 3 - teorioppgave</h2>
+<p>Finn ting som kan gå galt i følgende programbit:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">char</span> text[<span class="pl-c1">5</span>];
+<span class="pl-k">char</span> *pointer = text;
+<span class="pl-k">char</span> search_for = <span class="pl-s"><span class="pl-pds">'</span>e<span class="pl-pds">'</span></span>;
+cin &gt;&gt; text;
+<span class="pl-k">while</span> (*pointer != search_for) {
+  *pointer = search_for;
+  pointer++;
+}</pre></div>
+<h2><a id="user-content-oppgave-4" class="anchor" aria-hidden="true" href="#oppgave-4"><span aria-hidden="true" class="octicon octicon-link"></span></a>Oppgave 4</h2>
+<p>Finn alle syntaksfeil i følgende programbit:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> a = <span class="pl-c1">5</span>;
+<span class="pl-k">int</span> &amp;b;
+<span class="pl-k">int</span> *c;
+c = &amp;b;
+*a = *b + *c;
+&amp;b = <span class="pl-c1">2</span>;</pre></div>
+<p>Legg setningene inn i en .cpp-fil og endre koden slik at den kompilerer. Beskriv årsaken til hver
+enkelt av kompileringsfeilene i kommentarer.</p>
+<h2><a id="user-content-oppgave-5" class="anchor" aria-hidden="true" href="#oppgave-5"><span aria-hidden="true" class="octicon octicon-link"></span></a>Oppgave 5</h2>
+<p>Vi har definert variabelen <code>double number</code></p>
+<ul>
+<li>Definer en peker som skal peke til <code>number</code>.</li>
+<li>Definer en referanse som skal referere til <code>number</code>.</li>
+<li>Vis tre måter å få tilordnet verdi til <code>number</code> på.</li>
+</ul>
+<p>Legg dette i en .cpp-fil som kompilerer.</p>
+<h2><a id="user-content-oppgave-6" class="anchor" aria-hidden="true" href="#oppgave-6"><span aria-hidden="true" class="octicon octicon-link"></span></a>Oppgave 6</h2>
+<p>Lag en funksjon som finner summen av elementene i en tabell. Funksjonen skal ha følgende hode:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> <span class="pl-en">find_sum</span>(<span class="pl-k">const</span> <span class="pl-k">int</span> *table, <span class="pl-k">int</span> length)</pre></div>
+<p>I hovedprogrammet skal du opprette en tabell med 20 elementer, fyll tabellen med tallene 1, 2, 3,
+osv. og bruk funksjonen til å finne summen av</p>
+<ul>
+<li>De 10 første tallene</li>
+<li>De 5 neste tallene</li>
+<li>De 5 siste tallene</li>
+</ul>
+
+                      </article>
+                    </div>
+                  </div>
+
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

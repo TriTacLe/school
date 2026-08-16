@@ -1,0 +1,2 @@
+
+gcc -o test_clock solution_using\ clock_ge_time.c

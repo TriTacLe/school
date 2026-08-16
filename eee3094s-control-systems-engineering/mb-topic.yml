@@ -1,0 +1,466 @@
+- generic [active] [ref=f11e1]:
+  - banner [ref=f11e2]:
+    - navigation "Main" [ref=f11e3]:
+      - generic [ref=f11e4]:
+        - link "skip to main content" [ref=f11e5] [cursor=pointer]:
+          - /url: javascript:void(0);
+        - generic:
+          - generic [ref=f11e10]:
+            - generic [ref=f11e12]:
+              - link "My Home" [ref=f11e14] [cursor=pointer]:
+                - /url: /d2l/lp/ouHome/defaultHome.d2l
+                - img "My Home" [ref=f11e17]
+              - link "STA2020S 2026 | Applied Statistics" [ref=f11e21] [cursor=pointer]:
+                - /url: /d2l/home/210443
+            - generic [ref=f11e22]:
+              - button "Select a course..." [ref=f11e25] [cursor=pointer]
+              - generic [ref=f11e31]:
+                - button "Message alerts" [ref=f11e34] [cursor=pointer]
+                - button "Subscription alerts" [ref=f11e39] [cursor=pointer]
+                - generic [ref=f11e43]:
+                  - button "Update alerts" [ref=f11e44] [cursor=pointer]
+                  - generic: Update alerts - You have new alerts
+              - button "Tri Le, avatar" [ref=f11e54] [cursor=pointer]:
+                - generic: TL
+          - list [ref=f11e63]:
+            - listitem [ref=f11e64]:
+              - link "Course Home" [ref=f11e65] [cursor=pointer]:
+                - /url: /d2l/home/210443
+            - listitem [ref=f11e66]:
+              - link "Content" [ref=f11e67] [cursor=pointer]:
+                - /url: /d2l/le/lessons/210443
+            - listitem [ref=f11e68]:
+              - button "Activities" [ref=f11e70]
+            - listitem [ref=f11e74]:
+              - button "Course Info" [ref=f11e76]
+            - listitem [ref=f11e80]:
+              - link "Grades" [ref=f11e81] [cursor=pointer]:
+                - /url: /d2l/lms/grades/index.d2l?ou=210443
+            - listitem [ref=f11e82]:
+              - button "Help" [ref=f11e84]
+  - main [ref=f11e88]:
+    - iframe [ref=f11e91]:
+      - generic [ref=f12e6]:
+        - generic [ref=f12e8]:
+          - generic [ref=f12e13]:
+            - searchbox "Search titles and descriptions" [ref=f12e14]
+            - button "Search" [ref=f12e17] [cursor=pointer]
+          - application [ref=f12e23]:
+            - generic:
+              - row [ref=f12e24]:
+                - gridcell [ref=f12e25]:
+                  - link "Course orientation 6 out of 7 topics completed" [ref=f12e29] [cursor=pointer]:
+                    - /url: /d2l/le/lessons/210443/units/4069254
+                    - generic [ref=f12e36]:
+                      - generic [ref=f12e37]: Course orientation
+                      - generic "6 out of 7 topics completed" [ref=f12e42]:
+                        - generic [ref=f12e43]: 6/7
+                        - generic [ref=f12e44]: Completed
+                  - button "Course orientation" [ref=f12e49] [cursor=pointer]
+              - row [ref=f12e52]:
+                - gridcell [ref=f12e53]:
+                  - link "Resources 23 out of 25 topics completed" [ref=f12e57] [cursor=pointer]:
+                    - /url: /d2l/le/lessons/210443/units/4069256
+                    - generic [ref=f12e64]:
+                      - generic [ref=f12e65]: Resources
+                      - generic "23 out of 25 topics completed" [ref=f12e70]:
+                        - generic [ref=f12e71]: 23/25
+                        - generic [ref=f12e72]: Completed
+                  - button "Resources" [ref=f12e77] [cursor=pointer]
+              - row [ref=f12e80]:
+                - gridcell [ref=f12e81]:
+                  - link "R Lab Sessions 11 out of 15 topics completed" [ref=f12e85] [cursor=pointer]:
+                    - /url: /d2l/le/lessons/210443/units/4069269
+                    - generic [ref=f12e92]:
+                      - generic [ref=f12e93]: R Lab Sessions
+                      - generic "11 out of 15 topics completed" [ref=f12e98]:
+                        - generic [ref=f12e99]: 11/15
+                        - generic [ref=f12e100]: Completed
+                  - button "R Lab Sessions" [ref=f12e105] [cursor=pointer]
+              - row [ref=f12e108]:
+                - gridcell [ref=f12e109]:
+                  - 'link "Week 1: REGRESSION Availability started July 24, 2026 5:00 PM 9 out of 14 topics completed" [ref=f12e113] [cursor=pointer]':
+                    - /url: /d2l/le/lessons/210443/units/4069258
+                    - generic [ref=f12e120]:
+                      - generic [ref=f12e121]: "Week 1: REGRESSION"
+                      - generic "Availability started July 24, 2026 5:00 PM" [ref=f12e125]:
+                        - button "Started Jul 24" [ref=f12e126]
+                      - generic "9 out of 14 topics completed" [ref=f12e129]:
+                        - generic [ref=f12e130]: 9/14
+                        - generic [ref=f12e131]: Completed
+                  - 'button "Week 1: REGRESSION" [ref=f12e136] [cursor=pointer]'
+              - row [ref=f12e139]:
+                - gridcell [ref=f12e140]:
+                  - 'link "Week 2: REGRESSION Availability started July 31, 2026 5:00 PM 5 out of 12 topics completed" [ref=f12e144] [cursor=pointer]':
+                    - /url: /d2l/le/lessons/210443/units/4069259
+                    - generic [ref=f12e151]:
+                      - generic [ref=f12e152]: "Week 2: REGRESSION"
+                      - generic "Availability started July 31, 2026 5:00 PM" [ref=f12e156]:
+                        - button "Started Jul 31" [ref=f12e157]
+                      - generic "5 out of 12 topics completed" [ref=f12e160]:
+                        - generic [ref=f12e161]: 5/12
+                        - generic [ref=f12e162]: Completed
+                  - 'button "Week 2: REGRESSION" [ref=f12e167] [cursor=pointer]'
+              - row [ref=f12e170]:
+                - gridcell [ref=f12e171]:
+                  - 'link "Week 3: REGRESSION Availability started August 7, 2026 5:00 PM 6 out of 12 topics completed" [ref=f12e175] [cursor=pointer]':
+                    - /url: /d2l/le/lessons/210443/units/4069260
+                    - generic [ref=f12e182]:
+                      - generic [ref=f12e183]: "Week 3: REGRESSION"
+                      - generic "Availability started August 7, 2026 5:00 PM" [ref=f12e187]:
+                        - button "Started Aug 7" [ref=f12e188]
+                      - generic "6 out of 12 topics completed" [ref=f12e191]:
+                        - generic [ref=f12e192]: 6/12
+                        - generic [ref=f12e193]: Completed
+                  - 'button "Week 3: REGRESSION" [expanded] [ref=f12e198] [cursor=pointer]'
+                  - application [ref=f12e206]:
+                    - generic:
+                      - row [ref=f12e207]:
+                        - gridcell [ref=f12e208]:
+                          - link "Logistic Regression 3 out of 6 topics completed" [ref=f12e212] [cursor=pointer]:
+                            - /url: /d2l/le/lessons/210443/units/4069284
+                            - generic [ref=f12e219]:
+                              - generic [ref=f12e220]: Logistic Regression
+                              - generic "3 out of 6 topics completed" [ref=f12e225]:
+                                - generic [ref=f12e226]: 3/6
+                                - generic [ref=f12e227]: Completed
+                          - button "Logistic Regression" [ref=f12e232] [cursor=pointer]
+                      - row [ref=f12e235]:
+                        - gridcell [ref=f12e236]:
+                          - link "Model Building 1 out of 2 topics completed" [ref=f12e240] [cursor=pointer]:
+                            - /url: /d2l/le/lessons/210443/units/4069283
+                            - generic [ref=f12e247]:
+                              - generic [ref=f12e248]: Model Building
+                              - generic "1 out of 2 topics completed" [ref=f12e253]:
+                                - generic [ref=f12e254]: 1/2
+                                - generic [ref=f12e255]: Completed
+                          - button "Model Building" [expanded] [ref=f12e260] [cursor=pointer]
+                          - application [ref=f12e268]:
+                            - generic:
+                              - row [ref=f12e269]:
+                                - gridcell [ref=f12e270]:
+                                  - link "STA2020___Model_Building Completed" [ref=f12e273] [cursor=pointer]:
+                                    - /url: /d2l/le/lessons/210443/topics/4069444
+                                    - generic [ref=f12e281]:
+                                      - generic [ref=f12e282]: STA2020___Model_Building
+                                      - generic "Completed" [ref=f12e287]
+                              - row [ref=f12e290]:
+                                - gridcell [ref=f12e291]:
+                                  - link "MB in R" [ref=f12e294] [cursor=pointer]:
+                                    - /url: /d2l/le/lessons/210443/topics/4069434
+                      - row [ref=f12e306]:
+                        - gridcell [ref=f12e307]:
+                          - link "Annotated Lectures 1 out of 1 topics completed" [ref=f12e311] [cursor=pointer]:
+                            - /url: /d2l/le/lessons/210443/units/4167049
+                            - generic [ref=f12e318]:
+                              - generic [ref=f12e319]: Annotated Lectures
+                              - generic "1 out of 1 topics completed" [ref=f12e324]:
+                                - generic [ref=f12e325]: 1/1
+                                - generic [ref=f12e326]: Completed
+                          - button "Annotated Lectures" [ref=f12e331] [cursor=pointer]
+                      - row [ref=f12e334]:
+                        - gridcell [ref=f12e335]:
+                          - link "Tutorial 1 out of 2 topics completed" [ref=f12e339] [cursor=pointer]:
+                            - /url: /d2l/le/lessons/210443/units/4069288
+                            - generic [ref=f12e346]:
+                              - generic [ref=f12e347]: Tutorial
+                              - generic "1 out of 2 topics completed" [ref=f12e352]:
+                                - generic [ref=f12e353]: 1/2
+                                - generic [ref=f12e354]: Completed
+                          - button "Tutorial" [ref=f12e359] [cursor=pointer]
+                      - row [ref=f12e362]:
+                        - gridcell "STA2020___Past_Paper_Practice Not available yet Availability starts August 13, 2026 8:00 AM" [ref=f12e363]:
+                          - generic [ref=f12e368] [cursor=pointer]
+                          - generic [ref=f12e376]:
+                            - generic [ref=f12e377]: STA2020___Past_Paper_Practice
+                            - generic [ref=f12e380]: Not available yet
+                            - generic "Availability starts August 13, 2026 8:00 AM" [ref=f12e383]:
+                              - button "Starts Aug 13" [ref=f12e384]
+              - row [ref=f12e385]:
+                - gridcell [ref=f12e386]:
+                  - 'link "Week 4: ANOVA Not available yet Availability starts August 14, 2026 12:00 PM 0 out of 11 topics completed The module and all its activities are not available" [ref=f12e390] [cursor=pointer]':
+                    - /url: /d2l/le/lessons/210443/units/4069267
+                    - generic [ref=f12e395]:
+                      - generic [ref=f12e397]:
+                        - generic [ref=f12e398]: "Week 4: ANOVA"
+                        - generic [ref=f12e401]: Not available yet
+                        - generic "Availability starts August 14, 2026 12:00 PM" [ref=f12e404]:
+                          - button "Starts Aug 14" [ref=f12e405]
+                        - generic "0 out of 11 topics completed" [ref=f12e408]:
+                          - generic [ref=f12e409]: 0/11
+                          - generic [ref=f12e410]: Completed
+                      - generic "The module and all its activities are not available" [ref=f12e411]
+                  - 'button "Week 4: ANOVA" [ref=f12e416] [cursor=pointer]'
+              - row [ref=f12e419]:
+                - gridcell [ref=f12e420]:
+                  - 'link "Week 5: ANOVA Not available yet Availability starts August 21, 2026 12:00 PM 0 out of 12 topics completed The module and all its activities are not available" [ref=f12e424] [cursor=pointer]':
+                    - /url: /d2l/le/lessons/210443/units/4069268
+                    - generic [ref=f12e429]:
+                      - generic [ref=f12e431]:
+                        - generic [ref=f12e432]: "Week 5: ANOVA"
+                        - generic [ref=f12e435]: Not available yet
+                        - generic "Availability starts August 21, 2026 12:00 PM" [ref=f12e438]:
+                          - button "Starts Aug 21" [ref=f12e439]
+                        - generic "0 out of 12 topics completed" [ref=f12e442]:
+                          - generic [ref=f12e443]: 0/12
+                          - generic [ref=f12e444]: Completed
+                      - generic "The module and all its activities are not available" [ref=f12e445]
+                  - 'button "Week 5: ANOVA" [ref=f12e450] [cursor=pointer]'
+              - row [ref=f12e453]:
+                - gridcell [ref=f12e454]:
+                  - 'link "Week 6: ANOVA Not available yet Availability starts August 28, 2026 12:00 PM 0 out of 10 topics completed The module and all its activities are not available" [ref=f12e458] [cursor=pointer]':
+                    - /url: /d2l/le/lessons/210443/units/4069257
+                    - generic [ref=f12e463]:
+                      - generic [ref=f12e465]:
+                        - generic [ref=f12e466]: "Week 6: ANOVA"
+                        - generic [ref=f12e469]: Not available yet
+                        - generic "Availability starts August 28, 2026 12:00 PM" [ref=f12e472]:
+                          - button "Starts Aug 28" [ref=f12e473]
+                        - generic "0 out of 10 topics completed" [ref=f12e476]:
+                          - generic [ref=f12e477]: 0/10
+                          - generic [ref=f12e478]: Completed
+                      - generic "The module and all its activities are not available" [ref=f12e479]
+                  - 'button "Week 6: ANOVA" [ref=f12e484] [cursor=pointer]'
+              - row [ref=f12e487]:
+                - gridcell [ref=f12e488]:
+                  - 'link "Week 7: NONPARAMETRICS Not available yet Availability starts September 11, 2026 12:00 PM 0 out of 20 topics completed The module and all its activities are not available" [ref=f12e492] [cursor=pointer]':
+                    - /url: /d2l/le/lessons/210443/units/4069265
+                    - generic [ref=f12e497]:
+                      - generic [ref=f12e499]:
+                        - generic [ref=f12e500]: "Week 7: NONPARAMETRICS"
+                        - generic [ref=f12e503]: Not available yet
+                        - generic "Availability starts September 11, 2026 12:00 PM" [ref=f12e506]:
+                          - button "Starts Sep 11" [ref=f12e507]
+                        - generic "0 out of 20 topics completed" [ref=f12e510]:
+                          - generic [ref=f12e511]: 0/20
+                          - generic [ref=f12e512]: Completed
+                      - generic "The module and all its activities are not available" [ref=f12e513]
+                  - 'button "Week 7: NONPARAMETRICS" [ref=f12e518] [cursor=pointer]'
+              - row [ref=f12e521]:
+                - gridcell [ref=f12e522]:
+                  - 'link "Week 8: NONPARAMETRICS Not available yet Availability starts September 18, 2026 12:00 PM 0 out of 13 topics completed The module and all its activities are not available" [ref=f12e526] [cursor=pointer]':
+                    - /url: /d2l/le/lessons/210443/units/4069266
+                    - generic [ref=f12e531]:
+                      - generic [ref=f12e533]:
+                        - generic [ref=f12e534]: "Week 8: NONPARAMETRICS"
+                        - generic [ref=f12e537]: Not available yet
+                        - generic "Availability starts September 18, 2026 12:00 PM" [ref=f12e540]:
+                          - button "Starts Sep 18" [ref=f12e541]
+                        - generic "0 out of 13 topics completed" [ref=f12e544]:
+                          - generic [ref=f12e545]: 0/13
+                          - generic [ref=f12e546]: Completed
+                      - generic "The module and all its activities are not available" [ref=f12e547]
+                  - 'button "Week 8: NONPARAMETRICS" [ref=f12e552] [cursor=pointer]'
+              - row [ref=f12e555]:
+                - gridcell [ref=f12e556]:
+                  - 'link "Week 9: TIME SERIES Not available yet Availability starts September 25, 2026 5:00 PM 0 out of 15 topics completed The module and all its activities are not available" [ref=f12e560] [cursor=pointer]':
+                    - /url: /d2l/le/lessons/210443/units/4069261
+                    - generic [ref=f12e565]:
+                      - generic [ref=f12e567]:
+                        - generic [ref=f12e568]: "Week 9: TIME SERIES"
+                        - generic [ref=f12e571]: Not available yet
+                        - generic "Availability starts September 25, 2026 5:00 PM" [ref=f12e574]:
+                          - button "Starts Sep 25" [ref=f12e575]
+                        - generic "0 out of 15 topics completed" [ref=f12e578]:
+                          - generic [ref=f12e579]: 0/15
+                          - generic [ref=f12e580]: Completed
+                      - generic "The module and all its activities are not available" [ref=f12e581]
+                  - 'button "Week 9: TIME SERIES" [ref=f12e586] [cursor=pointer]'
+              - row [ref=f12e589]:
+                - gridcell [ref=f12e590]:
+                  - 'link "Week 10: TIME SERIES Not available yet Availability starts October 2, 2026 5:00 PM 0 out of 13 topics completed The module and all its activities are not available" [ref=f12e594] [cursor=pointer]':
+                    - /url: /d2l/le/lessons/210443/units/4069262
+                    - generic [ref=f12e599]:
+                      - generic [ref=f12e601]:
+                        - generic [ref=f12e602]: "Week 10: TIME SERIES"
+                        - generic [ref=f12e605]: Not available yet
+                        - generic "Availability starts October 2, 2026 5:00 PM" [ref=f12e608]:
+                          - button "Starts Oct 2" [ref=f12e609]
+                        - generic "0 out of 13 topics completed" [ref=f12e612]:
+                          - generic [ref=f12e613]: 0/13
+                          - generic [ref=f12e614]: Completed
+                      - generic "The module and all its activities are not available" [ref=f12e615]
+                  - 'button "Week 10: TIME SERIES" [ref=f12e620] [cursor=pointer]'
+              - row [ref=f12e623]:
+                - gridcell [ref=f12e624]:
+                  - 'link "Week 11: TIME SERIES Not available yet Availability starts October 9, 2026 5:00 PM 0 out of 11 topics completed The module and all its activities are not available" [ref=f12e628] [cursor=pointer]':
+                    - /url: /d2l/le/lessons/210443/units/4069263
+                    - generic [ref=f12e633]:
+                      - generic [ref=f12e635]:
+                        - generic [ref=f12e636]: "Week 11: TIME SERIES"
+                        - generic [ref=f12e639]: Not available yet
+                        - generic "Availability starts October 9, 2026 5:00 PM" [ref=f12e642]:
+                          - button "Starts Oct 9" [ref=f12e643]
+                        - generic "0 out of 11 topics completed" [ref=f12e646]:
+                          - generic [ref=f12e647]: 0/11
+                          - generic [ref=f12e648]: Completed
+                      - generic "The module and all its activities are not available" [ref=f12e649]
+                  - 'button "Week 11: TIME SERIES" [ref=f12e654] [cursor=pointer]'
+              - row [ref=f12e657]:
+                - gridcell [ref=f12e658]:
+                  - 'link "Week 12: TIME SERIES Not available yet Availability starts October 16, 2026 5:00 PM 0 out of 15 topics completed The module and all its activities are not available" [ref=f12e662] [cursor=pointer]':
+                    - /url: /d2l/le/lessons/210443/units/4069264
+                    - generic [ref=f12e667]:
+                      - generic [ref=f12e669]:
+                        - generic [ref=f12e670]: "Week 12: TIME SERIES"
+                        - generic [ref=f12e673]: Not available yet
+                        - generic "Availability starts October 16, 2026 5:00 PM" [ref=f12e676]:
+                          - button "Starts Oct 16" [ref=f12e677]
+                        - generic "0 out of 15 topics completed" [ref=f12e680]:
+                          - generic [ref=f12e681]: 0/15
+                          - generic [ref=f12e682]: Completed
+                      - generic "The module and all its activities are not available" [ref=f12e683]
+                  - 'button "Week 12: TIME SERIES" [ref=f12e688] [cursor=pointer]'
+              - row [ref=f12e691]:
+                - gridcell [ref=f12e692]:
+                  - link "Lecture Videos 1 out of 1 topics completed" [ref=f12e696] [cursor=pointer]:
+                    - /url: /d2l/le/lessons/210443/units/4069005
+                    - generic [ref=f12e703]:
+                      - generic [ref=f12e704]: Lecture Videos
+                      - generic "1 out of 1 topics completed" [ref=f12e709]:
+                        - generic [ref=f12e710]: 1/1
+                        - generic [ref=f12e711]: Completed
+                  - button "Lecture Videos" [ref=f12e716] [cursor=pointer]
+        - generic [ref=f12e719]:
+          - generic [ref=f12e722]:
+            - button "Download" [ref=f12e724] [cursor=pointer]
+            - button "Open in full screen mode" [ref=f12e729] [cursor=pointer]
+            - generic [ref=f12e733]:
+              - button "Previous" [ref=f12e735] [cursor=pointer]
+              - button "Next" [ref=f12e739] [cursor=pointer]
+          - generic [ref=f12e741]:
+            - heading "STA2020___Model_Building" [level=1] [ref=f12e742]
+            - document [ref=f12e745]:
+              - toolbar:
+                - generic:
+                  - generic:
+                    - generic: Page 1 / 20
+                    - group:
+                      - button "Zoom Out"
+                      - button "Zoom In"
+                      - button "Download"
+                      - button "Open new tab for printing"
+                      - button "Presentation Mode"
+              - generic [ref=f12e747]:
+                - region "Page ⁨1⁩" [ref=f12e748]:
+                  - generic [ref=f12e750]:
+                    - text: Model Building Grace Carmichael Department of Statistical Sciences University of Cape Town
+                    - generic [ref=f12e751]: "2024"
+                    - text: Model Building 1 / 20
+                  - generic:
+                    - link [ref=f12e753] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e755] [cursor=pointer]:
+                      - /url: ""
+                    - link [ref=f12e757] [cursor=pointer]:
+                      - /url: "#Navigation2"
+                    - link [ref=f12e759] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e761] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e763] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e765] [cursor=pointer]:
+                      - /url: "#Navigation2"
+                    - link [ref=f12e767] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e769] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e771] [cursor=pointer]:
+                      - /url: "#Navigation2"
+                    - link [ref=f12e773] [cursor=pointer]:
+                      - /url: "#Navigation3"
+                    - link [ref=f12e775] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e777] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e779] [cursor=pointer]:
+                      - /url: "#Navigation2"
+                    - link [ref=f12e781] [cursor=pointer]:
+                      - /url: "#Navigation3"
+                    - link [ref=f12e783] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e785] [cursor=pointer]:
+                      - /url: "#Navigation20"
+                    - link [ref=f12e787] [cursor=pointer]:
+                      - /url: ""
+                    - link [ref=f12e789] [cursor=pointer]:
+                      - /url: ""
+                    - link [ref=f12e791] [cursor=pointer]:
+                      - /url: ""
+                    - link [ref=f12e793] [cursor=pointer]:
+                      - /url: "#Navigation20"
+                - region "Page ⁨2⁩" [ref=f12e794]:
+                  - generic [ref=f12e796]:
+                    - text: Outline 1 Intro to Model Building 2 Example Problem 3 Akaike Information Criterion (AIC) 4
+                    - generic [ref=f12e801]: Model Building Approaches
+                    - text: Model Building 2 / 20
+                  - generic:
+                    - link [ref=f12e803] [cursor=pointer]:
+                      - /url: "#Navigation3"
+                    - link [ref=f12e805] [cursor=pointer]:
+                      - /url: "#Navigation5"
+                    - link [ref=f12e807] [cursor=pointer]:
+                      - /url: "#Navigation7"
+                    - link [ref=f12e809] [cursor=pointer]:
+                      - /url: "#Navigation11"
+                    - link [ref=f12e811] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e813] [cursor=pointer]:
+                      - /url: ""
+                    - link [ref=f12e815] [cursor=pointer]:
+                      - /url: "#Navigation3"
+                    - link [ref=f12e817] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e819] [cursor=pointer]:
+                      - /url: "#Navigation2"
+                    - link [ref=f12e821] [cursor=pointer]:
+                      - /url: "#Navigation2"
+                    - link [ref=f12e823] [cursor=pointer]:
+                      - /url: "#Navigation3"
+                    - link [ref=f12e825] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e827] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e829] [cursor=pointer]:
+                      - /url: "#Navigation2"
+                    - link [ref=f12e831] [cursor=pointer]:
+                      - /url: "#Navigation3"
+                    - link [ref=f12e833] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e835] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e837] [cursor=pointer]:
+                      - /url: "#Navigation2"
+                    - link [ref=f12e839] [cursor=pointer]:
+                      - /url: "#Navigation3"
+                    - link [ref=f12e841] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                    - link [ref=f12e843] [cursor=pointer]:
+                      - /url: "#Navigation20"
+                    - link [ref=f12e845] [cursor=pointer]:
+                      - /url: ""
+                    - link [ref=f12e847] [cursor=pointer]:
+                      - /url: ""
+                    - link [ref=f12e849] [cursor=pointer]:
+                      - /url: ""
+                    - link [ref=f12e851] [cursor=pointer]:
+                      - /url: "#Navigation1"
+                - region "Page ⁨3⁩" [ref=f12e852]
+                - region "Page ⁨4⁩" [ref=f12e853]
+                - region "Page ⁨5⁩" [ref=f12e854]
+                - region "Page ⁨6⁩" [ref=f12e855]
+                - region "Page ⁨7⁩" [ref=f12e856]
+                - region "Page ⁨8⁩" [ref=f12e857]
+                - region "Page ⁨9⁩" [ref=f12e858]
+                - region "Page ⁨10⁩" [ref=f12e859]
+                - region "Page ⁨11⁩" [ref=f12e860]
+                - region "Page ⁨12⁩" [ref=f12e861]
+                - region "Page ⁨13⁩" [ref=f12e862]
+                - region "Page ⁨14⁩" [ref=f12e863]
+                - region "Page ⁨15⁩" [ref=f12e864]
+                - region "Page ⁨16⁩" [ref=f12e865]
+                - region "Page ⁨17⁩" [ref=f12e866]
+                - region "Page ⁨18⁩" [ref=f12e867]
+                - region "Page ⁨19⁩" [ref=f12e868]
+                - region "Page ⁨20⁩" [ref=f12e869]

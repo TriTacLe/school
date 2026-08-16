@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title> </title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark-a167e256da9c.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light-0eace2597ca3.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-711f412bb361.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-primitives-2ef2a46b27ee.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-f4d857cbc96a.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/global-8215aa0ce496.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_high_contrast-ea7373db06c8.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_tritanopia-5cb699a7e247.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_colorblind-afa99dcf40f7.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_dimmed-d11f2cf8009b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_colorblind-af6c685139ba.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_high_contrast-578cdbc8a5a9.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/repository-6247ca238fd4.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_tritanopia-9b32204967c6.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/code-36b3bf8f5e76.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+      margin-bottom: 21px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+    <main id="js-repo-pjax-container">
+      <div class="clearfix new-discussion-timeline container-xl px-3 px-md-4 px-lg-5">
+        <div class="repository-content">
+          <div class="clearfix">
+            <div class="Layout Layout--flowRow-until-md Layout--sidebarPosition-end Layout--sidebarPosition-flowRow-end">
+              <div class="Layout-main">
+
+                
+
+                  <div id="readme" class="Box md Box--responsive">
+                    
+                      <div class="Box-header d-flex border-bottom-0 flex-items-center flex-justify-between color-bg-default rounded-top-2">
+                        <div class="d-flex flex-items-center">
+                          <h2 class="Box-title">
+                             
+                          </h2>
+                        </div>
+                      </div>
+                    
+                    <div class="Box-body px-5 pb-5">
+                      <article id="grip-content" class="markdown-body entry-content container-lg">
+                        <div class="markdown-heading"><h1 class="heading-element">Leksjon 5: Liv og død, smarte pekere og polymorfi</h1><a id="user-content-leksjon-5-liv-og-død-smarte-pekere-og-polymorfi" class="anchor" aria-label="Permalink: Leksjon 5: Liv og død, smarte pekere og polymorfi" href="#leksjon-5-liv-og-død-smarte-pekere-og-polymorfi"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Skrevet av Mildrid Ljosland, Else Lervik og Ole Christian Eidheim</p>
+<p>Eksemplene for denne leksjonen finner du her: <a href="https://gitlab.com/ntnu-iini4003/examples5" rel="nofollow">https://gitlab.com/ntnu-iini4003/examples5</a></p>
+<div class="markdown-heading"><h2 class="heading-element">1. Liv og død</h2><a id="user-content-1-liv-og-død" class="anchor" aria-label="Permalink: 1. Liv og død" href="#1-liv-og-død"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>I C++ lever variabler og objekter på stacken i et scope:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  {            <span class="pl-c"><span class="pl-c">//</span> nytt scope her</span>
+    <span class="pl-k">int</span> a = <span class="pl-c1">2</span>; <span class="pl-c"><span class="pl-c">//</span> a blir opprettet i minnet</span>
+  }            <span class="pl-c"><span class="pl-c">//</span> a blir slettet fra minnet når scopet blir avsluttet</span>
+}</pre></div>
+<p>Hver gang du bruker <code>{</code> opprettes et nytt scope. Vi kan i tillegg definere hva som skal skje når et
+objekt blir slettet fra minnet ved hjelp av destruktører:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">class</span> <span class="pl-en">A</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">A</span>() {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Objektet blir opprettet<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  }
+  <span class="pl-en">~A</span>() {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Objektet blir slettet<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  {
+    A a;
+  }
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Scopet er avsluttet<span class="pl-pds">"</span></span> &lt;&lt; endl;
+}
+<span class="pl-c"><span class="pl-c">//</span> Utskrift:</span>
+<span class="pl-c"><span class="pl-c">//</span> Objektet blir opprettet</span>
+<span class="pl-c"><span class="pl-c">//</span> Objektet blir slettet</span>
+<span class="pl-c"><span class="pl-c">//</span> Scopet er avsluttet</span></pre></div>
+<p>Noen klasser er mer avanserte og har data lagret i det såkalte frie lageret, men både objektet (som
+lagres på stacken) og innholdet til objektet (som kan være lagret i det frie lageret eller "heapen")
+blir frigjort når et scope blir avsluttet:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span><span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  {                    <span class="pl-c"><span class="pl-c">//</span> nytt scope her</span>
+    string a = <span class="pl-s"><span class="pl-pds">"</span>test<span class="pl-pds">"</span></span>; <span class="pl-c"><span class="pl-c">//</span> a blir opprettet i stacken, mens ”test” er lagret i det frie lageret</span>
+  }                    <span class="pl-c"><span class="pl-c">//</span> objektet a og innholdet til a blir slettet fra minnet når scopet blir avsluttet</span>
+}</pre></div>
+<p>Typisk er data med ikke-fastsatt størrelse lagret på heapen. Hovedgrunnen til dette er at
+lagringsplassen til stacken er mye mindre enn lagringsplassen til heapen. Når vi bruker ferdige
+klasser som <code>string</code> og <code>vector</code> så slipper vi å forholde oss til om innholdet er lagret i det frie
+lageret. Men i andre tilfeller må vi tenke på det.</p>
+<div class="markdown-heading"><h3 class="heading-element">Det frie lageret ("heapen")</h3><a id="user-content-det-frie-lageret-heapen" class="anchor" aria-label="Permalink: Det frie lageret (&quot;heapen&quot;)" href="#det-frie-lageret-heapen"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>I Java opprettes alle objekter med <code>new</code>, og de havner dermed på heapen.</p>
+<p>Også i C++ bruker vi <code>new</code> for å lagre objekter i det dynamiske minnet, som vi kaller det frie
+lageret ("the free store") eller "heapen".</p>
+<p>I motsetning til "vanlige" (stakk-)variabler, har en variabel i det frie lageret ikke noe navn. I
+stedet lar vi en peker peke til den. Operatoren <code>new</code> brukes til dette, og vi må angi hvilken
+datatype variabelen skal ha:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">class</span> <span class="pl-en">A</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">A</span>() {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Objektet blir opprettet<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  }
+  <span class="pl-en">~A</span>() {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Objektet blir slettet<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  {
+    A *a = <span class="pl-k">new</span> <span class="pl-c1">A</span>(); <span class="pl-c"><span class="pl-c">//</span> Det opprettes et anonymt objekt på heapen som a peker til</span>
+  }
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Scopet er avsluttet<span class="pl-pds">"</span></span> &lt;&lt; endl;
+}
+<span class="pl-c"><span class="pl-c">//</span> Utskrift:</span>
+<span class="pl-c"><span class="pl-c">//</span> Objektet blir opprettet</span>
+<span class="pl-c"><span class="pl-c">//</span> Scopet er avsluttet</span></pre></div>
+<p>Hvorfor blir ikke destruktøren til det anonyme objektet som <code>a</code> peker på kalt? Svaret er at
+variabler eller objekter som er lagret på heapen, blir ikke automatisk slettet når pekeren går ut av
+scopet! En må da bruke operatoren <code>delete</code> for å frigjøre plassen igjen:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">class</span> <span class="pl-en">A</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">A</span>() {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Objektet blir opprettet<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  }
+  <span class="pl-en">~A</span>() {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Objektet blir slettet<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  {
+    A *a = <span class="pl-k">new</span> <span class="pl-c1">A</span>();  <span class="pl-c"><span class="pl-c">//</span> Det opprettes et anonymt objekt på heapen som a peker til</span>
+    <span class="pl-k">delete</span> a;
+  }
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Scopet er avsluttet<span class="pl-pds">"</span></span> &lt;&lt; endl;
+}
+<span class="pl-c"><span class="pl-c">//</span> Utskrift:</span>
+<span class="pl-c"><span class="pl-c">//</span> Objektet blir opprettet</span>
+<span class="pl-c"><span class="pl-c">//</span> Objektet blir slettet</span>
+<span class="pl-c"><span class="pl-c">//</span> Scopet er avsluttet</span></pre></div>
+<div class="markdown-heading"><h3 class="heading-element"><code>unique_ptr</code></h3><a id="user-content-unique_ptr" class="anchor" aria-label="Permalink: unique_ptr" href="#unique_ptr"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Det er lett å glemme å slette et objekt på heapen, og der er tilfeller det kan være vanskelig å vite
+når et slikt objekt bør slettes. Heldigvis har nyere C++ løst dette med smarte pekere. I denne
+leksjonen tar vi for oss en av disse smarte pekerene, <code>unique_ptr</code>:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>memory<span class="pl-pds">&gt;</span></span>   <span class="pl-c"><span class="pl-c">//</span> For unique_ptr</span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">class</span> <span class="pl-en">A</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">A</span>() {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Objektet blir opprettet<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  }
+  <span class="pl-en">~A</span>() {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Objektet blir slettet<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  {
+    unique_ptr&lt;A&gt; <span class="pl-c1">a</span>(<span class="pl-k">new</span> <span class="pl-c1">A</span>()); <span class="pl-c"><span class="pl-c">//</span> Et objekt opprettes på heapen, som a peker til</span>
+                              <span class="pl-c"><span class="pl-c">//</span> Når a slettes, frigjøres også det anonyme objektet</span>
+  }
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Scopet er avsluttet<span class="pl-pds">"</span></span> &lt;&lt; endl;
+}
+<span class="pl-c"><span class="pl-c">//</span> Utskrift:</span>
+<span class="pl-c"><span class="pl-c">//</span> Objektet blir opprettet</span>
+<span class="pl-c"><span class="pl-c">//</span> Objektet blir slettet</span>
+<span class="pl-c"><span class="pl-c">//</span> Scopet er avsluttet</span></pre></div>
+<p>Ved hjelp av smarte pekere kan vi dermed programmere tryggere uten å være redd for at vi glemmer å
+slette objekter lagret i det frie lageret. Vi skal i en senere leksjon se på bruk av <code>shared_ptr</code>
+som gir oss referansetelling i C++ (en form for "garbage collection"). <code>shared_ptr</code> er mye brukt i
+tråd programmering, der det er vanskelig å vite på forhånd når et objekt skal slettes.</p>
+<p>Referanse telling er derimot mer ressurskrevende og en skal ikke bruke det når det ikke trengs.
+<code>unique_ptr</code> koster ikke noe ekstra å bruke, men en får da ikke lov til å kopiere <code>unique_ptr</code>
+objekter (da trengs referansetelling). Derimot kan vi flytte på innholdet med <code>move</code> operatoren om
+vi trenger det:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>memory<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  unique_ptr&lt;<span class="pl-k">int</span>&gt; <span class="pl-c1">p1</span>(<span class="pl-k">new</span> <span class="pl-c1">int</span>(<span class="pl-c1">2</span>)); <span class="pl-c"><span class="pl-c">//</span> p1 peker til tallet 2 lagret på heapen</span>
+  unique_ptr&lt;<span class="pl-k">int</span>&gt; p2;             <span class="pl-c"><span class="pl-c">//</span> p2 peker til ingenting (inneholder nullptr)</span>
+
+  <span class="pl-c"><span class="pl-c">//</span>p2 = p1                       // ikke lov med unique_ptr</span>
+  p2 = <span class="pl-c1">move</span>(p1);                  <span class="pl-c"><span class="pl-c">//</span> flytter pekeren i p1 til p2</span>
+                                  <span class="pl-c"><span class="pl-c">//</span> p1 inneholder nå nullptr</span>
+
+  <span class="pl-k">if</span> (!p1)
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>p1 inneholder nullptr<span class="pl-pds">"</span></span> &lt;&lt; endl;
+
+  <span class="pl-k">if</span> (p2) {
+    <span class="pl-c"><span class="pl-c">//</span> get() returnerer pekeren unique_ptr-objektet inneholder:</span>
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>p2 har addressen <span class="pl-pds">"</span></span> &lt;&lt; p2.<span class="pl-c1">get</span>() &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> som inneholder tallet <span class="pl-pds">"</span></span> &lt;&lt; *p2 &lt;&lt; endl;
+  }
+}
+<span class="pl-c"><span class="pl-c">//</span> Eksempel utskrift:</span>
+<span class="pl-c"><span class="pl-c">//</span> p1 inneholder nullptr</span>
+<span class="pl-c"><span class="pl-c">//</span> p2 har addressen 0xd59c20 som inneholder tallet 2</span></pre></div>
+<p>I eksempelet over så er det også vist (feks: <code>if (p2)</code>) hvordan en enkelt kan sjekke om en smart
+peker inneholder en gyldig adresse eller ikke (<code>nullptr</code>).</p>
+<p>En kan også slette objektet en <code>unique_ptr</code> peker til ved å skrive for eksempel <code>p2 = nullptr</code>. I
+tillegg kan en lage et nytt objekt som <code>unique_ptr</code> peker til: <code>p1 = unique_ptr&lt;int&gt;(new int(2))</code>,
+og da vil objektet som <code>p1</code> eventuelt allerede peker til bli slettet. En kan også bruke
+<code>make_unique</code> for å enklere opprette <code>unique_ptr</code>-objekter. Noen eksempler:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>memory<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">class</span> <span class="pl-en">A</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">A</span>() {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Objektet blir opprettet<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  }
+  <span class="pl-en">~A</span>() {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Objektet blir slettet<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  {
+    <span class="pl-k">auto</span> a = make_unique&lt;A&gt;(); <span class="pl-c"><span class="pl-c">//</span> Dette er det samme som å skrive:</span>
+                               <span class="pl-c"><span class="pl-c">//</span> unique_ptr&lt;A&gt; a(new A());</span>
+    a = make_unique&lt;A&gt;();
+    a = <span class="pl-c1">nullptr</span>;
+    a = make_unique&lt;A&gt;();
+  }
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Scopet er avsluttet<span class="pl-pds">"</span></span> &lt;&lt; endl;
+}
+<span class="pl-c"><span class="pl-c">//</span> Mulig utskrift:</span>
+<span class="pl-c"><span class="pl-c">//</span> Objektet blir opprettet</span>
+<span class="pl-c"><span class="pl-c">//</span> Objektet blir opprettet</span>
+<span class="pl-c"><span class="pl-c">//</span> Objektet blir slettet</span>
+<span class="pl-c"><span class="pl-c">//</span> Objektet blir slettet</span>
+<span class="pl-c"><span class="pl-c">//</span> Objektet blir opprettet</span>
+<span class="pl-c"><span class="pl-c">//</span> Objektet blir slettet</span>
+<span class="pl-c"><span class="pl-c">//</span> Scopet er avsluttet</span></pre></div>
+<p>Legg merke til at destruktøren til <code>A</code> blir kalt like mange ganger som konstruktøren, noe som gjør
+det veldig trygt å jobbe med smarte pekere. I tillegg, gir vi ofte pekere navn som representerer
+objektene pekerne peker til, for eksempel <code>a</code> i stedet for <code>en_objekt_peker</code>.</p>
+<p>Parametrene til <code>make_unique</code> er konstruktør parametrene til klassen, for eksempel kan vi skrive:
+<code>auto string=make_unique&lt;string&gt;("tekst");</code>.</p>
+<p><strong>Viktig</strong>: vi bruker smarte pekere kun når vi trenger det. Har vi muligheten til å jobbe med
+objekter på stacken, så gjør vi det i stedet for å lage smarte pekere. I neste kapittel, skal vi se
+på et av disse tilfellene der vi er nødt til å jobbe med pekere i stedet for objekter direkte.</p>
+<div class="markdown-heading"><h2 class="heading-element">2. Polymorfi</h2><a id="user-content-2-polymorfi" class="anchor" aria-label="Permalink: 2. Polymorfi" href="#2-polymorfi"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Polymorfi gjør det mulig å håndtere objekter med felles basisklasse under ett. Det enkelte objektet
+vet selv hvordan det skal reagere på en felles melding.</p>
+<p>For å kunne håndtere slike objekter av ulik type under ett, må vi bruke pekere.</p>
+<p><strong>Viktig</strong>: en må passe på å ikke misbruke polymorfi. Bruk polymorfi <strong>kun</strong> når det er nødvendig!
+For eksempel, en trenger aldri å bruke polymorfi for å ta i bruk funksjoner i standard biblioteket
+til C++. Dette er et veldig bevisst valg fra ISO komitéen.</p>
+<div class="markdown-heading"><h3 class="heading-element">Pekere til objekter i et arvehierarki</h3><a id="user-content-pekere-til-objekter-i-et-arvehierarki" class="anchor" aria-label="Permalink: Pekere til objekter i et arvehierarki" href="#pekere-til-objekter-i-et-arvehierarki"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>En peker til en basisklasse kan settes til å peke til et objekt av en klasse på lavere nivå. Det
+omvendte er ikke tilfelle. Som eksempel bruker vi klassene fra leksjon 3:</p>
+<p><a target="_blank" rel="noopener noreferrer" href="uml51.png"><img src="uml51.png" alt="" style="max-width: 100%;"></a><sup><br>Klassen <code>Material</code> representerer en generalisering av klassene <code>Covering</code>,
+<code>Paint</code> og <code>Wallpaper</code></sup></p>
+<p>Gitt:</p>
+<div class="highlight highlight-source-c++"><pre>Material *material_pointer;
+Covering *covering_pointer;
+Material <span class="pl-en">material</span>(”SuperDuper”, <span class="pl-c1">200</span>);
+Covering <span class="pl-en">covering</span>(”Dux”, <span class="pl-c1">300</span>, <span class="pl-c1">5</span>);</pre></div>
+<p>Kan vi skrive:</p>
+<div class="highlight highlight-source-c++"><pre>material_pointer = &amp;material;  <span class="pl-c"><span class="pl-c">//</span> ok, selvfølgelig</span>
+material_pointer = &amp;covering;  <span class="pl-c"><span class="pl-c">//</span> også ok</span>
+covering_pointer = &amp;covering   <span class="pl-c"><span class="pl-c">//</span> ok</span></pre></div>
+<p>Men vi kan ikke skrive:</p>
+<div class="highlight highlight-source-c++"><pre>covering_pointer = &amp;material;  <span class="pl-c"><span class="pl-c">//</span> ikke ok</span></pre></div>
+<p>Hvorfor er det slik? Husk at <code>Covering</code> er en spesialisering av <code>Material</code>. Klassen <code>Covering</code> har
+derfor gjerne flere medlemsfunksjoner enn <code>Material</code>. Vi kan gjøre ting med et <code>Covering</code>-objekt som
+vi ikke kan gjøre med et <code>Material</code>-objekt. Det er derfor naturlig at kompilatoren nekter oss å
+sette en <code>Covering</code>-peker til å peke til et <code>Material</code>-objekt. Det omvendte innebærer imidlertid
+ingen risiko. Alt vi kan gjøre med <code>Material</code>-objekter kan vi også gjøre med <code>Covering</code>-objekter.</p>
+<div class="markdown-heading"><h3 class="heading-element">Å håndtere objekter av subklasser under ett</h3><a id="user-content-å-håndtere-objekter-av-subklasser-under-ett" class="anchor" aria-label="Permalink: Å håndtere objekter av subklasser under ett" href="#å-håndtere-objekter-av-subklasser-under-ett"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Studer og kjør følgende eksempel som lager og bruker klassene <code>Material</code>, <code>Covering</code>, <code>Paint</code> og
+<code>Wallpaper</code> (koden finner dere i example1.cpp).</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> example1.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">class</span> <span class="pl-en">Material</span> {
+<span class="pl-k">public:</span>
+  string name;
+  <span class="pl-k">double</span> price; <span class="pl-c"><span class="pl-c">//</span> per unit</span>
+
+  <span class="pl-en">Material</span>(<span class="pl-k">const</span> string &amp;name_, <span class="pl-k">double</span> price_) : name(name_), price(price_) {}
+
+  <span class="pl-k">void</span> <span class="pl-en">print</span>() <span class="pl-k">const</span> {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Navn: <span class="pl-pds">"</span></span> &lt;&lt; name &lt;&lt; endl
+         &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Pris: <span class="pl-pds">"</span></span> &lt;&lt; price &lt;&lt; endl;
+  };
+};
+
+<span class="pl-k">class</span> <span class="pl-en">Covering</span> : <span class="pl-k">public</span> <span class="pl-en">Material</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-k">double</span> width; <span class="pl-c"><span class="pl-c">//</span> I meter.</span>
+
+  <span class="pl-c"><span class="pl-c">//</span> Prisen er per meter belegg (i lengden)</span>
+  <span class="pl-en">Covering</span>(<span class="pl-k">const</span> string &amp;name, <span class="pl-k">double</span> price, <span class="pl-k">double</span> width_)
+      : Material(name, price), width(width_) {}
+
+  <span class="pl-k">void</span> <span class="pl-en">print</span>() <span class="pl-k">const</span> {
+    <span class="pl-c1">Material::print</span>();
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>For belegg<span class="pl-pds">"</span></span> &lt;&lt; endl
+         &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Bredde: <span class="pl-pds">"</span></span> &lt;&lt; width &lt;&lt; endl;
+  }
+};
+
+<span class="pl-k">class</span> <span class="pl-en">Wallpaper</span> : <span class="pl-k">public</span> <span class="pl-en">Material</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-k">double</span> length; <span class="pl-c"><span class="pl-c">//</span> i meter per rull</span>
+  <span class="pl-k">double</span> width;  <span class="pl-c"><span class="pl-c">//</span> i meter per rull</span>
+
+  <span class="pl-c"><span class="pl-c">//</span> Prisen er per rull</span>
+  <span class="pl-en">Wallpaper</span>(<span class="pl-k">const</span> string &amp;name, <span class="pl-k">double</span> price, <span class="pl-k">double</span> length_, <span class="pl-k">double</span> width_)
+      : Material(name, price), length(length_), width(width_) {}
+
+  <span class="pl-k">void</span> <span class="pl-en">print</span>() <span class="pl-k">const</span> {
+    <span class="pl-c1">Material::print</span>();
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>For tapet<span class="pl-pds">"</span></span> &lt;&lt; endl
+         &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Bredde av rull: <span class="pl-pds">"</span></span> &lt;&lt; width &lt;&lt; endl
+         &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Lengde av rull: <span class="pl-pds">"</span></span> &lt;&lt; length &lt;&lt; endl;
+  }
+};
+
+<span class="pl-k">class</span> <span class="pl-en">Paint</span> : <span class="pl-k">public</span> <span class="pl-en">Material</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-k">int</span> coatings;         <span class="pl-c"><span class="pl-c">//</span> Antall strøk</span>
+  <span class="pl-k">double</span> liters_per_m2; <span class="pl-c"><span class="pl-c">//</span> Liter per kvadratmeter</span>
+
+  <span class="pl-c"><span class="pl-c">//</span> Prisen er per liter</span>
+  <span class="pl-en">Paint</span>(<span class="pl-k">const</span> string &amp;navn, <span class="pl-k">double</span> pris, <span class="pl-k">int</span> coatings_, <span class="pl-k">double</span> liters_per_m2_)
+      : Material(navn, pris), coatings(coatings_), liters_per_m2(liters_per_m2_) {}
+
+  <span class="pl-k">void</span> <span class="pl-en">print</span>() <span class="pl-k">const</span> {
+    <span class="pl-c1">Material::print</span>();
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>For maling<span class="pl-pds">"</span></span> &lt;&lt; endl
+         &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Antall strøk: <span class="pl-pds">"</span></span> &lt;&lt; coatings &lt;&lt; endl
+         &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>liter per kvadratmeter: <span class="pl-pds">"</span></span> &lt;&lt; liters_per_m2 &lt;&lt; endl;
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  Covering <span class="pl-smi">covering</span>(<span class="pl-s"><span class="pl-pds">"</span>Super Duper Dux<span class="pl-pds">"</span></span>, <span class="pl-c1">433.50</span>, <span class="pl-c1">4</span>);
+  Wallpaper <span class="pl-smi">wallpaper</span>(<span class="pl-s"><span class="pl-pds">"</span>Soldogg<span class="pl-pds">"</span></span>, <span class="pl-c1">200</span>, <span class="pl-c1">12</span>, <span class="pl-c1">0.6</span>);
+  Paint <span class="pl-smi">paint</span>(<span class="pl-s"><span class="pl-pds">"</span>Extra<span class="pl-pds">"</span></span>, <span class="pl-c1">125</span>, <span class="pl-c1">2</span>, <span class="pl-c1">12.0</span>);
+
+  <span class="pl-c"><span class="pl-c">//</span> Objektet bruker sin egen print()-funksjon (ingen arv)</span>
+  covering.<span class="pl-c1">print</span>();
+  cout &lt;&lt; endl;
+  wallpaper.<span class="pl-c1">print</span>();
+  cout &lt;&lt; endl;
+  paint.<span class="pl-c1">print</span>();
+}
+
+<span class="pl-c"><span class="pl-c">//</span> Utskrift:</span>
+<span class="pl-c"><span class="pl-c">//</span> Navn: Super Duper Dux</span>
+<span class="pl-c"><span class="pl-c">//</span> Pris: 433.5</span>
+<span class="pl-c"><span class="pl-c">//</span> For belegg</span>
+<span class="pl-c"><span class="pl-c">//</span> Bredde: 4</span>
+
+<span class="pl-c"><span class="pl-c">//</span> Navn: Soldogg</span>
+<span class="pl-c"><span class="pl-c">//</span> Pris: 200</span>
+<span class="pl-c"><span class="pl-c">//</span> For tapet</span>
+<span class="pl-c"><span class="pl-c">//</span> Bredde av rull: 0.6</span>
+<span class="pl-c"><span class="pl-c">//</span> Lengde av rull: 12</span>
+
+<span class="pl-c"><span class="pl-c">//</span> Navn: Extra</span>
+<span class="pl-c"><span class="pl-c">//</span> Pris: 125</span>
+<span class="pl-c"><span class="pl-c">//</span> For maling</span>
+<span class="pl-c"><span class="pl-c">//</span> Antall strøk: 2</span>
+<span class="pl-c"><span class="pl-c">//</span> liter per kvadratmeter: 12</span></pre></div>
+<p>Dette er for så vidt greit nok, men vi burde kanskje kunne vente større effekt av arv enn dette?
+Selv om alle subklassene har funksjonen <code>print()</code> så ser det ikke ut som vi klarer å utnytte
+fellestrekket særlig.</p>
+<p>Nå vet vi at dersom vi lager en peker av typen <code>Material</code>, så kan vi sette den til å peke til
+objekter av subklasser til <code>Material</code>. La oss lage en tabell av slike pekere og sette dem til å peke
+til de tre objektene:</p>
+<div class="highlight highlight-source-c++"><pre>vector&lt;Material*&gt; materials;
+materials.emplace_back(&amp;covering);
+materials.emplace_back(&amp;wallpaper);
+materials.emplace_back(&amp;paint);</pre></div>
+<p>Kan vi nå håndtere disse tre objektene under ett, for eksempel slik:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;material : materials) {
+  material-&gt;<span class="pl-c1">print</span>(); <span class="pl-c"><span class="pl-c">//</span> Samme som (*material).print()</span>
+  cout &lt;&lt; endl;
+}</pre></div>
+<p>Kompilatoren godtar dette. Merk at bruken av operatoren <code>-&gt;</code> er en enklere måte å skrive
+<code>(*material).print()</code> på, eller med andre ord: kall metoden til objektet som material peker til.</p>
+<p>Så får vi se hva utskriften blir:</p>
+<pre><code>Navn: Super Duper Dux
+Pris: 433.5
+
+Navn: Soldogg
+Pris 200
+
+Navn: Extra
+Pris: 125
+</code></pre>
+<p>Hmm... vi får ikke skrevet ut det som er særskilt for hvert enkelt objekt. Den utgaven av funksjonen
+<code>print()</code> som finnes i klassen <code>Material</code> blir brukt for alle objektene.</p>
+<p>Årsaken er at dette bestemmes under kompilering. Kompilatoren ser at datatypen til materials er
+peker til <code>Material</code>, og dermed blir <code>print()</code> i klassen <code>Material</code> knyttet til variabelen
+materials.</p>
+<p>Det fins en annen mulighet: Vi kan la objektet (og ikke variabeldefinisjonen) bestemme hvilken
+utgave av <code>print()</code> som skal brukes. Det er sjelden forholdene er så oversiktlig som foran, derfor
+må dette eventuelt skje under kjøring av programmet. Det får vi til ved å erklære funksjonen som
+<code>virtual</code>, og når vi overskriver en virtuell funksjon bruker vi nøkkelordet <code>override</code>.</p>
+<hr>
+<p><strong>OBS</strong></p>
+<p>Java-programmerere: C++ krever at funksjoner er erklært <code>virtual</code>, for at polymorfien skal virke.
+Bak denne tankegangen ligger effektiviseringshensyn. Polymorfi er ressurskrevende, og bør derfor
+ikke brukes hvis det ikke er nødvendig. I Java virker polymorfien alltid.</p>
+<hr>
+<p>Koden nedenfor (example2.cpp) viser hvordan en bruker <code>virtual</code> og <code>override</code>:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> example2.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>vector<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">class</span> <span class="pl-en">Material</span> {
+<span class="pl-k">public:</span>
+  string name;
+  <span class="pl-k">double</span> price; <span class="pl-c"><span class="pl-c">//</span> per unit (</span>
+
+  <span class="pl-en">Material</span>(<span class="pl-k">const</span> string &amp;name_, <span class="pl-k">double</span> price_) : name(name_), price(price_) {}
+
+  <span class="pl-k">virtual</span> <span class="pl-k">void</span> <span class="pl-en">print</span>() <span class="pl-k">const</span> {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Navn: <span class="pl-pds">"</span></span> &lt;&lt; name &lt;&lt; endl
+         &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Pris: <span class="pl-pds">"</span></span> &lt;&lt; price &lt;&lt; endl;
+  };
+};
+
+<span class="pl-k">class</span> <span class="pl-en">Covering</span> : <span class="pl-k">public</span> <span class="pl-en">Material</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-k">double</span> width; <span class="pl-c"><span class="pl-c">//</span> i meter</span>
+
+  <span class="pl-c"><span class="pl-c">//</span> Prisen er per meter belegg (i lengden)</span>
+  <span class="pl-en">Covering</span>(<span class="pl-k">const</span> string &amp;name, <span class="pl-k">double</span> price, <span class="pl-k">double</span> width_)
+      : Material(name, price), width(width_) {}
+
+  <span class="pl-k">void</span> <span class="pl-en">print</span>() <span class="pl-k">const</span> <span class="pl-k">override</span> {
+    <span class="pl-c1">Material::print</span>();
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>For belegg<span class="pl-pds">"</span></span> &lt;&lt; endl
+         &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Bredde: <span class="pl-pds">"</span></span> &lt;&lt; width &lt;&lt; endl;
+  }
+};
+
+<span class="pl-k">class</span> <span class="pl-en">Wallpaper</span> : <span class="pl-k">public</span> <span class="pl-en">Material</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-k">double</span> length; <span class="pl-c"><span class="pl-c">//</span> i meter per rull</span>
+  <span class="pl-k">double</span> width;  <span class="pl-c"><span class="pl-c">//</span> i meter per rull</span>
+
+  <span class="pl-c"><span class="pl-c">//</span> Prisen er per rull</span>
+  <span class="pl-en">Wallpaper</span>(<span class="pl-k">const</span> string &amp;name, <span class="pl-k">double</span> price, <span class="pl-k">double</span> length_, <span class="pl-k">double</span> width_)
+      : Material(name, price), length(length_), width(width_) {}
+
+  <span class="pl-k">void</span> <span class="pl-en">print</span>() <span class="pl-k">const</span> <span class="pl-k">override</span> {
+    <span class="pl-c1">Material::print</span>();
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>For tapet<span class="pl-pds">"</span></span> &lt;&lt; endl
+         &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Bredde av rull: <span class="pl-pds">"</span></span> &lt;&lt; width &lt;&lt; endl
+         &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Lengde av rull: <span class="pl-pds">"</span></span> &lt;&lt; length &lt;&lt; endl;
+  }
+};
+
+<span class="pl-k">class</span> <span class="pl-en">Paint</span> : <span class="pl-k">public</span> <span class="pl-en">Material</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-k">int</span> coatings;         <span class="pl-c"><span class="pl-c">//</span> Antall strøk</span>
+  <span class="pl-k">double</span> liters_per_m2; <span class="pl-c"><span class="pl-c">//</span> Liter per kvadratmeter</span>
+
+  <span class="pl-c"><span class="pl-c">//</span> Prisen er per liter</span>
+  <span class="pl-en">Paint</span>(<span class="pl-k">const</span> string &amp;name, <span class="pl-k">double</span> price, <span class="pl-k">int</span> coatings_, <span class="pl-k">double</span> liters_per_m2_)
+      : Material(name, price), coatings(coatings_), liters_per_m2(liters_per_m2_) {}
+
+  <span class="pl-k">void</span> <span class="pl-en">print</span>() <span class="pl-k">const</span> <span class="pl-k">override</span> {
+    <span class="pl-c1">Material::print</span>();
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>For maling<span class="pl-pds">"</span></span> &lt;&lt; endl
+         &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Antall strøk: <span class="pl-pds">"</span></span> &lt;&lt; coatings &lt;&lt; endl
+         &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Liter per kvadratmeter: <span class="pl-pds">"</span></span> &lt;&lt; liters_per_m2 &lt;&lt; endl;
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  Covering <span class="pl-smi">covering</span>(<span class="pl-s"><span class="pl-pds">"</span>Super Duper Dux<span class="pl-pds">"</span></span>, <span class="pl-c1">433.50</span>, <span class="pl-c1">4</span>);
+  Wallpaper <span class="pl-smi">wallpaper</span>(<span class="pl-s"><span class="pl-pds">"</span>Soldogg<span class="pl-pds">"</span></span>, <span class="pl-c1">200</span>, <span class="pl-c1">12</span>, <span class="pl-c1">0.6</span>);
+  Paint <span class="pl-smi">paint</span>(<span class="pl-s"><span class="pl-pds">"</span>Extra<span class="pl-pds">"</span></span>, <span class="pl-c1">125</span>, <span class="pl-c1">2</span>, <span class="pl-c1">12.0</span>);
+
+  vector&lt;Material *&gt; materials;
+  materials.<span class="pl-c1">emplace_back</span>(&amp;covering);
+  materials.<span class="pl-c1">emplace_back</span>(&amp;wallpaper);
+  materials.<span class="pl-c1">emplace_back</span>(&amp;paint);
+
+  <span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;material : materials) {
+    material-&gt;<span class="pl-c1">print</span>();
+    cout &lt;&lt; endl;
+  }
+}</pre></div>
+<p>Vi prøver testprogrammet igjen. Utskriften ser nå slik ut:</p>
+<pre><code>Navn: Super Duper Dux
+Pris: 433.5
+For belegg
+Bredde: 4
+
+Navn: Soldogg
+Pris: 200
+For tapet
+Bredde av rull: 0.6
+Lengde av rull: 12
+
+Navn: Extra
+Pris: 125
+For maling
+Antall strøk: 2
+Liter per kvadratmeter: 12
+</code></pre>
+<p>Og dette er slik vi håpet det skulle bli.</p>
+<hr>
+<p><strong>Merk</strong></p>
+<p>Anta at vi har en funksjon som er definert både i en basisklasse og i tilhørende subklasser. Vi har
+videre en peker med type lik basisklassen.<br><br>Vi setter pekeren til å peke til et objekt av en
+subklasse.<br><br>Dersom vi til dette objektet sender en melding som er laget som en <code>virtual</code>
+funksjon, vil objektets type bestemme hvilken utgave av funksjonen som blir brukt. ("Run-time
+binding") Dette er polymorfi. De reserverte ordene <code>virtual</code> og <code>override</code> brukes bare i erklæringen
+av funksjonen, ikke i implementasjonen.<br><br>Dersom funksjonen ikke er <code>virtual</code>, vil datatypen
+til pekeren bestemme hvilken utgave som blir brukt. ("Compile-time binding")</p>
+<hr>
+<p>Vi kan også forenkle <code>main()</code> funksjonen over ved å bruke <code>unique_ptr</code> (se example3.cpp):</p>
+<div class="highlight highlight-source-c++"><pre>...
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>memory<span class="pl-pds">&gt;</span></span>
+...
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  vector&lt;unique_ptr&lt;Material&gt;&gt; materials;
+  materials.<span class="pl-c1">emplace_back</span>(<span class="pl-k">new</span> <span class="pl-c1">Covering</span>(<span class="pl-s"><span class="pl-pds">"</span>Super Duper Dux<span class="pl-pds">"</span></span>, <span class="pl-c1">433.50</span>, <span class="pl-c1">4</span>));
+  materials.<span class="pl-c1">emplace_back</span>(<span class="pl-k">new</span> <span class="pl-c1">Wallpaper</span>(<span class="pl-s"><span class="pl-pds">"</span>Soldogg<span class="pl-pds">"</span></span>, <span class="pl-c1">200</span>, <span class="pl-c1">12</span>, <span class="pl-c1">0.6</span>));
+  materials.<span class="pl-c1">emplace_back</span>(<span class="pl-k">new</span> <span class="pl-c1">Paint</span>(<span class="pl-s"><span class="pl-pds">"</span>Extra<span class="pl-pds">"</span></span>, <span class="pl-c1">125</span>, <span class="pl-c1">2</span>, <span class="pl-c1">12</span>));
+
+  <span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;material : materials) {
+    material-&gt;<span class="pl-c1">print</span>();
+    cout &lt;&lt; endl;
+  }
+}</pre></div>
+<div class="markdown-heading"><h3 class="heading-element"><code>dynamic_cast</code></h3><a id="user-content-dynamic_cast" class="anchor" aria-label="Permalink: dynamic_cast" href="#dynamic_cast"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>I eksempelet over lagret vi ulike <code>Material</code> pekere i vektoren <code>materials</code>. Av og til ønsker vi å
+utføre en operasjon dersom en peker peker til et objekt av en spesifikk subklasse. Til dette bruker
+vi <code>dynamic_cast</code>:</p>
+<div class="highlight highlight-source-c++"><pre>...
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>memory<span class="pl-pds">&gt;</span></span>
+...
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  vector&lt;unique_ptr&lt;Material&gt;&gt; materials;
+  materials.<span class="pl-c1">emplace_back</span>(<span class="pl-k">new</span> <span class="pl-c1">Covering</span>(<span class="pl-s"><span class="pl-pds">"</span>Super Duper Dux<span class="pl-pds">"</span></span>, <span class="pl-c1">433.50</span>, <span class="pl-c1">4</span>));
+  materials.<span class="pl-c1">emplace_back</span>(<span class="pl-k">new</span> <span class="pl-c1">Wallpaper</span>(<span class="pl-s"><span class="pl-pds">"</span>Soldogg<span class="pl-pds">"</span></span>, <span class="pl-c1">200</span>, <span class="pl-c1">12</span>, <span class="pl-c1">0.6</span>));
+  materials.<span class="pl-c1">emplace_back</span>(<span class="pl-k">new</span> <span class="pl-c1">Paint</span>(<span class="pl-s"><span class="pl-pds">"</span>Extra<span class="pl-pds">"</span></span>, <span class="pl-c1">125</span>, <span class="pl-c1">2</span>, <span class="pl-c1">12</span>));
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Malinger lagret i materials vektoren:<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  <span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;material : materials) {
+    <span class="pl-k">if</span> (<span class="pl-k">dynamic_cast</span>&lt;Paint*&gt;(material.<span class="pl-c1">get</span>()))
+      material-&gt;<span class="pl-c1">print</span>();
+  }
+}
+<span class="pl-c"><span class="pl-c">//</span> Utskrift:</span>
+<span class="pl-c"><span class="pl-c">//</span> Malinger lagret i materials vektoren:</span>
+<span class="pl-c"><span class="pl-c">//</span> Navn: Extra</span>
+<span class="pl-c"><span class="pl-c">//</span> Pris: 125</span>
+<span class="pl-c"><span class="pl-c">//</span> For maling</span>
+<span class="pl-c"><span class="pl-c">//</span> Antall strøk: 2</span>
+<span class="pl-c"><span class="pl-c">//</span> Ant kvm./l: 12</span></pre></div>
+<p>En kunne også ha skrevet <code>if (auto maling=dynamic_cast&lt;Paint*&gt;(material.get()))</code> og da fått pekeren
+(<code>Paint*</code>) lagret i <code>maling</code>:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  vector&lt;unique_ptr&lt;Material&gt;&gt; materials;
+  materials.<span class="pl-c1">emplace_back</span>(<span class="pl-k">new</span> <span class="pl-c1">Covering</span>(<span class="pl-s"><span class="pl-pds">"</span>Super Duper Dux<span class="pl-pds">"</span></span>, <span class="pl-c1">433.50</span>, <span class="pl-c1">4</span>));
+  materials.<span class="pl-c1">emplace_back</span>(<span class="pl-k">new</span> <span class="pl-c1">Wallpaper</span>(<span class="pl-s"><span class="pl-pds">"</span>Soldogg<span class="pl-pds">"</span></span>, <span class="pl-c1">200</span>, <span class="pl-c1">12</span>, <span class="pl-c1">0.6</span>));
+  materials.<span class="pl-c1">emplace_back</span>(<span class="pl-k">new</span> <span class="pl-c1">Paint</span>(<span class="pl-s"><span class="pl-pds">"</span>Extra<span class="pl-pds">"</span></span>, <span class="pl-c1">125</span>, <span class="pl-c1">2</span>, <span class="pl-c1">12</span>));
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Totalt antall strøk:<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  <span class="pl-k">int</span> coatings_total = <span class="pl-c1">0</span>;
+  <span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;material : materials) {
+    <span class="pl-k">if</span> (<span class="pl-k">auto</span> paint = <span class="pl-k">dynamic_cast</span>&lt;Paint*&gt;(material.<span class="pl-c1">get</span>()))
+      coatings_total += paint-&gt;<span class="pl-smi">coatings</span>;
+  }
+  cout &lt;&lt; coatings_total &lt;&lt; endl;
+}
+<span class="pl-c"><span class="pl-c">//</span> Utskrift:</span>
+<span class="pl-c"><span class="pl-c">//</span> Totalt antall strøk:</span>
+<span class="pl-c"><span class="pl-c">//</span> 2</span></pre></div>
+<div class="markdown-heading"><h3 class="heading-element">Virtuelle destruktører</h3><a id="user-content-virtuelle-destruktører" class="anchor" aria-label="Permalink: Virtuelle destruktører" href="#virtuelle-destruktører"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>I eksempel3.cpp har vi også lagt til denne linjen i <code>Material</code> klassen: <code>virtual ~Material() {}</code>.</p>
+<p>Enhver klasse har eksakt én destruktør, og i enkelte tilfeller programmerer vi den selv.
+Destruktørene utføres nedenfra og oppover i klassehierarkiet. Det vil si at destruktøren for en
+avledet klasse utføres før destruktøren for en basisklasse. Dersom vi lager destruktører i et
+arvehierarki selv, bør de være virtuelle. Dette sikrer at alle destruktørene blir utført når et
+objekt slettes. Merk deg at vi ikke selv skal programmere kall av destruktøren i basis-klassen, i
+motsetning til for konstruktører.</p>
+<div class="markdown-heading"><h2 class="heading-element">3. Rene virtuelle klasser og abstrakte klasser</h2><a id="user-content-3-rene-virtuelle-klasser-og-abstrakte-klasser" class="anchor" aria-label="Permalink: 3. Rene virtuelle klasser og abstrakte klasser" href="#3-rene-virtuelle-klasser-og-abstrakte-klasser"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p><a target="_blank" rel="noopener noreferrer" href="uml52.png"><img src="uml52.png" alt="" style="max-width: 100%;"></a><sup><br><code>Material</code> som abstrakt klasse</sup></p>
+<p>Studer figuren over. Vi har tatt inn beregning av behov og pris for en bestemt flate (klassen
+<code>Surface</code> er kjent fra leksjon 3). Det vi imidlertid vet er at vi <em>ikke</em> kan beregne behov for et
+generelt material. Det har ingen mening. Ingen formler klarer det for oss.</p>
+<p>Vi ønsker imidlertid å fortelle at <em>det er mulig</em> å beregne behovet for alle typer materials. Dermed
+kan vi håndtere disse under ett (se example4.cpp):</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;material : materials) {
+  cout &lt;&lt; material-&gt;<span class="pl-smi">name</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>: <span class="pl-pds">"</span></span>
+       &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> Behov: <span class="pl-pds">"</span></span> &lt;&lt; material-&gt;<span class="pl-c1">units_needed</span>(surface)
+       &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> enheter, pris: <span class="pl-pds">"</span></span> &lt;&lt; material-&gt;<span class="pl-c1">price_total</span>(surface) &lt;&lt; endl;
+}</pre></div>
+<p>Vi har altså følgende situasjon:</p>
+<p>I klassen <code>Material</code> skal vi kun fortelle at det er rimelig at funksjonen <code>units_needed()</code>
+eksisterer for objekter av subklasser. Men vi er ikke i stand til å sette opp noen implementasjon av
+denne funksjonen i klassen <code>Material</code>.</p>
+<p>Dette faktum viser vi i UML ved å skrive funksjonsnavnet i kursiv. Vi sier at operasjonen er
+abstrakt.</p>
+<p>Det vil ikke være mulig å lage objekter av en klasse som inneholder en abstrakt operasjon. Vi sier
+derfor at også <em>klassen</em> er <em>abstrakt</em>. Både klassenavn og operasjonsnavn står i kursiv i
+UML-diagrammet.</p>
+<p>I C++ lager vi en abstrakt operasjon ved å erklære en virtuell funksjon som rent virtuell:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">virtual</span> <span class="pl-k">double</span> <span class="pl-en">units_needed</span>(<span class="pl-k">const</span> Surface &amp;surface) <span class="pl-k">const</span> = 0;</pre></div>
+<p>Vi er nå i klassen <code>Material</code>. Merk at vi setter funksjonen lik 0. Denne funksjonen har ingen
+implementasjon, ikke en gang en tom kropp, <code>{}</code>, i klassen <code>Material</code>.</p>
+<p>En klasse som inneholder minst én ren virtuell funksjon, blir abstrakt. Det vil ikke være mulig å
+lage objekter av klassen.</p>
+<p>I subklasser implementeres denne funksjonen som vanlige virtuelle funksjoner. Dersom subklassen ikke
+implementerer funksjonen, vil den selv bli abstrakt.</p>
+<p>Hva med <code>price_total()</code>?</p>
+<p>Denne operasjonen er ikke abstrakt i UML-diagrammet, og den er ikke engang implementert som en
+virtuell funksjon. Her er det mulig å sette opp en definisjon som gjelder for alle klassene:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">double</span> <span class="pl-en">Material::totalpris</span>(<span class="pl-k">const</span> Surface &amp;surface) <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> <span class="pl-c1">units_needed</span>(surface) * pris;
+}</pre></div>
+<p>Denne definisjonen tilhører klassen <code>Material</code>, og den vil arves til subklasser.</p>
+<p>Merk at vi her kan bruke den virtuelle funksjonen <code>units_needed()</code>, selv om den ikke har
+implementasjon i klassen <code>Material</code>.</p>
+
+                      </article>
+                    </div>
+                  </div>
+
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

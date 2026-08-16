@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title> </title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_tritanopia-2171ea0f078b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/code-3d7b701fc6eb.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_dimmed-0adfa28f0e68.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_high_contrast-1c8575b36644.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light-5178aee0ee76.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_tritanopia-cdd88f146bf7.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/global-afe5b3f5ff2d.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-251065160b09.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_colorblind-5113d2be20b0.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_colorblind-c96add742484.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark-217d4f9c8e70.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-0e158a2f5ddd.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_high_contrast-290f92f5e867.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+      margin-bottom: 21px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+    <main id="js-repo-pjax-container">
+      <div class="clearfix new-discussion-timeline container-xl px-3 px-md-4 px-lg-5">
+        <div class="repository-content">
+          <div class="clearfix">
+            <div class="Layout Layout--flowRow-until-md Layout--sidebarPosition-end Layout--sidebarPosition-flowRow-end">
+              <div class="Layout-main">
+
+                
+
+                  <div id="readme" class="Box md Box--responsive">
+                    
+                      <div class="Box-header d-flex border-bottom-0 flex-items-center flex-justify-between color-bg-default rounded-top-2">
+                        <div class="d-flex flex-items-center">
+                          <h2 class="Box-title">
+                             
+                          </h2>
+                        </div>
+                      </div>
+                    
+                    <div class="Box-body px-5 pb-5">
+                      <article id="grip-content" class="markdown-body entry-content container-lg">
+                        <h1><a id="user-content-leksjon-7-operator-overloading" class="anchor" aria-hidden="true" href="#leksjon-7-operator-overloading"><span aria-hidden="true" class="octicon octicon-link"></span></a>Leksjon 7: Operator overloading</h1>
+<p>Operator overloading betyr at vi utvider bruksområdet for de vanlige operatorene. Vi kan eksempelvis
+bruke sammenligningsoperatorene <code>&lt;</code> <code>&gt;</code> og <code>==</code> i stedet for en funksjon til å sammenligne objekter.
+Vi vil se at operatorene programmeres som vanlige funksjoner, det er bare navnet som er spesielt.
+Noen av operatorene er relativt enkle å programmere, mens andre er meget vanskelige. Spesielt nevnes
+tilordningsoperatoren som alltid bør programmeres dersom vi har en peker som datamedlem.</p>
+<p>Skrevet av Mildrid Ljosland, Else Lervik og Ole Christian Eidheim</p>
+<p>Eksemplene for denne leksjonen finner du her: <a href="https://gitlab.com/ntnu-iini4003/examples7" rel="nofollow">https://gitlab.com/ntnu-iini4003/examples7</a></p>
+<p>Støttelitteratur:</p>
+<ul>
+<li>Bjarne Stroustrup: A Tour of C++, Second Edition
+<ul>
+<li>kap. 4.2.1</li>
+</ul>
+</li>
+</ul>
+<h2><a id="user-content-hva-menes-med-operator-overloading" class="anchor" aria-hidden="true" href="#hva-menes-med-operator-overloading"><span aria-hidden="true" class="octicon octicon-link"></span></a>Hva menes med operator overloading?</h2>
+<p>Vi kan ha flere funksjoner med samme navn, bare parameterlisten er forskjellig i type/antall. Dette
+kalles å utvide bruksområdet til funksjonene.</p>
+<p>Vi skal se at vi på tilsvarende måte kan la samme operator brukes med forskjellige typer operander.
+Ja, dette er jo allerede kjent, ettersom for eksempel operatoren <code>+</code> kan brukes både for heltall og
+flyttall. Siden heltall og flyttall representeres på to vidt forskjellige måter internt i maskinen,
+vil det for kompilatoren være to helt forskjellige operasjoner.</p>
+<p>På samme måte kan vi bruke <code>&lt;</code> til å sammenlikne to heltall, eller vi kan sammenlikne to flyttall,
+eller vi kan sammenlikne to tegn.</p>
+<p>Disse eksemplene viser hvordan samme operator kan brukes på forskjel­lige datatyper.</p>
+<p>I C++ kan programmereren også definere hva en operator skal bety, men det forutsetter at den brukes
+i forbindelse med en klasse.</p>
+<p>Eksempel: I en funksjon for sortering av tall kan vi ha følgende:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">void</span> <span class="pl-en">sort</span>(<span class="pl-k">int</span> *table, <span class="pl-k">int</span> number_of_elements) {
+  ...
+  <span class="pl-k">if</span> (table[<span class="pl-c1">index</span>] &lt; table[index_smallest]) {
+    ...
+}</pre></div>
+<p>Vi kan lage en helt tilsvarende funksjon for å sortere objekter, dersom vi bare utvider bruksområdet
+til sammenligningsoperatoren til også å gjelde den aktuelle typen objekter. (Eksempelvis er dette
+gjort for alle <code>string</code>-objekter.)</p>
+<p>Vi skal programmere operatoren <code>&lt;</code> for <code>Surface</code>. Vi tar utgangspunkt i følgende medlemsfunksjon som
+sammenligner en flate med en annen flate:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> <span class="pl-en">Surface::compare</span>(<span class="pl-k">const</span> Surface &amp;other) <span class="pl-k">const</span> {
+  <span class="pl-k">const</span> <span class="pl-k">double</span> toleranse = <span class="pl-c1">0.00001</span>;
+  <span class="pl-k">double</span> area1 = <span class="pl-c1">get_area</span>();
+  <span class="pl-k">double</span> area2 = other.<span class="pl-c1">get_area</span>();
+  <span class="pl-k">if</span> (<span class="pl-c1">fabs</span>(area2 - area1) &lt; toleranse)
+    <span class="pl-k">return</span> <span class="pl-c1">0</span>;
+  <span class="pl-k">else</span> <span class="pl-k">if</span> (area1 &lt; area2)
+    <span class="pl-k">return</span> -<span class="pl-c1">1</span>;
+  <span class="pl-k">else</span>
+    <span class="pl-k">return</span> <span class="pl-c1">1</span>;
+}</pre></div>
+<p>Her sammenligner vi to beregnede desimalverdier. Vi passer derfor på ikke å bruke <code>==</code> direkte på
+verdiene, men sjekker heller om forskjellen mellom verdiene er mindre enn en gitt toleranse.
+Funksjonen <code>fabs()</code> er deklarert i header-filen cmath.</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> <span class="pl-en">main</span>(<span class="pl-k">int</span>) {
+  Surface <span class="pl-smi">surface1</span>(<span class="pl-s"><span class="pl-pds">"</span>Flate1<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>, <span class="pl-c1">3</span>);
+  Surface <span class="pl-smi">surface2</span>(<span class="pl-s"><span class="pl-pds">"</span>Flate2<span class="pl-pds">"</span></span>, <span class="pl-c1">2</span>, <span class="pl-c1">5</span>);
+
+  <span class="pl-k">int</span> res = surface1.<span class="pl-c1">compare</span>(surface2);
+  <span class="pl-k">if</span> (res == <span class="pl-c1">0</span>) cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Flatene er like<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>;
+  <span class="pl-k">else</span> <span class="pl-k">if</span> (res &lt; <span class="pl-c1">0</span>) cout &lt;&lt; surface1.<span class="pl-smi">name</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> er minst<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>;
+  <span class="pl-k">else</span> cout &lt;&lt; surface1.<span class="pl-smi">name</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> er størst<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>;
+}</pre></div>
+<p>Utskriften blir slik:</p>
+<pre><code>Flate1 er minst
+</code></pre>
+<p>Vi bruker denne funksjonen når vi skal lage sammenligningsoperatorene. Operatoren <code>&lt;</code> ser for
+eksempel slik ut:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">bool</span> Surface::<span class="pl-k">operator</span>&lt;(<span class="pl-k">const</span> Surface &amp;other) <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> (<span class="pl-c1">compare</span>(other) &lt; <span class="pl-c1">0</span>);
+}</pre></div>
+<p>Det eneste som egentlig er spesielt her er navnet på funksjonen. På grunn av at <code>&lt;</code> er en binær
+operator kan vi imidlertid ikke ha mer enn ett argument. Returtypen bestemmer vi selv, men det er
+naturlig å bruke <code>bool</code> som returtype for sammenligningsoperatorene. Vi kan bruke funksjonen som en
+vanlig medlemsfunksjon:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">if</span> (surface1.<span class="pl-k">operator</span>&lt;(surface2)) cout &lt;&lt; surface1.name &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> er minst<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>;</pre></div>
+<p>Men det er jo ikke spesielt spennende. Poenget er at vi kan bruke denne funksjonen som en operator,
+vi har utvidet bruksområdet for operatoren <code>&lt;</code>:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">if</span> (surface1 &lt; surface2) cout &lt;&lt; surface1.name &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> er minst<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>;</pre></div>
+<p>Har vi en tabell med flate-objekter som skal sorteres kan vi nå skrive:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">if</span> (table[index] &lt; table[index_smallest]) ...</pre></div>
+<p>på samme måte som for tabeller av heltall eller andre standardtyper.</p>
+<p>Funksjonen er ferdigdefinert til å hete <code>operator&lt;</code>. På samme måte har vi funksjonsnavn tilsvarende
+de andre operatorene, for eksempel <code>operator+</code> og <code>operator!=</code>.</p>
+<h2><a id="user-content-eksempel-klassen-fraction-norsk-brøk" class="anchor" aria-hidden="true" href="#eksempel-klassen-fraction-norsk-brøk"><span aria-hidden="true" class="octicon octicon-link"></span></a>Eksempel: klassen Fraction (norsk: brøk)</h2>
+<p>Aller først en oppklaring: En <em>binær</em> operator er en operator som tar to operander, for eksempel
+multiplikasjon. Vi må alltid ha to operander for å utføre en multiplikasjon. En <em>unær</em> operator tar
+kun én operand. Pluss og minus er vanligvis binære operatorer, men kan også være unære. Eksempel:
+<code>-number</code>, her utføres den unære operasjonen minus, resultatet av operasjonen er verdien til
+variabelen <code>number</code> med motsatt fortegn.</p>
+<p>Brøker kan adderes, subtraheres, multipliseres og divideres. Dessuten kan de sammenliknes, og vi kan
+sette en brøk lik en annen. Alt dette kan vi definere ved fraction av binære operatorer.</p>
+<p>Vi kan også definere noen unære operatorer: Å addere 1 til brøken, og å skifte fortegn på brøken.</p>
+<p>I eksempelet (fraction/main.cpp) nedenfor ser vi på et program som bruker en del av disse
+operatorene på noen brøker. Vi ser at vi kan bruke operatorene på akkurat samme måte for brøkene,
+som om det hadde vært <code>int</code> eller <code>double</code>. Vi kan skrive <code>d = a / b; c = -c; b += a; (b &gt; 0)</code> osv.</p>
+<p>Definisjonen av klassen er vist i fraction/fraction.hpp. Der har vi definert mange operatorer. I
+tillegg har vi vanlige tilgangsfunksjoner.</p>
+<p>Vi skal se på noen av disse operatorene, og deler dem i tre grupper etter hvilken type returverdien
+har. Gruppe 1 returnerer en brøk, gruppe 2 returnerer en referanse til en brøk, og gruppe 3
+returnerer andre typer (her <code>bool</code>).</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> fraction/main.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">"</span>fraction.hpp<span class="pl-pds">"</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">void</span> <span class="pl-en">print</span>(<span class="pl-k">const</span> string &amp;text, <span class="pl-k">const</span> Fraction &amp;broek) {
+  cout &lt;&lt; text &lt;&lt; broek.<span class="pl-smi">numerator</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> / <span class="pl-pds">"</span></span> &lt;&lt; broek.<span class="pl-smi">denominator</span> &lt;&lt; endl;
+}
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  Fraction <span class="pl-smi">a</span>(<span class="pl-c1">10</span>, <span class="pl-c1">20</span>);
+  Fraction <span class="pl-smi">b</span>(<span class="pl-c1">3</span>, <span class="pl-c1">4</span>);
+  Fraction c;
+  c.<span class="pl-c1">set</span>(<span class="pl-c1">5</span>);
+  Fraction d = a / b;
+
+  <span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">"</span>a = <span class="pl-pds">"</span></span>, a);
+  <span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">"</span>b = <span class="pl-pds">"</span></span>, b);
+  <span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">"</span>c = <span class="pl-pds">"</span></span>, c);
+  <span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">"</span>d = <span class="pl-pds">"</span></span>, d);
+
+  b += a;
+  ++c;
+  d *= d;
+
+  <span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">"</span>b = <span class="pl-pds">"</span></span>, b);
+  <span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">"</span>c = <span class="pl-pds">"</span></span>, c);
+  <span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">"</span>d = <span class="pl-pds">"</span></span>, d);
+
+  c = a + b - d * a;
+  c = -c;
+
+  <span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">"</span>c = <span class="pl-pds">"</span></span>, c);
+
+  <span class="pl-k">if</span> (a + b != c + d)
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>a + b != c + d<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  <span class="pl-k">else</span>
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> a + b == c + d<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  <span class="pl-k">while</span> (b &gt; a)
+    b -= a;
+  <span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">"</span>b = <span class="pl-pds">"</span></span>, b);
+}
+
+<span class="pl-c"><span class="pl-c">//</span> Utskrift:</span>
+<span class="pl-c"><span class="pl-c">//</span> a = 1 / 2</span>
+<span class="pl-c"><span class="pl-c">//</span> b = 3 / 4</span>
+<span class="pl-c"><span class="pl-c">//</span> c = 5 / 1</span>
+<span class="pl-c"><span class="pl-c">//</span> d = 2 / 3</span>
+<span class="pl-c"><span class="pl-c">//</span> b = 5 / 4</span>
+<span class="pl-c"><span class="pl-c">//</span> c = 6 / 1</span>
+<span class="pl-c"><span class="pl-c">//</span> d = 4 / 9</span>
+<span class="pl-c"><span class="pl-c">//</span> c = -55 / 36</span>
+<span class="pl-c"><span class="pl-c">//</span> a + b != c + d</span>
+<span class="pl-c"><span class="pl-c">//</span> b = 1 / 4</span></pre></div>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> fraction/fraction.hpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">pragma</span> once
+
+<span class="pl-k">class</span> <span class="pl-en">Fraction</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-k">int</span> numerator;
+  <span class="pl-k">int</span> denominator;
+
+  <span class="pl-en">Fraction</span>();
+  <span class="pl-en">Fraction</span>(<span class="pl-k">int</span> numerator, <span class="pl-k">int</span> denominator);
+  <span class="pl-k">void</span> <span class="pl-en">set</span>(<span class="pl-k">int</span> numerator_, <span class="pl-k">int</span> denominator_ = <span class="pl-c1">1</span>);
+  Fraction <span class="pl-k">operator</span>+(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span>;
+  Fraction <span class="pl-k">operator</span>-(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span>;
+  Fraction <span class="pl-k">operator</span>*(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span>;
+  Fraction <span class="pl-k">operator</span>/(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span>;
+  Fraction <span class="pl-k">operator</span>-() <span class="pl-k">const</span>;
+  Fraction &amp;<span class="pl-k">operator</span>++(); <span class="pl-c"><span class="pl-c">//</span> Preinkrement</span>
+  Fraction &amp;<span class="pl-k">operator</span>--(); <span class="pl-c"><span class="pl-c">//</span> Predekrement</span>
+  Fraction &amp;<span class="pl-k">operator</span>+=(<span class="pl-k">const</span> Fraction &amp;other);
+  Fraction &amp;<span class="pl-k">operator</span>-=(<span class="pl-k">const</span> Fraction &amp;other);
+  Fraction &amp;<span class="pl-k">operator</span>*=(<span class="pl-k">const</span> Fraction &amp;other);
+  Fraction &amp;<span class="pl-k">operator</span>/=(<span class="pl-k">const</span> Fraction &amp;other);
+  Fraction &amp;<span class="pl-k">operator</span>=(<span class="pl-k">const</span> Fraction &amp;other);
+  <span class="pl-k">bool</span> <span class="pl-k">operator</span>==(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span>;
+  <span class="pl-k">bool</span> <span class="pl-k">operator</span>!=(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span>;
+  <span class="pl-k">bool</span> <span class="pl-k">operator</span>&lt;=(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span>;
+  <span class="pl-k">bool</span> <span class="pl-k">operator</span>&gt;=(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span>;
+  <span class="pl-k">bool</span> <span class="pl-k">operator</span>&lt;(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span>;
+  <span class="pl-k">bool</span> <span class="pl-k">operator</span>&gt;(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span>;
+
+<span class="pl-k">private:</span>
+  <span class="pl-k">void</span> <span class="pl-en">reduce</span>();
+  <span class="pl-k">int</span> <span class="pl-en">compare</span>(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span>;
+};</pre></div>
+<h2><a id="user-content-objekt-som-returverdi" class="anchor" aria-hidden="true" href="#objekt-som-returverdi"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objekt som returverdi</h2>
+<p><code>+</code>, <code>-</code>, <code>*</code> og <code>/</code> returnerer en brøk. Vi har to tall (brøker), og skal få som retur­verdi et
+tredje tall. De to tallene som er utgangspunktet skal ikke foran­dres. Funksjonen må derfor lage et
+nytt objekt, gi det verdier, og retur­nere det som funksjonsverdi.</p>
+<p>Operatoren <code>-</code> har både en unær og en binær versjon. For den unære versjonen gjelder det samme som
+for den binære: Et nytt objekt må lages. Verdien blir operanden med mot­satt fortegn på telleren:</p>
+<div class="highlight highlight-source-c++"><pre>Fraction Fraction::<span class="pl-k">operator</span>-() <span class="pl-k">const</span> {
+  Fraction fraction;
+  fraction.<span class="pl-smi">numerator</span> = -numerator;
+  fraction.<span class="pl-smi">denominator</span> = denominator;
+  <span class="pl-k">return</span> fraction;
+}</pre></div>
+<p>Den binære operatoren <code>*</code> lages på omtrent den samme måten. Her bruker vi <code>set()</code> i stedet for å
+sette teller og nevner direkte. Det er gjort fordi <code>set()</code> sørger for å sjekke om nevneren blir
+null, og den for­korter brøken.</p>
+<div class="highlight highlight-source-c++"><pre>Fraction Fraction::<span class="pl-k">operator</span>*(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span> {
+  Fraction fraction = *<span class="pl-c1">this</span>;
+  fraction *= other;
+  <span class="pl-k">return</span> fraction;
+}</pre></div>
+<p>Anta at vi har følgende setninger:</p>
+<div class="highlight highlight-source-c++"><pre>Fraction fraction1;
+Fraction fraction2;
+Fraction fraction3;
+fraction1.set(<span class="pl-c1">1</span>,<span class="pl-c1">2</span>);
+fraction3.set(<span class="pl-c1">2</span>,<span class="pl-c1">3</span>);</pre></div>
+<p>Vi kan skrive:</p>
+<div class="highlight highlight-source-c++"><pre>fraction2 = -fraction1;</pre></div>
+<p>Først brukes <code>operator-()</code> til å beregne <code>-fraction1</code>. Deretter brukes dette uttrykket (som er et
+objekt) videre som argument til <code>operator=()</code>.</p>
+<p>Det samme gjelder de binære operatorene. Uttrykket</p>
+<div class="highlight highlight-source-c++"><pre>fraction1 + fraction2</pre></div>
+<p>er et objekt. Det kan brukes videre i uttrykket</p>
+<div class="highlight highlight-source-c++"><pre>fraction1 + fraction2 + fraction3</pre></div>
+<p>Assosiativiteten gjør at uttrykket blir regnet ut som</p>
+<div class="highlight highlight-source-c++"><pre>(fraction1 + fraction2) + fraction3</pre></div>
+<p>Vi bruker et objekt som returverdi når operatoren har som oppgave å lage et nytt objekt av samme
+type som <code>*this</code>. De mest aktuelle opera­torene av denne typen er de binære operatorene <code>+</code>, <code>-</code>,
+<code>*</code>, <code>/</code>, <code>%</code> og de unære operatorene <code>+</code> og <code>-</code>.</p>
+<h2><a id="user-content-this-som-returverdi" class="anchor" aria-hidden="true" href="#this-som-returverdi"><span aria-hidden="true" class="octicon octicon-link"></span></a>
+<code>*this</code> som returverdi</h2>
+<p><code>this</code> er en ferdigdefinert variabelpeker som inneholder adressen til det objektet vi jobber med nå
+(svarer til Java-referansen <code>this</code>). <code>*this</code>blir dermed objektet selv. Når vi vil at <code>*this</code> skal
+forandres, bruker vi normalt en referanse til <code>*this</code> som funksjonsverdi. Operatoren <code>=</code> er et
+eksempel på dette. Her vil vi at første operand (det som står foran likhetstegnet) skal få samme
+verdi som andre operand (det som står bak).</p>
+<p>Vi lager følgende implementasjon:</p>
+<div class="highlight highlight-source-c++"><pre>Fraction &amp;Fraction::<span class="pl-k">operator</span>=(<span class="pl-k">const</span> Fraction &amp;other) {
+  numerator = other.<span class="pl-smi">numerator</span>;
+  denominator = other.<span class="pl-smi">denominator</span>;
+  <span class="pl-k">return</span> *<span class="pl-c1">this</span>;
+}</pre></div>
+<p>Nå kan vi skrive <code>fraction1 = fraction2</code>; Resultatet blir at <code>fraction1</code> får samme verdi som
+<code>fraction2</code>.</p>
+<p>Vi kan også bruke uttrykket videre i nye beregninger, og skrive</p>
+<div class="highlight highlight-source-c++"><pre>fraction1 = fraction2 = fraction3;</pre></div>
+<p>Siden tilordningsoperatoren er høyreassosiativ, vil uttrykket bli tolket som</p>
+<div class="highlight highlight-source-c++"><pre>fraction1 = (fraction2 = fraction3);</pre></div>
+<p>Først får <code>fraction2</code> samme verdi som <code>fraction3</code>. Så brukes returverdien (som er <code>fraction2</code> etter
+forandringen) til å gi ny verdi til <code>fraction1</code>.</p>
+<p>Hadde vi i stedet laget funksjonen</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">void</span> Fraction::<span class="pl-k">operator</span>=(<span class="pl-k">const</span> Fraction &amp;other) {
+  numerator = other.<span class="pl-smi">numerator</span>;
+  denominator = other.<span class="pl-smi">denominator</span>;
+}</pre></div>
+<p>kunne vi fortsatt ha skrevet</p>
+<div class="highlight highlight-source-c++"><pre>fraction1 = fraction2</pre></div>
+<p>men <strong>ikke</strong></p>
+<div class="highlight highlight-source-c++"><pre>fraction1 = fraction2 = fraction3;</pre></div>
+<p>Denne skrivemåten krever en funksjonsverdi som kan anvendes i det siste funksjonskallet.</p>
+<hr>
+<p><strong>Merk</strong></p>
+<p>Kompilatoren definerer en standardversjon av operatoren <code>=</code> hvis vi ikke lager en egen utgave av
+denne operatoren. Standardversjonen sier at et objekt settes lik et annet objekt ved å sette alle
+datamedlemmene i det ene objektet lik de til­svarende datamedlemmene i det andre. Dette fungerer
+ikke tilfredsstillende dersom vi har en peker som datamedlem.</p>
+<hr>
+<p>Vår implementasjon av <code>=</code> for klassen <code>Fraction</code> gjør akkurat dette. Den er derfor unødvendig og
+kunne vært utelatt, men er tatt med for fullstendighetens skyld.</p>
+<p>De mest vanlige operatorene som bør returnere <code>*this</code>, er <code>++</code>, <code>--</code> og alle til­ordningsoperatorene
+(<code>=</code>, <code>+=</code>, <code>-=</code> osv).</p>
+<h2><a id="user-content-diverse-returverdier" class="anchor" aria-hidden="true" href="#diverse-returverdier"><span aria-hidden="true" class="octicon octicon-link"></span></a>Diverse returverdier</h2>
+<p>Noen operatorer gir en annen returverdi enn et objekt eller en referanse til et objekt.
+Sammenlikningsoperatorene er et godt eksempel på dette. Vi lar dem ha typen <code>bool</code>.</p>
+<p>Også i klassen <code>Fraction</code> har vi en medlemsfunksjon <code>compare()</code>. På samme måte som i klassen
+<code>Surface</code> lar vi den returnere <code>+1</code>, <code>0</code> eller <code>-1</code> hvis den første er henholdsvis større, lik eller
+mindre enn den andre. Sammenlikningsoperatorene bruker denne.</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">bool</span> Fraction::<span class="pl-k">operator</span>==(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> (<span class="pl-c1">compare</span>(other) == <span class="pl-c1">0</span>) ? <span class="pl-c1">true</span> : <span class="pl-c1">false</span>;
+}</pre></div>
+<p>Nå kan vi lage setninger av typen <code>if (fraction1 != fraction2) ...</code> som finner ut om <code>fraction1</code> har
+samme verdi som <code>fraction2</code>.</p>
+<h2><a id="user-content-implementasjon-av-medlemsfunksjonene-i-klassen-fraction" class="anchor" aria-hidden="true" href="#implementasjon-av-medlemsfunksjonene-i-klassen-fraction"><span aria-hidden="true" class="octicon octicon-link"></span></a>Implementasjon av medlemsfunksjonene i klassen <code>Fraction</code>
+</h2>
+<p>Noen funksjoner er implementert litt annerledes enn beskrevet. Det skyldes at vi gjør bruk av andre
+operatorer når vi implementerer nye. Eksempel: Operatoren <code>*</code> gjør bruk av <code>*=</code> og <code>=</code>.</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> fraction/fraction.hpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">"</span>fraction.hpp<span class="pl-pds">"</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>cmath<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>sstream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-en">Fraction::Fraction</span>() : numerator(<span class="pl-c1">0</span>), denominator(<span class="pl-c1">1</span>) {}
+
+<span class="pl-en">Fraction::Fraction</span>(<span class="pl-k">int</span> numberator, <span class="pl-k">int</span> denominator) {
+  <span class="pl-c1">set</span>(numberator, denominator);
+}
+
+<span class="pl-k">void</span> <span class="pl-en">Fraction::set</span>(<span class="pl-k">int</span> numberator_, <span class="pl-k">int</span> denominator_) {
+  <span class="pl-k">if</span> (denominator_ != <span class="pl-c1">0</span>) {
+    numerator = numberator_;
+    denominator = denominator_;
+    <span class="pl-c1">reduce</span>();
+  } <span class="pl-k">else</span> {
+    <span class="pl-k">throw</span> <span class="pl-s"><span class="pl-pds">"</span>nevneren ble null<span class="pl-pds">"</span></span>;
+  }
+}
+
+Fraction Fraction::<span class="pl-k">operator</span>+(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span> {
+  Fraction fraction = *<span class="pl-c1">this</span>;
+  fraction += other;
+  <span class="pl-k">return</span> fraction;
+}
+
+Fraction &amp;Fraction::<span class="pl-k">operator</span>+=(<span class="pl-k">const</span> Fraction &amp;other) {
+  <span class="pl-c1">set</span>(numerator * other.<span class="pl-smi">denominator</span> + denominator * other.<span class="pl-smi">numerator</span>,
+      denominator * other.<span class="pl-smi">denominator</span>);
+  <span class="pl-k">return</span> *<span class="pl-c1">this</span>;
+}
+
+Fraction &amp;Fraction::<span class="pl-k">operator</span>++() {
+  numerator += denominator;
+  <span class="pl-k">return</span> *<span class="pl-c1">this</span>;
+}
+
+Fraction Fraction::<span class="pl-k">operator</span>-(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span> {
+  Fraction fraction = *<span class="pl-c1">this</span>;
+  fraction -= other;
+  <span class="pl-k">return</span> fraction;
+}
+
+Fraction &amp;Fraction::<span class="pl-k">operator</span>-=(<span class="pl-k">const</span> Fraction &amp;other) {
+  <span class="pl-c1">set</span>(numerator * other.<span class="pl-smi">denominator</span> - denominator * other.<span class="pl-smi">numerator</span>,
+      denominator * other.<span class="pl-smi">denominator</span>);
+  <span class="pl-k">return</span> *<span class="pl-c1">this</span>;
+}
+
+Fraction &amp;Fraction::<span class="pl-k">operator</span>--() {
+  numerator -= denominator;
+  <span class="pl-k">return</span> *<span class="pl-c1">this</span>;
+}
+
+Fraction Fraction::<span class="pl-k">operator</span>-() <span class="pl-k">const</span> {
+  Fraction fraction;
+  fraction.<span class="pl-smi">numerator</span> = -numerator;
+  fraction.<span class="pl-smi">denominator</span> = denominator;
+  <span class="pl-k">return</span> fraction;
+}
+
+Fraction Fraction::<span class="pl-k">operator</span>*(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span> {
+  Fraction fraction = *<span class="pl-c1">this</span>;
+  fraction *= other;
+  <span class="pl-k">return</span> fraction;
+}
+
+Fraction &amp;Fraction::<span class="pl-k">operator</span>*=(<span class="pl-k">const</span> Fraction &amp;other) {
+  <span class="pl-c1">set</span>(numerator * other.<span class="pl-smi">numerator</span>, denominator * other.<span class="pl-smi">denominator</span>);
+  <span class="pl-k">return</span> *<span class="pl-c1">this</span>;
+}
+
+Fraction Fraction::<span class="pl-k">operator</span>/(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span> {
+  Fraction fraction = *<span class="pl-c1">this</span>;
+  fraction /= other;
+  <span class="pl-k">return</span> fraction;
+}
+
+Fraction &amp;Fraction::<span class="pl-k">operator</span>/=(<span class="pl-k">const</span> Fraction &amp;other) {
+  <span class="pl-c1">set</span>(numerator * other.<span class="pl-smi">denominator</span>, denominator * other.<span class="pl-smi">numerator</span>);
+  <span class="pl-k">return</span> *<span class="pl-c1">this</span>;
+}
+
+Fraction &amp;Fraction::<span class="pl-k">operator</span>=(<span class="pl-k">const</span> Fraction &amp;other) {
+  numerator = other.<span class="pl-smi">numerator</span>;
+  denominator = other.<span class="pl-smi">denominator</span>;
+  <span class="pl-k">return</span> *<span class="pl-c1">this</span>;
+}
+
+<span class="pl-k">bool</span> Fraction::<span class="pl-k">operator</span>==(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> (<span class="pl-c1">compare</span>(other) == <span class="pl-c1">0</span>) ? <span class="pl-c1">true</span> : <span class="pl-c1">false</span>;
+}
+
+<span class="pl-k">bool</span> Fraction::<span class="pl-k">operator</span>!=(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> (<span class="pl-c1">compare</span>(other) != <span class="pl-c1">0</span>) ? <span class="pl-c1">true</span> : <span class="pl-c1">false</span>;
+}
+
+<span class="pl-k">bool</span> Fraction::<span class="pl-k">operator</span>&lt;=(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> (<span class="pl-c1">compare</span>(other) &lt;= <span class="pl-c1">0</span>) ? <span class="pl-c1">true</span> : <span class="pl-c1">false</span>;
+}
+
+<span class="pl-k">bool</span> Fraction::<span class="pl-k">operator</span>&gt;=(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> (<span class="pl-c1">compare</span>(other) &gt;= <span class="pl-c1">0</span>) ? <span class="pl-c1">true</span> : <span class="pl-c1">false</span>;
+}
+
+<span class="pl-k">bool</span> Fraction::<span class="pl-k">operator</span>&lt;(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> (<span class="pl-c1">compare</span>(other) &lt; <span class="pl-c1">0</span>) ? <span class="pl-c1">true</span> : <span class="pl-c1">false</span>;
+}
+
+<span class="pl-k">bool</span> Fraction::<span class="pl-k">operator</span>&gt;(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> (<span class="pl-c1">compare</span>(other) &gt; <span class="pl-c1">0</span>) ? <span class="pl-c1">true</span> : <span class="pl-c1">false</span>;
+}
+
+<span class="pl-c"><span class="pl-c">//</span>-------------------------------------------------------------------</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> Sørg for at nevneren alltid er positiv.</span>
+<span class="pl-c"><span class="pl-c">//</span> Bruker Euclids algoritme for å finne fellesnevneren.</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-k">void</span> <span class="pl-en">Fraction::reduce</span>() {
+  <span class="pl-k">if</span> (denominator &lt; <span class="pl-c1">0</span>) {
+    numerator = -numerator;
+    denominator = -denominator;
+  }
+  <span class="pl-k">int</span> a = numerator;
+  <span class="pl-k">int</span> b = denominator;
+  <span class="pl-k">int</span> c;
+  <span class="pl-k">if</span> (a &lt; <span class="pl-c1">0</span>)
+    a = -a;
+
+  <span class="pl-k">while</span> (b &gt; <span class="pl-c1">0</span>) {
+    c = a % b;
+    a = b;
+    b = c;
+  }
+  numerator /= a;
+  denominator /= a;
+}
+
+<span class="pl-c"><span class="pl-c">//</span>-------------------------------------------------------------------</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> Returnerer +1 hvis *this &gt; other, 0 hvis de er like, -1 ellers</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-k">int</span> <span class="pl-en">Fraction::compare</span>(<span class="pl-k">const</span> Fraction &amp;other) <span class="pl-k">const</span> {
+  Fraction fraction = *<span class="pl-c1">this</span> - other;
+  <span class="pl-k">if</span> (fraction.<span class="pl-smi">numerator</span> &gt; <span class="pl-c1">0</span>)
+    <span class="pl-k">return</span> <span class="pl-c1">1</span>;
+  <span class="pl-k">else</span> <span class="pl-k">if</span> (fraction.<span class="pl-smi">numerator</span> == <span class="pl-c1">0</span>)
+    <span class="pl-k">return</span> <span class="pl-c1">0</span>;
+  <span class="pl-k">else</span>
+    <span class="pl-k">return</span> -<span class="pl-c1">1</span>;
+}</pre></div>
+<h2><a id="user-content-å-definere-operatorer-som-ikke-medlemsfunksjoner" class="anchor" aria-hidden="true" href="#å-definere-operatorer-som-ikke-medlemsfunksjoner"><span aria-hidden="true" class="octicon octicon-link"></span></a>Å definere operatorer som ikke-medlemsfunk­sjoner</h2>
+<p>Hittil har vi bare sett på hvordan vi definerer operatorer som medlems­funksjoner. Men det er også
+mulig å lage dem som vanlige funksjoner. Det fins to grunner til det:</p>
+<ul>
+<li>Første operand skal ikke være et objekt av den klassen vi skal knytte operatoren til.</li>
+<li>Vi ønsker å definere en operator knyttet til en klasse som vi ikke har herredømme over.</li>
+</ul>
+<h3><a id="user-content-første-argument-er-ikke-et-objekt" class="anchor" aria-hidden="true" href="#første-argument-er-ikke-et-objekt"><span aria-hidden="true" class="octicon octicon-link"></span></a>Første argument er ikke et objekt</h3>
+<p>Vi ønsker å kunne addere en brøk og et heltall. Ved å utvide bruksområdet til operatoren + på
+følgende måte:</p>
+<div class="highlight highlight-source-c++"><pre>Fraction Fraction::<span class="pl-k">operator</span>+(<span class="pl-k">int</span> integer) <span class="pl-k">const</span> {
+  Fraction fraction;
+  fraction.<span class="pl-c1">set</span>(integer);
+  fraction += *<span class="pl-c1">this</span>;
+  <span class="pl-k">return</span> fraction;
+}</pre></div>
+<p>kan vi skrive</p>
+<div class="highlight highlight-source-c++"><pre>fraction1 + <span class="pl-c1">3</span></pre></div>
+<p>Det blir tolket som <code>fraction1.operator+(3);</code></p>
+<p>Men vi kan ikke skrive</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c1">3</span> + fraction1</pre></div>
+<p>siden første operand ikke lenger er et objekt av klassen <code>Fraction</code>.</p>
+<p>For å kunne bruke begge uttrykksmåtene, må vi lage en ny utgave av ope­ratoren. Utenfor klassen (men
+gjerne på samme fil som klasse­definisjonen) plasserer vi følgende erklæring:</p>
+<div class="highlight highlight-source-c++"><pre>Fraction <span class="pl-k">operator</span>+(<span class="pl-k">int</span> integer, <span class="pl-k">const</span> Fraction &amp;other);</pre></div>
+<p>I implementasjonsfilen kan vi skrive følgende (merk at vi ikke bruker <code>Fraction::</code> siden det ikke er
+en medlemsfunksjon):</p>
+<div class="highlight highlight-source-c++"><pre>Fraction <span class="pl-k">operator</span>+(<span class="pl-k">int</span> integer, <span class="pl-k">const</span> Fraction &amp;other) {
+  Fraction fraction;
+  fraction = other + integer;
+  <span class="pl-k">return</span> fraction;
+}</pre></div>
+<p>Nå kan vi skrive <code>3 + fraction1</code> som blir tolket som <code>ope­rator+(3, fraction1)</code>.</p>
+<h3><a id="user-content-å-definere-operatorer-for-klasser-vi-ikke-har-herredømme-over" class="anchor" aria-hidden="true" href="#å-definere-operatorer-for-klasser-vi-ikke-har-herredømme-over"><span aria-hidden="true" class="octicon octicon-link"></span></a>Å definere operatorer for klasser vi ikke har herredømme over</h3>
+<p>Operatoerene <code>&lt;&lt;</code> og <code>&gt;&gt;</code> er egentlig bitmanipuleringsoperatorer. Men i forbin­delse med filer og
+strømmer er de definert på en annen måte. Uttrykket <code>cout &lt;&lt; tall;</code> betyr egentlig
+<code>cout.operator&lt;&lt;(tall);</code> Operatoren er er­klært på følgende måte:</p>
+<div class="highlight highlight-source-c++"><pre>ostream &amp;<span class="pl-k">operator</span>&lt;&lt;(type var);</pre></div>
+<p>Det er definert mange versjoner med forskjellige datatyper på argumentet. Funksjonsverdien er
+<code>*this</code>, noe som gjør at funksjonskallene kan kjedes sammen.</p>
+<div class="highlight highlight-source-c++"><pre>cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>A = <span class="pl-pds">"</span></span> &lt;&lt; A &lt;&lt; endl;</pre></div>
+<p>betyr</p>
+<div class="highlight highlight-source-c++"><pre>((cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>A = <span class="pl-pds">"</span></span>) &lt;&lt; A) &lt;&lt; endl;</pre></div>
+<p>Andre operand kan være en variabel av hvilken som helst innebygd type. Hvis vi utvider bruksområdet
+for operatoren kan den også aksepterer et objekt av en klasse som andre operand.</p>
+<p>Vi ønsker å definere <code>&lt;&lt;</code> slik at vi kan skrive ut brøker ved fraction av den. <code>&lt;&lt;</code> hører til
+klassen <code>ostream</code>, som vi ikke kan forandre, så vi kan ikke lage en medlemsfunksjon. Men vi kan lage
+en ikke-medlemsfunksjon. Det gjør vi ved å bytte ut print-funksjonen i filen fraction/main.cpp med
+følgende:</p>
+<div class="highlight highlight-source-c++"><pre>ostream &amp;<span class="pl-k">operator</span>&lt;&lt;(ostream &amp;out, <span class="pl-k">const</span> Fraction &amp;fraction) {
+  out &lt;&lt; fraction.<span class="pl-smi">numerator</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span> &lt;&lt; fraction.<span class="pl-smi">denominator</span>;
+  <span class="pl-k">return</span> out;
+}</pre></div>
+<p>I stedet for <code>print("A = ", a);</code> skriver vi:</p>
+<div class="highlight highlight-source-c++"><pre>cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>A = <span class="pl-pds">"</span></span> &lt;&lt; a &lt;&lt; endl;</pre></div>
+<p>Her utføres først <code>cout &lt;&lt; "a = "</code>. Dette er den ferdigdefinerte betyd­ningen av <code>&lt;&lt;</code> for
+tekststrenger. Den gir <code>*this</code>, altså <code>cout</code>, som funksjons­verdi. Neste trinn er <code>cout &lt;&lt; a</code>. Siden
+<code>a</code> er en brøk, brukes den funk­sjonen vi har laget. Funksjonskallet blir</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">operator</span>&lt;&lt;(cout, a)</pre></div>
+<p>og returverdien blir <code>cout</code>. Til slutt får vi utført <code>cout &lt;&lt; endl</code>, der vi igjen bruker en
+ferdigdefinert betydning av <code>&lt;&lt;</code>.</p>
+<h2><a id="user-content-operatorer-vi-ikke-kan-overloade" class="anchor" aria-hidden="true" href="#operatorer-vi-ikke-kan-overloade"><span aria-hidden="true" class="octicon octicon-link"></span></a>Operatorer vi ikke kan overloade</h2>
+<p>Følgende operatorer kan vi ikke definere egne utgaver av: <code>.</code>, <code>.*</code>, <code>::</code>, <code>?:</code> og <code>sizeof</code>.</p>
+<p>Alle de andre operatorene kan vi overloade, men bare i forbindelse med klasser. Bruker vi andre
+typer enn klasser, brukes alltid den ferdigdefinerte betydningen som gjel­der for disse typene.</p>
+<h2><a id="user-content-operatorer-med-spesielle-regler" class="anchor" aria-hidden="true" href="#operatorer-med-spesielle-regler"><span aria-hidden="true" class="octicon octicon-link"></span></a>Operatorer med spesielle regler</h2>
+<p>Postfiksversjonene av operatorene <code>++</code> og <code>--</code> betraktes som binære opera­torer når vi erklærer og
+definerer dem, men som unære når vi bruker (kaller) dem. I prototypen og definisjonen må de ha et
+argument av typen <code>int</code>, men dette skal ikke brukes til noe. Derfor setter vi heller ikke noe navn
+på argumentet. Dette argumentet er nødvendig for å skille de to funksjonene fra hverandre.</p>
+<div class="highlight highlight-source-c++"><pre>Fraction Fraction::<span class="pl-k">operator</span>++(<span class="pl-k">int</span>) { <span class="pl-c"><span class="pl-c">//</span> postfix</span>
+  Fraction fraction;
+  fraction = *<span class="pl-c1">this</span>;
+  ++(*<span class="pl-c1">this</span>);
+  <span class="pl-k">return</span> fraction;
+}
+
+<span class="pl-c"><span class="pl-c">//</span>-----------------------------------------------------</span>
+Fraction fraction;
+fraction.set(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>);
+Fraction broekB = fraction++;</pre></div>
+<p>Operatoren <code>-&gt;</code> vil bli betraktet som en unær operator hvis vi utvider bruksområdet til den.</p>
+<p>Operatorene <code>new</code> og <code>delete</code> har spesielle regler for bruk. Dette må vi ta hensyn til hvis vi skal
+definere dem. Temaet blir ikke behandlet her. Ikke lag egne utgaver av dem før du vet nøyaktig hva
+du gjør.</p>
+<h2><a id="user-content-når-bør-vi-ikke-overloade-en-operator" class="anchor" aria-hidden="true" href="#når-bør-vi-ikke-overloade-en-operator"><span aria-hidden="true" class="octicon octicon-link"></span></a>Når bør vi ikke overloade en operator?</h2>
+<p>Vær forsiktig når du utvider bruksområdet for operatorer! Det er fullt mu­lig å definere <code>+</code> til å
+bety subtraksjon, men det ville skape kaos for den som måtte bruke det. Vi prøver å holde oss så nær
+den naturlige betyd­ningen som mulig. Lager vi en ny betydning, må den være slik at den ikke er til
+å misforstå.</p>
+<p>Eksempel: Operatorene <code>+</code> og <code>-</code> brukes til å addere/subtrahere verdier, for eksempel brøker,
+komplekse tall og matriser. <code>+</code> kan dessuten brukes til å "addere" (skjøte sammen) tekststrenger,
+mens <code>-</code> er mer tvilsom i denne sammenhengen. <code>-</code> kan derimot brukes til å finne differansen mellom
+to tidspunkt (dato og/eller klokkeslett), mens <code>+</code> ikke bør brukes mellom to tidspunkter, det er for
+usikkert hva det skulle bety. Derimot vil <code>+</code> gi god mening mellom en dato og et heltall (tolket som
+et antall dager).</p>
+<p>Når vi utvider bruksområdet for operatorer, kan vi ikke omdefinere priori­tet, assosiativitet og
+antall operander. Det kan i enkelte tilfeller gjøre at vi bør avstå fra å definere en operator vi
+egentlig kunne ønsket oss.</p>
+<p>Eksempel: I programmeringsspråket Pascal betyr operatoren <code>^</code> potensering. Det kan være fristende å
+definere den slik her også, slik at vi kunne skrevet <code>fraction1 ^ 8</code> for å opphøye brøken i åttende
+potens. Men prioritet og assosiativitet er ikke den samme som vi ville forventet ut fra slik den er
+definert i matema­tikken. Matematisk sett er den høyreassosiativ, og har høyere prioritet enn
+multiplikasjon, mens den i C++ ville blitt venstreassosiativ med lavere pri­oritet enn
+multiplikasjon.</p>
+<div class="highlight highlight-source-c++"><pre>fraction1 * fraction2 ^ <span class="pl-c1">8</span></pre></div>
+<p>ville blitt tolket som</p>
+<div class="highlight highlight-source-c++"><pre>(fraction1 * fraction2) ^ <span class="pl-c1">8</span></pre></div>
+<p>ikke som</p>
+<div class="highlight highlight-source-c++"><pre>fraction1 * (fraction2 ^ <span class="pl-c1">8</span>)</pre></div>
+<p>For å unngå misforståelser bør vi derfor la være å overloade denne operatoren. Ikke kan vi finne en
+annen som vil fungere tilfreds­stillende heller, for alle høyreassosiative operatorer med høyere
+prioritet enn multiplikasjon er unære.</p>
+<h2><a id="user-content-typeomforming-ved-bruk-av-konstruktører" class="anchor" aria-hidden="true" href="#typeomforming-ved-bruk-av-konstruktører"><span aria-hidden="true" class="octicon octicon-link"></span></a>Typeomforming ved bruk av konstruktører</h2>
+<p>Dette emnet har nok bare <em>tilsynelatende</em> noe med operator overloading å gjøre. Det er bruk av
+likhetstegnet i en sammenheng som vi bør være litt oppmerksomme på:</p>
+<div class="highlight highlight-source-c++"><pre>Surface surface2 = surface1;   <span class="pl-c"><span class="pl-c">//</span> samme som Surface surface2(surface1);</span></pre></div>
+<p>oppretter et nytt objekt surface2 som er likt surface1 i henhold til slik kopikonstruktøren er
+definert. Dersom kopikonstruktøren ikke er definert, blir standard kopikonstruktør brukt. I nyere
+C++ bruker en som regel standard kopikonstruktøren, og en slipper da å tenke på å opprette en egen
+kopikostruktør.</p>
+<p>Vi kan bruke likhetstegnet for alle konstruktører som tar et argument. I klassen <code>Surface</code> i
+vedlagte eksempelsamling har vi følgende konstruktør:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-en">Surface::Surface</span>(<span class="pl-k">double</span> area) {
+  name = <span class="pl-s"><span class="pl-pds">"</span>ukjent<span class="pl-pds">"</span></span>;
+  length = <span class="pl-c1">sqrt</span>(area);
+  width = length;
+}</pre></div>
+<p>Denne konstruktøren oppretter et flateobjekt med navn ”ukjent” og lengde = bredde = kvadratroten av
+argumentet. Det vil si at vi får et kvadrat. Vi kan altså skrive:</p>
+<div class="highlight highlight-source-c++"><pre>Surface surface3 = <span class="pl-c1">25</span>;  <span class="pl-c"><span class="pl-c">//</span> gir flate med lengde = bredde = 5</span></pre></div>
+<p>Men vi kan også få utført følgende tilordning:</p>
+<div class="highlight highlight-source-c++"><pre>surface2 = <span class="pl-c1">50</span>;</pre></div>
+<p>Her foregår en <em>omforming</em> fra heltall til <code>Surface</code>. Det er mulig fordi det eksisterer en
+konstruktør som gjør omformingsjobben. Denne prosessen kalles <em>egendefinert typeomforming</em>.</p>
+<p>At konstruktører blir brukt på denne måten kan føre til uventede resultater. Vanligvis lages
+konstruktører med tanke på at de skal brukes til å opprette nye objekter, og ikke for at de skal
+brukes til omforming ved for eksempel tilordning eller parameteroverføring. I svært mange tilfeller
+betyr denne bruken faktisk at programmereren har gjort en logisk feil.</p>
+<p>På denne bakgrunn kan det være ønskelig eksplisitt å si at konstruktører med ett argument kun skal
+brukes som konstruktører, og ikke på annet vis. Det får vi til ved å bruke nøkkelordet <code>explicit</code> i
+deklarasjonen av konstruktøren:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">explicit</span> <span class="pl-en">Surface</span>(<span class="pl-k">double</span> area);</pre></div>
+<p>Dette forhindrer imidlertid også at likhetstegnet kan brukes ved normal bruk av konstruktøren:</p>
+<div class="highlight highlight-source-c++"><pre>Surface surface3 = <span class="pl-c1">25</span>;  <span class="pl-c"><span class="pl-c">//</span> kan ikke skrive slik hvis konstruktøren er ”explicit”</span></pre></div>
+<p>I stedet må vi skrive:</p>
+<div class="highlight highlight-source-c++"><pre>Surface <span class="pl-en">surface3</span>(<span class="pl-c1">25</span>);</pre></div>
+<h2><a id="user-content-nøkkelordet-friend" class="anchor" aria-hidden="true" href="#nøkkelordet-friend"><span aria-hidden="true" class="octicon octicon-link"></span></a>Nøkkelordet <code>friend</code>
+</h2>
+<p>Hvis vi skriver</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">class</span> <span class="pl-en">A</span> {
+  <span class="pl-k">public:</span>
+    <span class="pl-k">friend</span> <span class="pl-k">class</span> <span class="pl-en">B</span>;
+    …
+};</pre></div>
+<p>så blir <code>B</code> en <em>venn</em> av <code>A</code>. Det betyr at <code>B</code> har adgang til de private delene av <code>A</code>, men ikke
+omvendt (hvis da ikke <code>A</code> er satt opp som venn av <code>B</code>). Vennskap er ikke arvelig, det ville i
+praksis gitt hvem som helst adgang til de private delene av vennskapsklassen. For alle kan lage en
+subklasse til en hvilken som helst klasse.</p>
+<p>Å erklære venner kan være besnærende for å spare kodearbeid. Grunnen bør imidlertid være en annen.
+For dersom en endrer for eksempel datastrukturen i <code>A</code>, må en – i tillegg til å gå gjennom alle
+funksjonene i <code>A</code> – også gå gjennom <code>B</code> med tanke på endringer. Og har vi enda flere venner, så må
+de også sjekkes...</p>
+<p>Grunnen til å erklære en klasse som venn må være at denne klassen skal ha tilgang til data eller
+funksjoner som det av ulike grunner ikke er ønskelig at skal være offentlige – eller beskyttet
+(<code>protected</code>) for den saks skyld. Det kan også i enkelte tilfeller være aktuelt å bruke venner av
+effektivitetsgrunner.</p>
+<p>En mer aktuell bruk for oss er funksjoner som venner. Det gjelder spesielt i forbindelse med
+operator overloading der vi ikke kan definere funksjonene som medlemsfunksjoner. Tidligere så vi
+hvordan operatoren <code>&lt;&lt;</code> ble definert som en ikke-medlemsfunksjon. Ved å sette opp denne funksjonen
+som en venn av klassen <code>Fraction</code>, kan vi referere til datamedlemmene direkte:</p>
+<div class="highlight highlight-source-c++"><pre>ostream &amp;<span class="pl-k">operator</span>&lt;&lt;(ostream &amp;out, <span class="pl-k">const</span> Fraction &amp;fraction) {
+  out &lt;&lt; fraction.<span class="pl-smi">numerator</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span> &lt;&lt; fraction.<span class="pl-smi">denominator</span>;
+  <span class="pl-k">return</span> out;
+}</pre></div>
+<p>Funksjonen er deklarert i klassen <code>Fraction</code> som <code>friend</code>:</p>
+<pre><code>class Fraction {
+public:
+  ....
+  Fraction();
+  Fraction(int numerator, int denominator);
+  void set(int numerator_, int denominator_ = 1);
+  friend ostream &amp;operator&lt;&lt;(ostream &amp;ut, const Fraction &amp;fraction);
+  ...
+}
+</code></pre>
+<p>Det som er fint her, er å få satt opp funksjonen sammen med de andre funksjonene inne i klassen
+<code>Fraction</code>.</p>
+
+                      </article>
+                    </div>
+                  </div>
+
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

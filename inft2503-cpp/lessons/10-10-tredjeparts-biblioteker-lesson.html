@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title> </title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark-a167e256da9c.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light-0eace2597ca3.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-711f412bb361.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-primitives-2ef2a46b27ee.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-f4d857cbc96a.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/global-8215aa0ce496.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_high_contrast-ea7373db06c8.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_tritanopia-5cb699a7e247.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_colorblind-afa99dcf40f7.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_dimmed-d11f2cf8009b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_colorblind-af6c685139ba.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_high_contrast-578cdbc8a5a9.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/repository-6247ca238fd4.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_tritanopia-9b32204967c6.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/code-36b3bf8f5e76.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+      margin-bottom: 21px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+    <main id="js-repo-pjax-container">
+      <div class="clearfix new-discussion-timeline container-xl px-3 px-md-4 px-lg-5">
+        <div class="repository-content">
+          <div class="clearfix">
+            <div class="Layout Layout--flowRow-until-md Layout--sidebarPosition-end Layout--sidebarPosition-flowRow-end">
+              <div class="Layout-main">
+
+                
+
+                  <div id="readme" class="Box md Box--responsive">
+                    
+                      <div class="Box-header d-flex border-bottom-0 flex-items-center flex-justify-between color-bg-default rounded-top-2">
+                        <div class="d-flex flex-items-center">
+                          <h2 class="Box-title">
+                             
+                          </h2>
+                        </div>
+                      </div>
+                    
+                    <div class="Box-body px-5 pb-5">
+                      <article id="grip-content" class="markdown-body entry-content container-lg">
+                        <div class="markdown-heading"><h1 class="heading-element">Leksjon 10: 3. parts biblioteker</h1><a id="user-content-leksjon-10-3-parts-biblioteker" class="anchor" aria-label="Permalink: Leksjon 10: 3. parts biblioteker" href="#leksjon-10-3-parts-biblioteker"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>I denne leksjonen tar vi for oss nyttige 3. parts biblioteker. Ulike typer biblioteker er forklart i
+tillegg til vanlige måter å sette opp plattformuavhengige bygging når kildekoden bruker slike
+biblioteker.</p>
+<p>Skrevet av Ole Christian Eidheim.</p>
+<div class="markdown-heading"><h2 class="heading-element">Programmeringsbibliotek</h2><a id="user-content-programmeringsbibliotek" class="anchor" aria-label="Permalink: Programmeringsbibliotek" href="#programmeringsbibliotek"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Et programmeringsbibliotek inneholder ferdigkompilerte implementasjoner av klasser eller funksjoner
+som kan gjenbrukes av programmer vi skriver. Formatet på bibliotekene kan variere fra plattform til
+plattform, men også om biblioteket er statisk eller dynamisk.</p>
+<div class="markdown-heading"><h3 class="heading-element">Statiske bibliotek</h3><a id="user-content-statiske-bibliotek" class="anchor" aria-label="Permalink: Statiske bibliotek" href="#statiske-bibliotek"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Opprinnelig fantes det kun <em>statiske bibliotek</em> som ble lagt til de kjørbare filene ved kompilering.
+Om et bibliotek ble oppdatert, for eksempel med forbedret kjøretid, måtte en kompilere alle
+programmene som brukte dette biblioteket på nytt. Dette gikk kanskje fint tidligere da man hadde
+enkle program og en brukte bare et fåtall bibliotek. I dag derimot er programmene mer komplekse og
+gjenbruk av kode eller bruk av flere og større programmeringsbibliotek er helt nødvendig.</p>
+<p>I tabellen nedenfor vises en oversikt over hva <em>statiske bibliotek</em> heter ([navn] med prefiks og
+postfiks) og hvor de er plassert i filsystemet i de mest populære operativsystemene.</p>
+<table>
+<thead>
+<tr>
+<th> </th>
+<th>Linux</th>
+<th>MacOS/iOS</th>
+<th>Windows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Biblioteker fra operativsystemet eller andre 3. parts bibliotek</td>
+<td>Noen få <code>lib[navn].a</code>-filer, ligger i <code>/usr/lib</code>- eller <code>/usr/local/lib</code>-katalogene</td>
+<td>Noen få <code>lib[navn].a</code> under <code>/usr/lib</code>, <code>/usr/local/lib</code>, <code>/System/Library</code> og <code>/Library</code>
+</td>
+<td>
+<code>[navn].lib</code> og <code>lib[navn].a</code>, typisk installert av 3. parts applikasjoner/biblioteker</td>
+</tr>
+<tr>
+<td>
+<em>Objektfiler</em> som blir laget når en kompilerer kildekode. <br><br> Dette er kompilerte c- eller cpp-filer som ikke inneholder main. Innholdet i disse blir kombinert til en kjørbar fil sammen med c- eller cpp-filen som inneholder <code>main</code>.</td>
+<td><code>[navn].o</code></td>
+<td> <code>[navn].o</code>
+</td>
+<td>
+<code>[navn].o</code> eller <code>[navn].obj</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Legg merke til at MacOS bare inneholder et fåtall statiske bibliotek. Faktisk så har en ikke
+mulighet til å kompilere inn statiske bibliotek (dette inkluderer ikke objektfiler) i kjørbare
+program under dette OS’et. Dette er et bevisst valg fra Apple, der en ønsker at program hele tiden
+kjører med de siste bibliotekene fra operativsystemet. Fra et sikkerhetsperspektiv er dette svært
+fornuftig.</p>
+<p>Også under Linux er der typisk ikke så mange statiske bibliotek som kan brukes til å kompilere et
+program. Men en kan som regel kompilere bibliotekene en trenger selv, og hente ut .a-filene på den
+måten. Dette er likevel ikke anbefalt.</p>
+<div class="markdown-heading"><h3 class="heading-element">Dynamiske bibliotek</h3><a id="user-content-dynamiske-bibliotek" class="anchor" aria-label="Permalink: Dynamiske bibliotek" href="#dynamiske-bibliotek"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>I et program som er linket dynamisk blir bibliotekene som programmet bruker lastet ved kjøring av
+programmet. Hver gang programmet startes blir dermed nyeste installerte versjon av biblioteket
+brukt. Ulempen er at en er avhengig av å ha bibliotekene installert for å kjøre programmet.</p>
+<p>Spesielt i Linux så har en i langt tid hatt pakkesystemer som inneholder lister over hvilke
+biblioteker et program trenger for å kunne kjøres. Når en da installerer et program, så blir
+automatisk alle biblioteker dette programmet er avhengig av installert først. Under oppgradering
+blir kanskje noen biblioteker installert på nytt med for eksempel sikkerhetsforbedringer.
+Programmene som bruker de oppgraderte bibliotekene trenger da ikke å bli installert igjen for å
+utnytte forbedringene i bibliotekene. Derimot må disse programmene startes på nytt, og informasjon
+om dette ligger også i pakkesystemene. Det er slik en for eksempel unngår å restarte
+operativsystemet etter oppgradering. Et av de mest brukte slike systemer stammer fra 1998 og heter
+Advanced Packaging Tool fra Debian (<a href="http://debian.org" rel="nofollow">http://debian.org</a>). MacOS har også et ok pakkesystem: HomeBrew
+(<a href="http://brew.sh" rel="nofollow">http://brew.sh</a>).</p>
+<p>I Windows har en alltid manglet et godt pakkesystem, spesielt for programmeringsbiblioteker. Men
+heldigvis kom <a href="https://sourceforge.net/projects/msys2/" rel="nofollow">MSYS2</a> (se <a href="https://msys2.github.io" rel="nofollow">https://msys2.github.io</a> for
+installasjon) i 2013, som i tillegg til å levere et operativsystem til Windows (for oss som er vant
+med Unix/Posix, så er Windows svært begrenset), gir deg tilgang til de mest brukte Open Source
+programmeringsbibliotekene og programmene ferdig kompilert. MSYS2 prøver også, så langt det er
+mulig, å bruke Microsoft sine biblioteker slik at ressurskostnadene for å kjøre programmer gjennom
+MSYS2 blir minimal. Derimot er MSYS2 ikke like stabilt og sikkert som Linux, og Windows mangler en
+del funksjonalitet i forhold til Posix standarden. Dette er en av grunnene til at vi anbefaler å
+bruke Linux eller MacOS i dette kurset.</p>
+<p>I tabellen nedenfor er det listet opp hva de forskjellige dynamiske bibliotekene heter og hvor de
+ligger i de forskjellige operativsystemene.</p>
+<table>
+<thead>
+<tr>
+<th> </th>
+<th>Linux</th>
+<th>MacOS/iOS</th>
+<th>Windows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Biblioteker fra operativsystemet eller andre 3. parts bibliotek</td>
+<td>
+<code>lib[navn].so</code>, ligger i <code>/usr/lib</code>- eller <code>/usr/local/lib</code>- katalogene</td>
+<td>
+<em>Frameworks</em> under <code>/System/Library</code> og <code>/Library</code>.<br><br><code>lib[navn].dylib</code> under <code>/usr/lib</code>, <code>/usr/local/lib</code>, <code>/System/Library</code> og <code>/Library</code>
+</td>
+<td>
+<code>[navn].dll</code>, ligger i <code>C:\Windows</code>-katalogstrukturen, men også i katalogene kjørbare filer ligger i</td>
+</tr>
+</tbody>
+</table>
+<p>Et eksempel på et bibliotek som kan finnes på både Linux og MacOS er libssl som inneholder
+funksjoner for sikrere kommunikasjon over nettet. I Linux finner en dette biblioteket i
+/usr/lib/libssl.so, mens i MacOS i /usr/lib/libssl.dylib.</p>
+<p>Merk at i MacOS brukes også bibliotekspakker som heter Frameworks. Dette er samlinger av relaterte
+bibliotek som er lagt i en pakke.</p>
+<div class="markdown-heading"><h2 class="heading-element">Kompileringsfiler</h2><a id="user-content-kompileringsfiler" class="anchor" aria-label="Permalink: Kompileringsfiler" href="#kompileringsfiler"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Informasjon om hvordan et program skal kompileres og hvilke biblioteker programmet skal kompileres
+med på de ulike plattformene, ble tidligere hovedsaklig satt opp i en eller flere <em>bygningsfil</em> som
+alle heter <code>Makefile</code>. Disse filene ligger i katalogene som inneholder kildekode, med en <code>Makefile</code>
+på rot-nivået til et prosjekt som styrer kompileringen av hele prosjektet.</p>
+<p>En <em>bygningsfil</em> på rot-nivået inneholder typisk følgende kommandoer:</p>
+<ul>
+<li>
+<code>all</code> – standard kommandoen, om ingen andre kommandoer blir spesifisert så brukes denne. Denne
+kommandoen går til alle de spesifiserte katalogene og kaller deres respektive <code>Makefile</code>. Her
+kompileres med andre ord alle de ulike programmene/bibliotekene i et prosjekt. For å kjøre denne
+kommandoen bruker en programmet <code>make</code>, og skriver rett og slett <code>make</code> i kommandolinjen.</li>
+<li>
+<code>clean</code> - kjøres med <code>make clean</code> i kommandolinjen. Rydder opp; sletter eventuelle biblioteker,
+objektfiler, og kjørbare filer.</li>
+<li>
+<code>install</code> - kjøres med <code>make install</code> i kommandolinjen. Installerer de kompilerte
+programmene/bibliotekene slik at de kan brukes uten å måtte spesifisere katalogen filene ligger i.
+I de fleste operativsystem må en ha administrator-rettigheter for at installasjonen skal bli
+vellykket uten endringer. Typisk så blir programmene og/eller bibliotekene installert i
+katalogstrukturen under /usr/local.</li>
+<li>
+<code>uninstall</code> - kjøres med <code>make uninstall</code> i kommandolinjen. Avinstallerer programmene.</li>
+</ul>
+<p>Merk at <code>make</code> må være installert for å benytte disse kommandoene. Etter installasjon av C++
+kompilatoren har en derimot som regel også installert programmet make.</p>
+<p>Nedenfor finner dere et enklere eksempel på en <code>Makefile</code>:</p>
+<div class="highlight highlight-source-makefile"><pre><span class="pl-smi">CPP</span>=g++
+<span class="pl-smi">CPPFLAGS</span> = -std=c++11
+<span class="pl-smi">LDFLAGS</span> = -lboost_system
+<span class="pl-smi">BINDIR</span> = /usr/local/bin
+
+<span class="pl-smi">OS</span> = <span class="pl-s">$(<span class="pl-c1">shell</span> uname -s)</span>
+
+<span class="pl-c"><span class="pl-c">#</span>Linux</span>
+<span class="pl-k">ifeq</span> (<span class="pl-s">$(<span class="pl-smi">OS</span>)</span>,Linux)
+<span class="pl-k">endif</span>
+
+<span class="pl-c"><span class="pl-c">#</span>OS X</span>
+<span class="pl-k">ifeq</span> (<span class="pl-s">$(<span class="pl-smi">OS</span>)</span>,Darwin)
+<span class="pl-k">endif</span>
+
+<span class="pl-c"><span class="pl-c">#</span>Windows</span>
+<span class="pl-k">ifeq</span> (<span class="pl-s">$(<span class="pl-smi">OS</span>)</span>,windows32)
+	CPPFLAGS+=-I"c:/Program Files/Boost"
+<span class="pl-k">endif</span>
+
+<span class="pl-en">all</span>:
+	<span class="pl-s">$(<span class="pl-smi">CPP</span>)</span> example.cpp -o example <span class="pl-s">$(<span class="pl-smi">CPPFLAGS</span>)</span> <span class="pl-s">$(<span class="pl-smi">LDFLAGS</span>)</span>
+<span class="pl-en">clean</span>:
+	-rm example
+<span class="pl-en">install</span>:
+	install example <span class="pl-s">$(<span class="pl-smi">BINDIR</span>)</span>
+<span class="pl-en">uninstall</span>:
+	-rm <span class="pl-s">$(<span class="pl-smi">BINDIR</span>)</span>/example</pre></div>
+<p>Her brukes Boost biblioteket <code>boost_system</code> og i Windows så må en oppgi katalogen der include-filene
+finnes. Merk at kommandoen <code>shell uname –s</code> kan returnere andre navn enn <code>windows32</code> i Windows, noe
+som gjør det spesielt vanskelig å lage Makefiler til Windows. Når en kjører <code>make</code> så blir denne
+kommandoen laget og kjørt: <code>g++ example.cpp -o example -std=c++11 -lboost_system</code>.</p>
+<p>Å lage komplette Makefiler for alle operativsystem blir spesielt vanskelig når en har mange
+biblioteker en benytter i kildekoden. I tillegg blir det ikke utført noen kontroll om en har disse
+bibliotekene installert eller ikke, og en kan få svært kryptiske feilmeldinger når kildekoden
+kompileres. Løsningen på disse problemene er CMake som er temaet for neste delkapittel.</p>
+<div class="markdown-heading"><h3 class="heading-element">CMake</h3><a id="user-content-cmake" class="anchor" aria-label="Permalink: CMake" href="#cmake"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>CMake tilbyr en enklere måte å lage bygningsfiler som er tilpasset ulike operativsystemene og
+IDE’er. En lager en fil CMakeLists.txt og ved å kjøre kommandoen cmake så genereres det for eksempel
+en Makefile, Xcode prosjekt filer, eller Microsoft Visual Studio prosjekt filer. Et eksempel på en
+slik CMakeLists.txt-fil finner du nedenfor:</p>
+<div class="highlight highlight-source-cmake"><pre><span class="pl-c1">cmake_minimum_required</span>(<span class="pl-c1">VERSION</span> <span class="pl-s">3.10</span>)
+<span class="pl-c1">project</span> (ExampleProject)
+<span class="pl-c1">set</span>(<span class="pl-c1">CMAKE_CXX_FLAGS</span> <span class="pl-s">"<span class="pl-smi">${<span class="pl-c1">CMAKE_CXX_FLAGS</span>}</span> -std=c++1y -Wall -Wextra"</span>)
+
+<span class="pl-c1">find_package</span>(<span class="pl-s">Boost</span> <span class="pl-s">1.55.0</span> <span class="pl-s">REQUIRED</span>)
+<span class="pl-c1">include_directories</span>(<span class="pl-smi">${Boost_INCLUDE_DIRS}</span>)
+
+<span class="pl-c1">add_executable</span>(<span class="pl-s">example</span> <span class="pl-s">example.cpp</span>)
+<span class="pl-c1">target_link_libraries</span>(<span class="pl-s">example</span> <span class="pl-smi">${Boost_LIBRARIES}</span>)</pre></div>
+<p>For å generere en Makefile frå denne CMakeLists.txt-filen på Linux eller OS X plattformen kjøres
+kommandoen <code>cmake ..</code>. Skriv cmake for å se hvilke andre filer som kan genereres ved hjelp av cmake.
+Punktumene (<code>..</code>) på slutten av kommandoen er katalogen der CMakeLists.txt ligger. Det anbefales å
+kjøre kommandoen i en egen bygge katalog, for eksempel slik: <code>mkdir build &amp;&amp; cd build &amp;&amp; cmake ..</code> i
+stedet for å kjøre cmake i samme katalog som kildekoden ligger under. Dette blir gjort i for
+eksempel juCi++, der resultatet av byggingen blir lagt i <code>build</code>-katalogen.</p>
+<p>Når cmake kjøres så sjekkes det om du har Boost System-bibliotekene installert. I tillegg må den
+installerte versjonen være høyre enn 1.55. Dette gjøres av cmake-kommandoen <code>find_package</code> i
+eksempelet over. Denne kommandoen setter også ulike variabler som for eksempel <code>Boost_INCLUDE_DIRS</code>
+om en finner en tilstrekkelig ny versjon av biblioteket. Dersom en ikke finner et gitt bibliotek så
+avsluttes cmake og det blir gitt beskjed om hvilket bibliotek som må installeres.</p>
+<p>Minuset med CMake er at en er avhengig av at noen har laget CMake-skript som søker etter
+bibliotekene. For Boost-bibliotekspakken i operativsystemet Debian ligger dette skriptet for
+eksempel under: <code>/usr/share/cmake-3.0/Modules/FindBoost.cmake</code>. Derimot har de fleste av de mest
+populære bibliotekene et slikt skript lagt ved under installasjon.</p>
+<div class="markdown-heading"><h2 class="heading-element">Eksempler på 3. parts biblioteker</h2><a id="user-content-eksempler-på-3-parts-biblioteker" class="anchor" aria-label="Permalink: Eksempler på 3. parts biblioteker" href="#eksempler-på-3-parts-biblioteker"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Standardbiblioteket til C++ er mindre enn standardbibliotekene til for eksempel Java og C#. Vi er
+derfor avhengig av prosjekter som har implementert klasser og funksjoner som standardbiblioteket for
+C++ mangler eller ikke har inkludert enda. Derimot jobbes det mye med å utbedre standardbiblioteket
+til C++, men siden en er nøye med valgene som blir gjort i fremtidige versjoner av C++ er dette
+arbeidet svært tidkrevende.</p>
+<p>Noen eksempler på 3. parts biblioteker:</p>
+<ul>
+<li>
+<a href="http://www.boost.org/" rel="nofollow">http://www.boost.org/</a> - det viktigste tillegget til standardbiblioteket for C++. Inneholder flere
+mindre biblioteker til for eksempel
+<a href="https://www.boost.org/doc/libs/1_68_0/doc/html/boost_asio.html" rel="nofollow">nettverksprogrammering</a>,
+<a href="https://www.boost.org/doc/libs/1_68_0/libs/multiprecision/doc/html/index.html" rel="nofollow">store tallberegninger</a>,
+<a href="https://www.boost.org/doc/libs/1_68_0/libs/iostreams/doc/index.html" rel="nofollow">komprimering/dekomprimering</a>,
+<a href="https://www.boost.org/doc/libs/1_68_0/libs/compute/doc/html/index.html" rel="nofollow">parallellisering</a>,
+<a href="https://www.boost.org/doc/libs/1_68_0/doc/html/property_tree.html" rel="nofollow">lesing/skriving av JSON og XML filer</a>,
+og <a href="https://www.boost.org/doc/libs/1_68_0/libs/filesystem/doc/index.htm" rel="nofollow">filbehandling</a>. Dette er
+den første plassen dere bør lete etter biblioteker som dere ikke finner i standardbiblioteket. I
+tillegg har mange av bibliotekene fra Boost faktisk blitt inkludert i standardbiblioteket, og
+dette sier noe om kvaliteten på bibliotekene her.</li>
+<li>
+<a href="http://www.sfml-dev.org/" rel="nofollow">http://www.sfml-dev.org/</a> - bibliotek for lyd, bilde og input-behandling (fra for eksempel tastatur
+og mus). Ved hjelp av dette biblioteket kan en enkelt sette opp et vindu for OpenGL visualisering.
+Et annet lignende bibliotek som er mye brukt er <a href="https://www.libsdl.org/" rel="nofollow">https://www.libsdl.org/</a>, men dette biblioteket er
+et rent C bibliotek. SFML derimot sikter på å være en C++ erstatning for SDL. Siden visualisering
+er et typisk bruksområde for C++ tar vi med et par andre viktige biblioteker:</li>
+<li>
+<a href="http://www.gtkmm.org/" rel="nofollow">http://www.gtkmm.org/</a> - GUI bibliotek, det vil si bibliotek for oppretting og bruk av ulike GUI
+widgets som knapper, tekstfelt, menyer, progressbarer og fildialoger i et vindubasert program.
+gtkmm er det offisielle C++-grensesnittet mot GTK+ (<a href="http://www.gtk.org/" rel="nofollow">http://www.gtk.org/</a>) som brukes av mange
+desktop-miljø i Linux.</li>
+</ul>
+
+                      </article>
+                    </div>
+                  </div>
+
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

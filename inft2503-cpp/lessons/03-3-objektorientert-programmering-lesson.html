@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title> </title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_tritanopia-2171ea0f078b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/code-3d7b701fc6eb.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_dimmed-0adfa28f0e68.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_high_contrast-1c8575b36644.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light-5178aee0ee76.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_tritanopia-cdd88f146bf7.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/global-afe5b3f5ff2d.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-251065160b09.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_colorblind-5113d2be20b0.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_colorblind-c96add742484.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark-217d4f9c8e70.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-0e158a2f5ddd.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_high_contrast-290f92f5e867.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+      margin-bottom: 21px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+    <main id="js-repo-pjax-container">
+      <div class="clearfix new-discussion-timeline container-xl px-3 px-md-4 px-lg-5">
+        <div class="repository-content">
+          <div class="clearfix">
+            <div class="Layout Layout--flowRow-until-md Layout--sidebarPosition-end Layout--sidebarPosition-flowRow-end">
+              <div class="Layout-main">
+
+                
+
+                  <div id="readme" class="Box md Box--responsive">
+                    
+                      <div class="Box-header d-flex border-bottom-0 flex-items-center flex-justify-between color-bg-default rounded-top-2">
+                        <div class="d-flex flex-items-center">
+                          <h2 class="Box-title">
+                             
+                          </h2>
+                        </div>
+                      </div>
+                    
+                    <div class="Box-body px-5 pb-5">
+                      <article id="grip-content" class="markdown-body entry-content container-lg">
+                        <h1><a id="user-content-3-objektorientert-programmering-i-c" class="anchor" aria-hidden="true" href="#3-objektorientert-programmering-i-c"><span aria-hidden="true" class="octicon octicon-link"></span></a>3. Objektorientert programmering i C++</h1>
+<p>Leksjonen gir en oversikt i hvordan man oppretter og arbeider med klasser i C++. Vi på bruk av
+klassen string, en biblioteksklasse som forenkler strengbehandlingen betraktelig. Siste del av
+leksjonen introduserer et større case som vi kommer tilbake til utover i kurset. Her konsentrerer vi
+oss om detaljene rundt programmering av en enkelt klasse, men går også gjennom samarbeid mellom
+objekter og arv av klasser.</p>
+<p>Skrevet av Else Lervik, Ole Christian Eidheim.</p>
+<p>Eksemplene for denne leksjonen finner du her: <a href="https://gitlab.com/ntnu-iini4003/examples3" rel="nofollow">https://gitlab.com/ntnu-iini4003/examples3</a></p>
+<p>Støttelitteratur:</p>
+<ul>
+<li>Bjarne Stroustrup: A Tour of C++, Second Edition
+<ul>
+<li>kap. 4</li>
+</ul>
+</li>
+</ul>
+<p>Venn deg også til å bruke ressurser som fins på Internett, eksempelvis er
+<a href="https://en.cppreference.com/w/" rel="nofollow">https://en.cppreference.com/w/</a> en grei referanse når det gjelder string-klassen (bl.a.).</p>
+<h2><a id="user-content-kort-om-objektorientert-programmering" class="anchor" aria-hidden="true" href="#kort-om-objektorientert-programmering"><span aria-hidden="true" class="octicon octicon-link"></span></a>Kort om objektorientert programmering</h2>
+<p>Det sentrale i en objektorientert modell er objektene. Et objekt er en modell av en ting som
+problemområdet vårt handler om. Et objekt kan modellere noe konkret som en stol, et bord, en person
+eller en buss, eller noe abstrakt som for eksempel et møte eller en avtale. Objekter er alltid
+substantiver. Vi fokuserer på ansvar. Et objekt har ansvar for å kunne en del ting om seg selv.
+Eksempler:</p>
+<ul>
+<li>En bil har kunnskap om sitt eget registreringsnummer, merke og modell. Den vet hvordan den
+starter, hvordan den kjører og hvordan den stopper.</li>
+<li>En student vet sitt eget studentnummer, sine egne karakterer, navn, fødselsdato og adresse. Han
+vet hvordan han skal komme seg til studiestedet, og hvordan han skal løse eksamensoppgavene.</li>
+<li>Et møte vet hvor det holder til, hvem som skal delta, når det starter og når det er planlagt
+avsluttet. Etter en tid vet det også hvem som deltok, og når det virkelig sluttet.</li>
+</ul>
+<p>Et objekt har en <em>tilstand</em>. Tilstanden til et objekt er "en situasjon i livet til objektet, der
+objektet tilfredsstiller en betingelse, gjennomfører en aktivitet eller venter på at noe skal skje".
+Studenten kan sitte på eksamen og vente på at oppgavene blir delt ut. I det oppgavene blir delt ut
+går han over i en ny tilstand.</p>
+<p>En <em>attributt</em> er en navngitt egenskap med et definert verdiområde. I studenteksemplet er
+studentnummer og adresse attributter. Verdiene til attributtene kan for eksempel være "1234567" og
+"Storgt. 56". Attributtet "studentnummer" består alltid av sju sifre. Verdiområdet er dermed alle
+heltall på sju sifre. Attributtet "adresse" kan defineres som en tekst, eller det kan være én av en
+nærmere spesifisert mengde adresser.</p>
+<p>Et objekt har en <em>identitet</em>. Alle virkelige objekter kan skilles fra hverandre. Det samme gjelder
+våre modellobjekter. Vi skiller objektet med studentnummer 1234567 fra alle andre objekter.</p>
+<p>Et objekt har en <em>atferd</em> (engelsk: behaviour). Objektet er i stand til å utføre en mengde oppgaver.
+Åse kan endre adressen sin, og hun kan gå på forelesning. Atferden til et objekt er gitt som mengden
+av operasjoner som objektet kan utføre.</p>
+<p><em>Innkapsling</em> (engelsk: encapsulation) er en viktig egenskap ved objekter. Opplysninger om hvordan
+et objekt løser en oppgave er gjemt inne i objektet. Klientobjektet trenger ikke å vite noe om
+hvordan tjenerobjektet løser oppgaven, bare at den kan løses. Et klientobjekt forholder seg kun til
+den atferden som er definert for tjenerobjektet. Klienten kan dermed kun sende et begrenset utvalg
+meldinger til tjenerobjektet. Det er den som konstruerer objektet som bestemmer hvilke tjenester
+objektet skal tilby.</p>
+<p>En <em>klasse</em> er en beskrivelse av en mengde objekter som har det til felles, at de har de samme
+attributtene og samme atferd.</p>
+<p>Det er vanlig å illustrere en klasse ved hjelp av et klassediagram. Dette er en standard notasjon
+som er en del av Unified Modeling Language (UML). UML er uavhengig av programmeringsspråk. Figuren
+nedenfor viser et UML eksempel for en Bil-klasse.</p>
+<p><a target="_blank" rel="noopener noreferrer" href="uml.png"><img src="uml.png" alt="" style="max-width: 100%;"></a></p>
+<h2><a id="user-content-klassen-string" class="anchor" aria-hidden="true" href="#klassen-string"><span aria-hidden="true" class="octicon octicon-link"></span></a>Klassen string</h2>
+<p>Vi begynner med å se på en av standardklassene, nemlig <code>string</code> som du muligens kjenner fra andre
+programmeringsspråk. Denne klassen brukes til å representere et sett med tegn (strenger), og
+inneholder flere metoder som hjelper oss til å utføre typiske operasjoner på slike strenger. Et
+eksempel på en slik operasjon er å kombinere to strenger.</p>
+<p>I programmet ditt lager du et string-objekt:</p>
+<div class="highlight highlight-source-c++"><pre>string <span class="pl-en">name</span>(<span class="pl-s"><span class="pl-pds">"</span>Ole Pettersen<span class="pl-pds">"</span></span>);</pre></div>
+<p>Du overlater ansvaret for streng-behandlingen til det aktuelle <code>string</code>-objektet. Det programmet du
+skriver er en klient som benytter seg av de tjenestene dette objektet tilbyr. Dette gjør klienten
+ved å sende meldinger til objektet <code>name</code>:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c1">size_t</span> first_space = name.find(<span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span>, <span class="pl-c1">0</span>);       <span class="pl-c"><span class="pl-c">//</span> søker etter første mellomrom</span>
+string middle_name = <span class="pl-s"><span class="pl-pds">"</span>Johan <span class="pl-pds">"</span></span>;                <span class="pl-c"><span class="pl-c">//</span> lager nytt objekt med en blank bakerst</span>
+name.insert(first_space + <span class="pl-c1">1</span>, middle_name);    <span class="pl-c"><span class="pl-c">//</span> setter inn mellomnavnet</span>
+cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Nå er navnet lik: <span class="pl-pds">"</span></span> &lt;&lt; name &lt;&lt; endl; <span class="pl-c"><span class="pl-c">//</span> skriver ut hele navnet</span></pre></div>
+<p>Her bruker vi konstruktøren til klassen <code>string</code>. Denne konstruktøren har kun ett argument. I stedet
+for å skrive:</p>
+<div class="highlight highlight-source-c++"><pre>string <span class="pl-en">name</span>(<span class="pl-s"><span class="pl-pds">"</span>Petter<span class="pl-pds">"</span></span>);</pre></div>
+<p>kan vi da bruke tegnet = foran argumentet. (Dette er en av de reglene som ikke akkurat gjør C++
+enkelt å lære, men den er altså mye brukt.) Det vil si at vi kan skrive:</p>
+<div class="highlight highlight-source-c++"><pre>string name = <span class="pl-s"><span class="pl-pds">"</span>Petter<span class="pl-pds">"</span></span>;</pre></div>
+<p>Legg kodebitene foran inn i et program og kjør. Operatorene + og += er definert for objekter av
+klassen <code>string</code>:</p>
+<div class="highlight highlight-source-c++"><pre>string first_name = <span class="pl-s"><span class="pl-pds">"</span>Ole<span class="pl-pds">"</span></span>;
+string middle_name = <span class="pl-s"><span class="pl-pds">"</span>Anders<span class="pl-pds">"</span></span>;
+string surname = <span class="pl-s"><span class="pl-pds">"</span>Jensen<span class="pl-pds">"</span></span>;
+string name = first_name + <span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span> + middle_name + <span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span> + surname;
+cout &lt;&lt; name &lt;&lt; endl;
+name += <span class="pl-s"><span class="pl-pds">"</span>, Åsveien 34, 1234 Buelv<span class="pl-pds">"</span></span>;
+cout &lt;&lt; name &lt;&lt; endl;</pre></div>
+<p>Klassen <code>string</code> tilbyr ingen funksjoner for analyse og omforming av de enkelte tegnene i strengen.
+For å få til for eksempel omforming til bare store/små bokstaver, å sjekke om et tegn er et siffer
+eller en bokstav, m.v. må vi bruke funksjonene fra <code>&lt;cctype&gt;</code> og fra <code>&lt;cstring&gt;</code>.</p>
+<p>Vi bruker <code>[]</code>-operatoren for å referere til et enkelt tegn i strengen. Vi kan bruke <code>[]</code> både på
+venstre og høyre side av tilordningstegnet. Merk imidlertid at dersom vi bruker <code>[]</code> på venstre
+side, så må det være satt av plass til dette tegnet. Eksempel:</p>
+<div class="highlight highlight-source-c++"><pre>text = <span class="pl-s"><span class="pl-pds">"</span>hallo<span class="pl-pds">"</span></span>; <span class="pl-c"><span class="pl-c">//</span> streng med lengde 5, gyldige posisjoner er 0, 1, 2, 3, 4</span>
+text[<span class="pl-c1">3</span>] = <span class="pl-s"><span class="pl-pds">'</span>Z<span class="pl-pds">'</span></span>;  <span class="pl-c"><span class="pl-c">//</span> ok!</span>
+text[<span class="pl-c1">5</span>] = <span class="pl-s"><span class="pl-pds">'</span>X<span class="pl-pds">'</span></span>;  <span class="pl-c"><span class="pl-c">//</span> ikke ok</span></pre></div>
+<p>Programmet nedenfor går i løkke og leser inn et ord av gangen. Ordet omformes til bare store
+bokstaver og skrives ut:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> toupper.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>cctype<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  string word;
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Skriv ord, et på hver linje, avslutt med <span class="pl-cce">\"</span>x<span class="pl-cce">\"</span>:<span class="pl-pds">"</span></span> &lt;&lt; endl;
+
+  <span class="pl-c"><span class="pl-c">//</span> Vi leser ordet inn i et string-objekt</span>
+  cin &gt;&gt; word;
+
+  <span class="pl-c"><span class="pl-c">//</span> Vi kan bruke sammenligningsoperatorene for å sammenligne</span>
+  <span class="pl-c"><span class="pl-c">//</span> innholdet i streng-objektene. (For å sammenligne strenger</span>
+  <span class="pl-c"><span class="pl-c">//</span> som er lagret i char-tabeller må vi bruke strcpy(), dersom</span>
+  <span class="pl-c"><span class="pl-c">//</span> vi bruker operatorene da, vil vi sammenligne adressene, og</span>
+  <span class="pl-c"><span class="pl-c">//</span> det er sjelden meningen!)</span>
+  <span class="pl-k">while</span> (word != <span class="pl-s"><span class="pl-pds">"</span>x<span class="pl-pds">"</span></span> &amp;&amp; word != <span class="pl-s"><span class="pl-pds">"</span>X<span class="pl-pds">"</span></span>) {
+    cout &lt;&lt; word;
+    <span class="pl-k">for</span> (<span class="pl-c1">size_t</span> i = <span class="pl-c1">0</span>; i &lt; word.<span class="pl-c1">length</span>(); i++) {
+      word[i] = <span class="pl-c1">toupper</span>(word[i]);
+    }
+
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> Omformet: <span class="pl-pds">"</span></span> &lt;&lt; word &lt;&lt; endl;
+    cin &gt;&gt; word;
+  }
+}</pre></div>
+<h3><a id="user-content-å-omforme-tall-til-strenger-og-omvendt" class="anchor" aria-hidden="true" href="#å-omforme-tall-til-strenger-og-omvendt"><span aria-hidden="true" class="octicon octicon-link"></span></a>Å omforme tall til strenger og omvendt</h3>
+<p>Her benytter man samme teknikk som ved utskrift av tallet. For å kunne skrive ut en tallverdi lagret
+på binær form må den omformes til tekstlig form. Eksempelvis vil tallverdien 76 (datatype <code>int</code>)
+omformes til tegnene '7' og '6' (datatype <code>char</code>) før utskrift.</p>
+<p>I stedet for å skrive til datafil eller kommando-vinduet, "skriver" programmet til strengvariabler i
+minnet. Vi bruker klassen <code>ostringstream</code>. Følgende funksjon tar et tall som argument og returnerer
+en streng som inneholder tallet på tekstform.</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>sstream<span class="pl-pds">&gt;</span></span>
+
+string <span class="pl-en">to_string</span>(<span class="pl-k">int</span> number) {
+ ostringstream oss;
+ oss &lt;&lt; number;
+ <span class="pl-k">return</span> oss.<span class="pl-c1">str</span>();
+}</pre></div>
+<p>Merk at vi bruker samme operator som ved vanlig utskrift. Vi kan også formatere om vi ønsker det.</p>
+<h4><a id="user-content-å-omforme-en-tekst-til-tall" class="anchor" aria-hidden="true" href="#å-omforme-en-tekst-til-tall"><span aria-hidden="true" class="octicon octicon-link"></span></a>Å omforme en tekst til tall</h4>
+<p>Tilsvarende kan vi bruke klassen <code>istringstream</code> for å lese tall fra en streng. Når en streng
+inneholder mer enn ett tall, må vi lese flere ganger fra <code>istringstream</code>-objektet. Eksempel:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>sstream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  istringstream iss;
+  <span class="pl-k">int</span> int_number;
+  <span class="pl-k">double</span> double_number;
+
+  iss.<span class="pl-c1">str</span>(<span class="pl-s"><span class="pl-pds">"</span>10 12.5<span class="pl-pds">"</span></span>);
+
+  iss &gt;&gt; int_number;
+  iss &gt;&gt; double_number;
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>int_number: <span class="pl-pds">"</span></span> &lt;&lt; int_number &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>, double_number: <span class="pl-pds">"</span></span> &lt;&lt; double_number &lt;&lt; endl;
+}
+
+<span class="pl-c"><span class="pl-c">//</span> Utskrift:</span>
+<span class="pl-c"><span class="pl-c">//</span> int_number: 10, double_number: 12.5</span></pre></div>
+<h2><a id="user-content-å-programmere-en-enkel-klasse" class="anchor" aria-hidden="true" href="#å-programmere-en-enkel-klasse"><span aria-hidden="true" class="octicon octicon-link"></span></a>Å programmere en enkel klasse</h2>
+<p>I dette kapitlet skal vi se på hvordan vi lager en enkel klasse. Dere vil kanskje kjenne igjen mye
+fra andre programmeringsspråk, spesielt oppbyggingen av klassene. Noe er likevel litt forskjellig i
+C++, som for eksempel syntaksen, og ordbruken av de ulike delene av klassedeklarasjonene og
+klasseimplementasjonene.</p>
+<p>Vi skal lage en klasse Flate sammen med et enkelt klientprogram. Filen flateTest.cpp inneholder både
+klassedeklarasjonen, klasseimplementasjonen og <code>main()</code>. Klassedeklarasjonen fungerer på samme måte
+som funksjonsprototyper du kjenner fra øving 1. Den gjør klassen og dens tjenester kjent for main().
+Figuren under viser sammenhengen mellom klassediagrammet og klassen.</p>
+<p><a target="_blank" rel="noopener noreferrer" href="uml2.png"><img src="uml2.png" alt="" style="max-width: 100%;"></a></p>
+<p>I objektorientert programmering er det vanlig å skjule datastrukturene. Derfor deklarerer (og
+definerer) vi disse under det reserverte ordet <code>private</code>. De er dermed ikke tilgjengelig utenfor
+klassen. Operasjonene i klassediagrammet representerer klassens offentlig tilgjengelige tjenester,
+vi setter opp funksjonsprototypene under det reserverte ordet <code>public</code>.</p>
+<p>Både data og funksjoner er medlemmer i klassen. Vi skiller mellom <em>datamedlemmer</em> og
+<em>funksjonsmedlemmer</em>.</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> surface_test.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-c"><span class="pl-c">//</span> ==&gt; Her kommer definisjonen av klassen</span>
+<span class="pl-k">class</span> <span class="pl-en">Surface</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">Surface</span>(<span class="pl-k">const</span> string &amp;name_, <span class="pl-k">double</span> length_, <span class="pl-k">double</span> width_);
+  <span class="pl-k">const</span> string &amp;<span class="pl-en">get_name</span>() <span class="pl-k">const</span>;
+  <span class="pl-k">double</span> <span class="pl-en">get_length</span>() <span class="pl-k">const</span>;
+  <span class="pl-k">double</span> <span class="pl-en">get_width</span>() <span class="pl-k">const</span>;
+  <span class="pl-k">double</span> <span class="pl-en">get_area</span>() <span class="pl-k">const</span>;
+  <span class="pl-k">double</span> <span class="pl-en">get_circumference</span>() <span class="pl-k">const</span>;
+
+<span class="pl-k">private:</span>
+  string name; <span class="pl-c"><span class="pl-c">//</span> til identifikasjon</span>
+  <span class="pl-k">double</span> length;
+  <span class="pl-k">double</span> width;
+};
+
+<span class="pl-c"><span class="pl-c">//</span> ==&gt; Her kommer implementasjonen av klassen</span>
+<span class="pl-en">Surface::Surface</span>(<span class="pl-k">const</span> string &amp;name_, <span class="pl-k">double</span> length_, <span class="pl-k">double</span> width_)
+    : name(name_), length(length_), width(width_) {}
+
+<span class="pl-k">const</span> string &amp;<span class="pl-en">Surface::get_name</span>() <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> name;
+}
+
+<span class="pl-k">double</span> <span class="pl-en">Surface::get_length</span>() <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> length;
+}
+
+<span class="pl-k">double</span> <span class="pl-en">Surface::get_width</span>() <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> width;
+}
+
+<span class="pl-k">double</span> <span class="pl-en">Surface::get_area</span>() <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> width * length;
+}
+
+<span class="pl-k">double</span> <span class="pl-en">Surface::get_circumference</span>() <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> <span class="pl-c1">2</span> * (length + width);
+}
+
+<span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> Dette er et program som tester klassen Flate .</span>
+<span class="pl-c"><span class="pl-c">//</span> Vi tester klassen ved å opprette et objekt av klassen.</span>
+<span class="pl-c"><span class="pl-c">//</span> Deretter henter vi ut dataene fra objektet og skriver disse ut,</span>
+<span class="pl-c"><span class="pl-c">//</span> slik at vi kan se at objektet virkelig inneholder</span>
+<span class="pl-c"><span class="pl-c">//</span> de dataene vi puttet inn, og at det gjør sine beregninger riktig.</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-c"><span class="pl-c">//</span> Trinn 1: Lager et objekt av klassen.</span>
+  Surface <span class="pl-c1">floor</span>(<span class="pl-s"><span class="pl-pds">"</span>Torils golv<span class="pl-pds">"</span></span>, <span class="pl-c1">4.8</span>, <span class="pl-c1">2.3</span>);
+
+  <span class="pl-c"><span class="pl-c">//</span> Trinn 2: Henter ut data og får utført beregninger på objektet</span>
+  string name = <span class="pl-c1">floor</span>.<span class="pl-c1">get_name</span>();
+  <span class="pl-k">double</span> width = <span class="pl-c1">floor</span>.<span class="pl-c1">get_width</span>();
+  <span class="pl-k">double</span> length = <span class="pl-c1">floor</span>.<span class="pl-c1">get_length</span>();
+  <span class="pl-k">double</span> area = <span class="pl-c1">floor</span>.<span class="pl-c1">get_area</span>();
+  <span class="pl-k">double</span> circumference = <span class="pl-c1">floor</span>.<span class="pl-c1">get_circumference</span>();
+
+  <span class="pl-c"><span class="pl-c">//</span> Trinn 3: Skriver ut resultatene slik at de kan kontrolleres</span>
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Data om golvet med navn: <span class="pl-pds">"</span></span> &lt;&lt; name &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>:<span class="pl-pds">"</span></span> &lt;&lt; endl;
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Bredde: <span class="pl-pds">"</span></span> &lt;&lt; width &lt;&lt; endl;
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Lengde: <span class="pl-pds">"</span></span> &lt;&lt; length &lt;&lt; endl;
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Areal: <span class="pl-pds">"</span></span> &lt;&lt; area &lt;&lt; endl;
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Omkrets: <span class="pl-pds">"</span></span> &lt;&lt; circumference &lt;&lt; endl;
+}</pre></div>
+<p>Før <code>main()</code> vises klasseimplementasjonen. Her finner vi definisjonen av alle funksjonene. Merk at
+vi definerer funksjoner som er inni navnerommet gitt av klassen <code>Surface</code>. Derfor må vi sette opp
+<code>Surface::</code> foran funksjonsnavnene. Dermed får vi tilgang til alle data (og funksjoner) deklarert
+inni klassen <code>Surface</code>. Vi ser at vi bruker variablene <code>name</code>, <code>length</code> og <code>width</code> inni disse
+funksjonene.</p>
+<h3><a id="user-content-å-dele-opp-surface_testcpp-i-flere-filer" class="anchor" aria-hidden="true" href="#å-dele-opp-surface_testcpp-i-flere-filer"><span aria-hidden="true" class="octicon octicon-link"></span></a>Å dele opp surface_test.cpp i flere filer</h3>
+<p>Bare kort om oppdeling av kildekode i to filer. Det er vanlig at funksjonsprototyper ligger i header
+(.hpp) filer, mens definisjonen (implementasjonen) av funksjonene ligger et annet sted (.cpp-filer).
+Slik gjør vi med klasser også, vi legger deklarasjonen på en header-fil, mens definisjonen ligger på
+en annen fil.</p>
+<p>I eksempelkoden til denne leksjonen er dette gjort for surface_test.cpp under katalogen
+"refurbishment". Vi ser at klassedeklarasjonen ligger i surface.hpp-filen, mens implementasjonen
+ligger i surface.cpp. For at cpp-filene skal kompilere må vi inkludere surface.hpp. En av hensiktene
+med dette er at klassen ikke trenger å kompileres om for hver gang. Nå er vel ikke det all verden
+her, men i store systemer har dette betydning.</p>
+<p>I .hpp-filene har vi også tatt med:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">pragma</span> once</pre></div>
+<p>Dette er vanlig for å unngå redeklarering dersom samme header-fil inkluderes flere ganger, direkte
+eller indirekte. Linjer som begynner med # er direktiver til preprossessoren.</p>
+<h3><a id="user-content-bruken-av-const" class="anchor" aria-hidden="true" href="#bruken-av-const"><span aria-hidden="true" class="octicon octicon-link"></span></a>Bruken av <code>const</code>
+</h3>
+<h4><a id="user-content-medlemsfunksjoner-som-endrerikke-endrer-datainnholdet-i-et-objekt" class="anchor" aria-hidden="true" href="#medlemsfunksjoner-som-endrerikke-endrer-datainnholdet-i-et-objekt"><span aria-hidden="true" class="octicon octicon-link"></span></a>Medlemsfunksjoner som endrer/ikke endrer datainnholdet i et objekt</h4>
+<p>Ingen av funksjonene foran forandrer på datainnholdet i objektet. Derfor har de <code>const</code> etter seg.
+Dette forteller den som skal bruke funksjonene at disse kan trygt brukes uten at man risikerer at
+datainnholdet forandres.</p>
+<p>Nå er kanskje ikke eksemplet foran best egnet til å vise endring av datainnhold. Et golv eller en
+vegg forandrer sjelden bredde og lengde. Men la oss nå tenke oss at det likevel er tilfelle. Vi
+ønsker å sende meldingen ”Du skal ha lengde 3.7” til flateobjektet. Det blir inn-argument til
+medlemsfunksjonen. I klasse-deklarasjonen ser det slik ut:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">void</span> <span class="pl-en">set_length</span>(<span class="pl-k">double</span> length);  <span class="pl-c"><span class="pl-c">//</span> Merk, ikke const her!</span></pre></div>
+<p>I klientprogrammet skriver vi:</p>
+<div class="highlight highlight-source-c++"><pre>floor.set_length(<span class="pl-c1">3.7</span>);</pre></div>
+<p>Funksjoner som endrer verdien til et datamedlem kalles gjerne sett-funksjoner.</p>
+<h4><a id="user-content-objekter-som-inn-argument" class="anchor" aria-hidden="true" href="#objekter-som-inn-argument"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objekter som inn-argument</h4>
+<p>Vi skal se nærmere på inn-argumentet <code>name_</code> i konstruktøren:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-en">Surface::Surface</span>(<span class="pl-k">const</span> string &amp;name_, <span class="pl-k">double</span> length_, <span class="pl-k">double</span> width_)
+    : name(name_), length(length_), width(width_) {}</pre></div>
+<p>For ordens skyld gjør vi oppmerksom på at det som nå sies ikke er spesielt for konstruktører, det
+gjelder også inn-argumenter i funksjoner.</p>
+<p>Vi referanseoverfører argumentet. Vi har tidligere sett hvordan vi referanseoverfører ut-argumenter.
+Det er imidlertid vanlig å referanseoverføre inn-argumenter også, dersom disse er objekter. For å
+markere at det er inn-argumenter setter vi <code>const</code> foran. Da vil funksjonen ikke kunne endre på
+argumentet (dersom funksjonen endrer argumentet ville det jo ikke lenger være et inn-argument, men
+et inn-/ut-argument eller ut-argument).</p>
+<p>Vi kunne selvfølgelig ha brukt verdioverføring:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-en">Surface::Surface</span>(string name_, <span class="pl-k">double</span> length_, <span class="pl-k">double</span> width_)
+    : name(name_), length(length_), width(width_) {}</pre></div>
+<p>Imidlertid er referanseoverføring både raskere og mindre plasskrevende. Verdioverføring medfører som
+kjent at det lages en kopi av det aktuelle argumentet, mens en referanse bare er et annet navn på en
+allerede eksisterende variabel.</p>
+<h4><a id="user-content-objekt-som-returverdi" class="anchor" aria-hidden="true" href="#objekt-som-returverdi"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objekt som returverdi</h4>
+<p>La oss se på funksjonen som returnerer en <code>const</code>-referanse til navn:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">const</span> string &amp;<span class="pl-en">Surface::get_name</span>() <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> name;
+}</pre></div>
+<p>Her returnerer vi en referanse til datamedlemmet. Merk at vi også her bruker <code>const</code>. Dette for å
+beskytte datamedlemmet mot klienten, slik at den ikke endrer verdien til datamedlemmet.</p>
+<p>Vi kan selvfølgelig returnere nye objekter i stedet for referanser til eksisterende. På samme måte
+som ved verdioverføring av argumenter lages det en kopi av originalen. Det er denne kopien som
+legges i variabelen på venstre side av tilordningstegnet. Eksempel:</p>
+<div class="highlight highlight-source-c++"><pre>string <span class="pl-en">Surface::get_name</span>() <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> name;
+}</pre></div>
+<p>I klientprogrammet kan det stå:</p>
+<div class="highlight highlight-source-c++"><pre>Surface surface;
+string surface_name = surface.get_name();</pre></div>
+<p><code>return</code>-setningen lager en kopi av datamedlemmet <code>name</code> og sender denne midlertidige kopien ut av
+funksjonen. I klientprogrammet blir kopien overført til objektet <code>surface_name</code> av kompilatoren
+(dette gjelder fra og med C++11 standarden). Resultatet er at kun én kopiering blir utført.</p>
+<h3><a id="user-content-konstruktører" class="anchor" aria-hidden="true" href="#konstruktører"><span aria-hidden="true" class="octicon octicon-link"></span></a>Konstruktører</h3>
+<p>En konstruktør er som kjent en medlemsfunksjon med samme navn som klassen. Vi kan lage ingen, én
+eller flere konstruktører i en klasse. Dersom vi lager flere konstruktører, må de skille seg fra
+hverandre ved at argumentlistene er forskjellige.</p>
+<p>Dersom vi ikke lager noen konstruktør, blir det laget en standardkonstruktør. Dette er en
+konstruktør uten argumenter og uten innhold, den ser rett og slett slik ut:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-en">Surface::Surface</span>() {}</pre></div>
+<p>En klient bruker denne konstruktøren ved å deklarere variabelen slik:</p>
+<div class="highlight highlight-source-c++"><pre>Surface surface;</pre></div>
+<p>Dersom vi lager minst én konstruktør selv (for eksempel:
+<code>Surface::Surface(const string &amp;name_, double length_, double width_)</code>), vil ikke denne
+standardkonstruktøren bli laget. Dersom vi da forsøker oss på deklarasjonen over, vil vi få
+kompileringsfeil om ikke <code>Surface::Surface()</code> også er definert.</p>
+<hr>
+<p><strong>Advarsel</strong></p>
+<p>Vi bør ikke sette vår lit til den ferdiglagde standardkonstruktøren. Den medfører at datamedlemmene
+får vilkårlige startverdier. Vi bør i stedet enten lage vår egen konstruktør med tom argumentliste,
+der vi gir datamedlemmene fornuftige startverdier, eller vi bør lage andre konstruktører som vi
+dermed tvinger klienten til å bruke.</p>
+<hr>
+<p>En egenlaget standardkonstruktør kan for eksempel se slik ut:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-en">Surface::Surface</span>() {
+ <span class="pl-c"><span class="pl-c">//</span> name har allerede blitt initialisert til standardverdien ""</span>
+ name = <span class="pl-s"><span class="pl-pds">"</span>NN<span class="pl-pds">"</span></span>;
+ length = <span class="pl-c1">0.0</span>;
+ width = <span class="pl-c1">0.0</span>;
+}</pre></div>
+<p>Problemet over er at noen av datamedlemmene blir initialisert med standardverdier før koden i
+konstruktøren blir kjørt, og deretter får datamedlemmene nye verdier i koden. Vi bør i stedet skrive
+følgende for å initialisere datamedlemmer:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-en">Surface::Surface</span>(): name(<span class="pl-s"><span class="pl-pds">"</span>NN<span class="pl-pds">"</span></span>), length(<span class="pl-c1">0.0</span>), width(<span class="pl-c1">0.0</span>) {}</pre></div>
+<h4><a id="user-content-c11" class="anchor" aria-hidden="true" href="#c11"><span aria-hidden="true" class="octicon octicon-link"></span></a>C++11</h4>
+<p>I C++11 kan en initialisere datamedlemmene med konstanter i klassedeklarasjonen som vist nedenfor:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">class</span> <span class="pl-en">Surface</span> {
+<span class="pl-k">public:</span>
+   <span class="pl-en">Surface</span>(<span class="pl-k">const</span> string &amp;startNavn, <span class="pl-k">double</span> startLengde, <span class="pl-k">double</span> startBredde);
+   <span class="pl-en">Surface</span>() {};
+   <span class="pl-k">const</span> string &amp;<span class="pl-en">get_name</span>() <span class="pl-k">const</span>;
+   <span class="pl-k">double</span> <span class="pl-en">get_length</span>() <span class="pl-k">const</span>;
+   <span class="pl-k">double</span> <span class="pl-en">get_width</span>() <span class="pl-k">const</span>;
+   <span class="pl-k">double</span> <span class="pl-en">get_area</span>() <span class="pl-k">const</span>;
+   <span class="pl-k">double</span> <span class="pl-en">get_circumference</span>() <span class="pl-k">const</span>;
+
+<span class="pl-k">private:</span>
+   string name = <span class="pl-s"><span class="pl-pds">"</span>NN<span class="pl-pds">"</span></span>;  <span class="pl-c"><span class="pl-c">//</span> C++11</span>
+   <span class="pl-k">double</span> length = <span class="pl-c1">0.0</span>; <span class="pl-c"><span class="pl-c">//</span> C++11</span>
+   <span class="pl-k">double</span> width = <span class="pl-c1">0.0</span>;  <span class="pl-c"><span class="pl-c">//</span> C++11</span>
+};</pre></div>
+<p>Merk at vi her har lagt til <code>Surface() {};</code> slik at vi kan bruke konstruktør uten parametere. Mindre
+og enkle funksjonsmedlemmer blir ofte lagt under klassedeklarasjonen, derfor kan vi skrive <code>{}</code> på
+slutten av <code>Surface()</code>.</p>
+<h2><a id="user-content-samarbeid-mellom-objekter" class="anchor" aria-hidden="true" href="#samarbeid-mellom-objekter"><span aria-hidden="true" class="octicon octicon-link"></span></a>Samarbeid mellom objekter</h2>
+<p>Figuren nedenfor viser klassediagrammet som ble presentert tidligere, men utvidet med en ekstra
+klasse <code>Covering</code> (norsk: Belegg). Et objekt av klassen <code>Covering</code> har ansvaret for å beregne antall
+meter (og pris) som skal til for å dekke en flate. For å kunne gjøre det må objektet vite hvilken
+flate det er snakk om. Vi kan ikke lagre informasjon om flaten i objektet, for vi må jo kunne
+beregne dette for mange forskjellige flater, ja, for hvilken som helst flate, faktisk.</p>
+<p><a target="_blank" rel="noopener noreferrer" href="uml3.png"><img src="uml3.png" alt="" style="max-width: 100%;"></a></p>
+<p>Som klient sender vi meldingen <code>get_meters()</code> (<code>finnAntMeter()</code> i figuren) til <code>Covering</code>-objektet.
+Sammen med meldingen sender vi opplysninger om flaten. Dette blir argument til funksjonen. Vi kan
+enten sende bredde og lengde som to tall, eller vi kan sende inn flate-objektet. Vi velger her å
+sende inn flate-objektet. Da ser prototypen slik ut:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> covering.hpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+
+#<span class="pl-k">pragma</span> once
+
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">"</span>surface.hpp<span class="pl-pds">"</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">const</span> <span class="pl-k">double</span> grense = <span class="pl-c1">0.02</span>; <span class="pl-c"><span class="pl-c">//</span> grense for å beregne en bredde ekstra</span>
+
+<span class="pl-k">class</span> <span class="pl-en">Covering</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">Covering</span>(string name_, <span class="pl-k">double</span> price_, <span class="pl-k">double</span> width_);
+  string <span class="pl-en">get_name</span>() <span class="pl-k">const</span> { <span class="pl-k">return</span> name; }
+  <span class="pl-k">double</span> <span class="pl-en">get_price</span>() <span class="pl-k">const</span> { <span class="pl-k">return</span> price; }
+  <span class="pl-k">double</span> <span class="pl-en">get_width</span>() <span class="pl-k">const</span> { <span class="pl-k">return</span> width; }
+
+  <span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c">  * Skal beregne antall meter som trengs til en flate.</span>
+<span class="pl-c">  * Teppet legges alltid på tvers av golvets lengde.</span>
+<span class="pl-c">  * For å finne ut om det er billigere å legge teppet andre veien</span>
+<span class="pl-c">  * må klienten bytte om lengde og bredde i den flaten som</span>
+<span class="pl-c">  * sendes inn som argument.</span>
+<span class="pl-c">  <span class="pl-c">*/</span></span>
+  <span class="pl-k">double</span> <span class="pl-en">get_meters</span>(<span class="pl-k">const</span> Surface &amp;surface) <span class="pl-k">const</span>;
+  <span class="pl-k">double</span> <span class="pl-en">get_price</span>(<span class="pl-k">const</span> Surface &amp;surface) <span class="pl-k">const</span>;
+
+<span class="pl-k">private:</span>
+  string name;  <span class="pl-c"><span class="pl-c">//</span> identifiserer belegget</span>
+  <span class="pl-k">double</span> price; <span class="pl-c"><span class="pl-c">//</span> pris meter belegg (i lengden)</span>
+  <span class="pl-k">double</span> width; <span class="pl-c"><span class="pl-c">//</span> meter</span>
+};</pre></div>
+<hr>
+<p>Merk spesielt <code>const Surface &amp;surface</code> i :</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">double</span> <span class="pl-en">get_meters</span>(<span class="pl-k">const</span> Surface &amp;surface) <span class="pl-k">const</span>;</pre></div>
+<p>Her er parameteren Surface en <code>const</code>-referanse som muliggjør både:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">double</span> meters = covering.get_meters(Flate(<span class="pl-s"><span class="pl-pds">"</span>Berits golv<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>, <span class="pl-c1">6</span>));</pre></div>
+<p>og</p>
+<div class="highlight highlight-source-c++"><pre>Surface <span class="pl-en">surface</span>(<span class="pl-s"><span class="pl-pds">"</span>Berits golv<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>, <span class="pl-c1">6</span>);
+<span class="pl-k">double</span> meters = covering.get_meters(surface);</pre></div>
+<p>I C++ dokumentasjon ser en ofte disse to begrepene:</p>
+<ul>
+<li>
+<em>r-value</em> - verdi/objekt som ikke har en minneadresse</li>
+<li>
+<em>l-value</em> - verdi/objekt som har en minneadresse</li>
+</ul>
+<p><code>Surface("Berits golv", 5, 6)</code> er en konstant (<em>r-value</em>). Uten <code>const</code> i <code>const Surface &amp;surface</code>
+kan en bare bruke et objekt som er lagret i en variabel (<em>l-value</em>) som parameter til <code>get_meters</code>:</p>
+<div class="highlight highlight-source-c++"><pre>Surface <span class="pl-en">surface</span>(<span class="pl-s"><span class="pl-pds">"</span>Berits golv<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>, <span class="pl-c1">6</span>);
+<span class="pl-k">double</span> meters = belegget.get_meters(surface);</pre></div>
+<hr>
+<p>Implementasjonen ser slik ut:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> covering.hpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">"</span>covering.hpp<span class="pl-pds">"</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">"</span>surface.hpp<span class="pl-pds">"</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-en">Covering::Covering</span>(string name_, <span class="pl-k">double</span> price_, <span class="pl-k">double</span> width_)
+    : name(name_), price(price_), width(width_) {}
+
+<span class="pl-k">double</span> <span class="pl-en">Covering::get_meters</span>(<span class="pl-k">const</span> Surface &amp;surface) <span class="pl-k">const</span> {
+  <span class="pl-k">double</span> surface_length = surface.<span class="pl-c1">get_length</span>();
+  <span class="pl-k">double</span> surface_width = surface.<span class="pl-c1">get_width</span>();
+
+  <span class="pl-k">int</span> antBredder = surface_length / width;
+  <span class="pl-k">double</span> rest = surface_length - antBredder * width;
+  <span class="pl-k">if</span> (rest &gt;= grense)
+    antBredder++;
+  <span class="pl-k">return</span> antBredder * surface_width;
+}
+
+<span class="pl-k">double</span> <span class="pl-en">Covering::get_price</span>(<span class="pl-k">const</span> Surface &amp;surface) <span class="pl-k">const</span> {
+  <span class="pl-k">return</span> <span class="pl-c1">get_meters</span>(surface) * price;
+}</pre></div>
+<p>En meget enkel testklient kan se slik ut:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> covering_test.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">"</span>covering.hpp<span class="pl-pds">"</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">"</span>surface.hpp<span class="pl-pds">"</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  Surface <span class="pl-smi">surface</span>(<span class="pl-s"><span class="pl-pds">"</span>Berits golv<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>, <span class="pl-c1">6</span>);
+  Covering <span class="pl-smi">covering</span>(<span class="pl-s"><span class="pl-pds">"</span>Vegg-til-vegg teppe<span class="pl-pds">"</span></span>, <span class="pl-c1">243.50</span>, <span class="pl-c1">5</span>);
+  <span class="pl-k">double</span> meters = covering.<span class="pl-c1">get_meters</span>(surface);
+  <span class="pl-k">double</span> price = covering.<span class="pl-c1">get_price</span>(surface);
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Du trenger <span class="pl-pds">"</span></span> &lt;&lt; meters &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> meter, pris kr. <span class="pl-pds">"</span></span> &lt;&lt; price &lt;&lt; endl;
+}
+
+<span class="pl-c"><span class="pl-c">/*</span> Utskrift:</span>
+<span class="pl-c">Du trenger 6 meter, pris kr. 1461</span>
+<span class="pl-c"><span class="pl-c">*/</span></span></pre></div>
+<p>Denne figuren viser meldingsutvekslingen ved beregning av antall meter golvbelegg:</p>
+<p><a target="_blank" rel="noopener noreferrer" href="uml4.png"><img src="uml4.png" alt="" style="max-width: 100%;"></a></p>
+<h2><a id="user-content-arv" class="anchor" aria-hidden="true" href="#arv"><span aria-hidden="true" class="octicon octicon-link"></span></a>Arv</h2>
+<p>Vi tar utgangspunkt i klassene vist i figuren nedenfor. Vi ser at disse tre klassene har en del
+felles. Alle sammen har <code>navn</code> og <code>pris</code> som attributter, samt operasjonene <code>finnNavn</code>, <code>skrivUt</code> og
+<code>finnPrisPrM/-Liter/-Rull</code>. De tre siste gir vi et felles navn: <code>finnPrisPrEnhet</code>.</p>
+<p><a target="_blank" rel="noopener noreferrer" href="uml5.png"><img src="uml5.png" alt="" style="max-width: 100%;"></a></p>
+<p>I neste figur har vi samlet det som er felles for de tre klassene i klassen <code>Materiale</code>. Vi sier at
+klassen <code>Materiale</code> (<em>basisklassen</em>) representerer en generalisering av klassene <code>Belegg</code>, <code>Maling</code>
+og <code>Tapet</code> (<em>subklasser</em>). På den annen side er klassene <code>Belegg</code>, <code>Maling</code> og <code>Tapet</code>
+spesialiseringer av klassen <code>Materiale</code>.</p>
+<p><a target="_blank" rel="noopener noreferrer" href="uml6.png"><img src="uml6.png" alt="" style="max-width: 100%;"></a></p>
+<p>Operasjonen <code>skrivUt</code> finner vi i alle fire klassene. Årsaken til dette er at implementasjonen av
+denne operasjonen er forskjellig for alle klassene.</p>
+<p>Generalisering uttrykker alltid et "er"-forhold. Av figuren over leser vi dermed følgende i pilens
+retning:</p>
+<ul>
+<li>Et belegg er et materiale</li>
+<li>En maling er et materiale</li>
+<li>En tapet er et materiale</li>
+</ul>
+<p>Vi kan også, som nevnt tidligere, se på de objektene som en subklasse beskriver som en delmengde av
+de objektene basisklassen beskriver:</p>
+<ul>
+<li>Alle belegg utgjør en delmengde av alle materialer</li>
+<li>Alle malinger utgjør en delmengde av alle materialer</li>
+<li>Alle tapeter utgjør en delmengde av alle materialer</li>
+</ul>
+<hr>
+<p><strong>Merk 1</strong></p>
+<p>Dersom vi ikke kan si at et objekt av en subklasse også er et objekt av basisklassen, har vi
+sannsynligvis ikke en ekte generalisering, og vi bør i stedet modellere sammenhengen mellom klassene
+på en annen måte.</p>
+<hr>
+<hr>
+<p><strong>Merk 2</strong></p>
+<p><strong><em>Forveksle ikke aggregering med generalisering/spesialisering!</em></strong></p>
+<p>En aggregering mellom to klasser betyr at det eksisterer en forbindelse mellom objektene i de to
+klassene. Et objekt av den ene klassen består av et eller flere objekter av den andre klassen.</p>
+<p>Generalisering/spesialisering uttrykker ikke et forhold mellom objekter av de involverte klassene,
+men mellom klassene (objektbeskrivelsene) som sådanne. Objektene som beskrives av en spesialisert
+klasse utgjør en delmengde av objektene som beskrives av den generelle klassen.</p>
+<hr>
+<h3><a id="user-content-å-programmere-et-klassetre" class="anchor" aria-hidden="true" href="#å-programmere-et-klassetre"><span aria-hidden="true" class="octicon octicon-link"></span></a>Å programmere et klassetre</h3>
+<p>Vi skal se hvordan vi programmerer klassetreet vist i den forrige figuren. La oss begynne øverst.
+Klassen Materiale er deklarert som følger:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">class</span> <span class="pl-en">Material</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">Material</span>(<span class="pl-k">const</span> std::string &amp;name_, <span class="pl-k">double</span> price_);
+  <span class="pl-k">const</span> std::string &amp;<span class="pl-en">get_name</span>() <span class="pl-k">const</span> { <span class="pl-k">return</span> name; }
+  <span class="pl-k">double</span> <span class="pl-en">get_price</span>() <span class="pl-k">const</span> { <span class="pl-k">return</span> price; }
+  <span class="pl-k">void</span> <span class="pl-en">print</span>() <span class="pl-k">const</span>;
+
+<span class="pl-k">private:</span>
+  std::string name; <span class="pl-c"><span class="pl-c">//</span> identifiserer materialet</span>
+  <span class="pl-k">double</span> price;     <span class="pl-c"><span class="pl-c">//</span> pris pr enhet</span>
+};</pre></div>
+<p>Ikke mye spesielt her. Og det er ikke å forvente heller. For det er slik at det alltid skal være
+mulig å lage en <em>subklasse</em> til en eksisterende klasse. En klasse kjenner ikke til sine
+<em>subklasser</em>. Derimot må en <em>subklasse</em> alltid kjenne til hvilken (eller "hvilke". I C++ kan en
+klasse ha mer enn en basisklasse. Dette kalles multippel arv) klasse den er <em>subklasse</em> til.</p>
+<p>Vi forventer derfor at klassen <code>Covering</code> skiller seg litt fra det vi er vant med:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">class</span> <span class="pl-en">Covering</span> : <span class="pl-k">public</span> <span class="pl-en">Material</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">Covering</span>(<span class="pl-k">const</span> std::string &amp;name_, <span class="pl-k">double</span> price_, <span class="pl-k">double</span> width_);
+  <span class="pl-k">double</span> <span class="pl-en">get_width</span>() <span class="pl-k">const</span> { <span class="pl-k">return</span> width; }
+  <span class="pl-k">void</span> <span class="pl-en">print</span>() <span class="pl-k">const</span>;
+
+<span class="pl-k">private:</span>
+  <span class="pl-k">double</span> width; <span class="pl-c"><span class="pl-c">//</span> meter</span>
+};</pre></div>
+<p>Vel, det var ikke mye. Men, altså, etter klassenavnet finner vi <code>: public Material</code>. Her forteller
+vi at klassen Covering er en <em>subklasse</em> til klassen <code>Material</code> (Det står public, det vil det nesten
+alltid gjøre).</p>
+<hr>
+<p>En subklasse arver data- og funksjonsmedlemmer fra basisklassen (Merk forskjellen i begrepsbruk fra
+Java der private medlemmer ikke arves, men eventuelle data blir likevel en del av objektet). Når vi
+programmerer subklassen, programmerer vi bare det som skiller den fra basisklassen.</p>
+<hr>
+<p>Implementasjonen til de to klassene er som følger. De ulike delene av implementasjonen gjennomgås
+lenger ut i denne leksjonen.</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-en">Material::Material</span>(<span class="pl-k">const</span> string &amp;name_, <span class="pl-k">double</span> price_) : name(name_), price(price_) {}
+
+<span class="pl-k">void</span> <span class="pl-en">Material::print</span>() <span class="pl-k">const</span> {
+  cout &lt;&lt; endl
+       &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Navn:          <span class="pl-pds">"</span></span> &lt;&lt; name &lt;&lt; endl
+       &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Pris pr enhet  <span class="pl-pds">"</span></span> &lt;&lt; price &lt;&lt; endl;
+}
+
+<span class="pl-en">Covering::Covering</span>(<span class="pl-k">const</span> string &amp;name_, <span class="pl-k">double</span> price_, <span class="pl-k">double</span> width_)
+    : Material(name_, price_),
+      width(width_) {}
+
+<span class="pl-k">void</span> <span class="pl-en">Covering::print</span>() <span class="pl-k">const</span> {
+  <span class="pl-c1">Material::print</span>();
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>For belegg: <span class="pl-pds">"</span></span> &lt;&lt; endl
+       &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Bredde:         : <span class="pl-pds">"</span></span> &lt;&lt; width &lt;&lt; endl;
+}</pre></div>
+<p>Legg merke til implementasjonen av <code>Covering::print()</code> der vi først kaller <code>Material::print()</code>. Vi
+må her kvalifisere navnet (<code>Material::</code>). Dersom vi ikke gjør det, vil funksjonen kalle seg selv.
+Kvalifisering er nødvendig dersom vi skal referere til et arvet navn, som er identisk med et navn
+som også er deklarert i klassen.</p>
+<p>Se også implementasjonen av konstruktøren til klassen <code>Covering</code> (<code>Covering::Covering</code>).
+Konstruktører arves ikke, men vi bruker her konstruktøren til klassen <code>Material</code>, og deretter
+initialiserer datamedlemmet <code>width</code> som <code>Covering</code> har i tillegg.</p>
+<p>Her er et lite program som prøver klassen <code>Covering</code>:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  Covering <span class="pl-smi">covering</span>(<span class="pl-s"><span class="pl-pds">"</span>Super Duper Dux<span class="pl-pds">"</span></span>, <span class="pl-c1">433.50</span>, <span class="pl-c1">4</span>);
+  <span class="pl-c"><span class="pl-c">//</span> get_name() og get_price() arves til subklassene:</span>
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Navn: <span class="pl-pds">"</span></span> &lt;&lt; covering.<span class="pl-c1">get_name</span>() &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>, pris: <span class="pl-pds">"</span></span>
+                   &lt;&lt; covering.<span class="pl-c1">get_price</span>() &lt;&lt; endl;
+  <span class="pl-c"><span class="pl-c">//</span> Objektet bruker sin egen print()-funksjon (og ikke den som er arvet)</span>
+  belegget.<span class="pl-c1">print</span>();
+}
+
+<span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c">Utskrift:</span>
+<span class="pl-c">Navn: Super Duper Dux, pris: 433.5</span>
+<span class="pl-c">Navn: Super Duper Dux</span>
+<span class="pl-c"></span>
+<span class="pl-c">Pris pr enhet 433.5</span>
+<span class="pl-c"></span>
+<span class="pl-c">For belegg:</span>
+<span class="pl-c"></span>
+<span class="pl-c">Bredde: : 4</span>
+<span class="pl-c"><span class="pl-c">*/</span></span></pre></div>
+<p>Kildekoden i dette delkapitlet er samlet i material.cpp i eksempel mappen.</p>
+<h3><a id="user-content-det-reserverte-ordet-protected" class="anchor" aria-hidden="true" href="#det-reserverte-ordet-protected"><span aria-hidden="true" class="octicon octicon-link"></span></a>Det reserverte ordet protected</h3>
+<p><code>protected</code> brukes på samme måte som private og public. Datamedlemmer med <code>protected</code> foran seg er
+kun tilgjengelig i subklasser.</p>
+<p>La oss se på eksemplet foran. Vi ønsker nok ikke at klienter skal lage objekter av klassen
+<code>Material</code>, vi vil at de skal bestemme seg for hvilken type materiale de har foran seg. Vi kan få
+til dette ved å sette konstruktøren privat, men det er jo litt dumt her, for subklasser må jo kunne
+få tilgang til konstruktøren. Løsningen er å lage konstruktøren protected. Videre vil vi heller ikke
+at klienter skal bruke funksjonen <code>print()</code> som fins i klassen <code>Material</code>. (Hva i all verden skulle
+de bruke den til, og hvordan skulle de få til å bruke den, dersom de ikke kan lage objekter av
+klassen?)</p>
+<p>Vi gjør altså konstruktøren og <code>print()</code> i klassen <code>Material</code> <code>protected</code>:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">class</span> <span class="pl-en">Material</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-k">const</span> string &amp;<span class="pl-en">get_name</span>() <span class="pl-k">const</span> { <span class="pl-k">return</span> name; }
+  <span class="pl-k">double</span> <span class="pl-en">get_price</span>() <span class="pl-k">const</span> { <span class="pl-k">return</span> price; }
+<span class="pl-k">protected:</span>
+  <span class="pl-en">Material</span>(<span class="pl-k">const</span> string &amp;name_, <span class="pl-k">double</span> price_);
+  <span class="pl-k">void</span> <span class="pl-en">print</span>() <span class="pl-k">const</span>;
+<span class="pl-k">private:</span>
+  string name;  <span class="pl-c"><span class="pl-c">//</span> identifiserer materialet</span>
+  <span class="pl-k">double</span> price; <span class="pl-c"><span class="pl-c">//</span> pris pr enhet</span>
+};</pre></div>
+
+                      </article>
+                    </div>
+                  </div>
+
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

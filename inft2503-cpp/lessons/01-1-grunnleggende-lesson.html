@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title> </title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_tritanopia-2171ea0f078b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/code-3d7b701fc6eb.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_dimmed-0adfa28f0e68.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_high_contrast-1c8575b36644.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light-5178aee0ee76.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_tritanopia-cdd88f146bf7.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/global-afe5b3f5ff2d.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-251065160b09.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_colorblind-5113d2be20b0.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_colorblind-c96add742484.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark-217d4f9c8e70.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-0e158a2f5ddd.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_high_contrast-290f92f5e867.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+      margin-bottom: 21px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+    <main id="js-repo-pjax-container">
+      <div class="clearfix new-discussion-timeline container-xl px-3 px-md-4 px-lg-5">
+        <div class="repository-content">
+          <div class="clearfix">
+            <div class="Layout Layout--flowRow-until-md Layout--sidebarPosition-end Layout--sidebarPosition-flowRow-end">
+              <div class="Layout-main">
+
+                
+
+                  <div id="readme" class="Box md Box--responsive">
+                    
+                      <div class="Box-header d-flex border-bottom-0 flex-items-center flex-justify-between color-bg-default rounded-top-2">
+                        <div class="d-flex flex-items-center">
+                          <h2 class="Box-title">
+                             
+                          </h2>
+                        </div>
+                      </div>
+                    
+                    <div class="Box-body px-5 pb-5">
+                      <article id="grip-content" class="markdown-body entry-content container-lg">
+                        <h1><a id="user-content-1-grunnleggende-c" class="anchor" aria-hidden="true" href="#1-grunnleggende-c"><span aria-hidden="true" class="octicon octicon-link"></span></a>1. Grunnleggende C++</h1>
+<p>Leksjonen introduserer studentene til kurset og til C++. Etter å ha gått gjennom leksjonen skal de
+være i stand til å skrive enkle C++-programmer. De skal kunne bruke kontrollstrukturer,
+endimensjonale tabeller, nullterminerte tekststrenger og datafiler.</p>
+<p>Skrevet av Else Lervik og Ole Christian Eidheim.</p>
+<p>Eksemplene for denne leksjonen finner du her: <a href="https://gitlab.com/ntnu-iini4003/examples1" rel="nofollow">https://gitlab.com/ntnu-iini4003/examples1</a></p>
+<p>Støttelitteratur:</p>
+<ul>
+<li>Bjarne Stroustrup: A Tour of C++, Second Edition
+<ul>
+<li>Grunnleggende: kap. 1</li>
+<li>Tabeller: kap. 1.7</li>
+<li>Filstrømmer: kap. 10.7</li>
+</ul>
+</li>
+</ul>
+<h2><a id="user-content-introduksjon-til-kurset-og-til-c" class="anchor" aria-hidden="true" href="#introduksjon-til-kurset-og-til-c"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduksjon til kurset og til C++</h2>
+<p>Velkommen til C++ for programmerere!</p>
+<p>I løpet av semesteret skal vi arbeide oss gjennom størstedelen av den standardiserte delen av C++.</p>
+<p>Fra før regner vi med at du har god kunnskap om objektorientering generelt og også erfaring fra et
+objektorientert programmeringsspråk, for eksempel C# eller Java. Ettersom de fleste utdanninger nå
+baserer seg på Java som programmeringsspråk, vil referansene i dette kurset gå til Java.</p>
+<p>Du har ikke bare erfaring med programmering, du har også erfaring med å lære å programmere. Og du
+vet at det eneste som nytter er å kode, lage kode, endre kode og prøve ut kode. Men – i tillegg er
+det viktig å forstå hva som skjer. Å lære C++ handler ikke bare om å lære ny syntaks, det er også
+viktig å skjønne på hvilke områder C++ er fundamentalt forskjellig fra det språket du er vant med.
+På hvilke måter C++ oppfører seg forskjellig fra det du er vant med.</p>
+<p>Kurset vektlegger det som skiller C++ fra Java. C++ har for eksempel en klasse <code>string</code> som ligner
+noe på Java-klassen med samme navn, og den vil vi selvfølgelig bruke. Men vi begynner med såkalte
+nullterminerte strenger som er en arv fra C, og som du heller ikke kan klare deg helt uten i C++.
+Det er mye vanskeligere enn å bruke klassen <code>string</code>, men så må du huske at dette er et kurs som
+skal lære deg det i C++ som ikke er som i Java … Og det er også slik at sannsynligheten for at ditt
+møte med C++ i arbeidslivet like gjerne blir å oppdatere eksisterende programvare som å lage ny.
+Ferdige klassebiblioteker (inkl. <code>string</code>) kom med standarden av 1998, og det gikk enda noen år før
+de første implementasjonene kom.</p>
+<p>Alle først skal vi imidlertid se litt på tabeller i C++.</p>
+<p>Du vil oppdage at C++ ikke passer på deg i like stor grad som Java. Ta en titt på følgende program:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span> include refererer til biblioteker</span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span> <span class="pl-c"><span class="pl-c">//</span> innlesing/utskrift</span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span> <span class="pl-c"><span class="pl-c">//</span> bruker standard navnerom, se cout nedenfor</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-k">int</span> a;
+  <span class="pl-k">int</span> b[<span class="pl-c1">3</span>]; <span class="pl-c"><span class="pl-c">//</span> en heltallstabell med 3 elementer</span>
+  <span class="pl-k">double</span> c;
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>a = <span class="pl-pds">"</span></span> &lt;&lt; a &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>, c = <span class="pl-pds">"</span></span> &lt;&lt; c &lt;&lt; endl;  <span class="pl-c"><span class="pl-c">//</span> kan skrive std::cout</span>
+  <span class="pl-k">for</span> (<span class="pl-k">int</span> i = <span class="pl-c1">0</span>; i &lt; <span class="pl-c1">5</span>; i++) {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>i = <span class="pl-pds">"</span></span> &lt;&lt; i &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> tabellelement: <span class="pl-pds">"</span></span> &lt;&lt; b[i] &lt;&lt; endl;
+  }
+  <span class="pl-k">return</span> <span class="pl-c1">0</span>; <span class="pl-c"><span class="pl-c">//</span> pga at main() er av typen int, kan sløyfes</span>
+}</pre></div>
+<p>Hvis du er Java-programmerer, legger du kanskje aller først merke til at <code>main()</code> ikke inngår i en
+klasse. Det betyr at du kan skrive C++-program uten å bruke klasser; det kan mest sammenlignes med å
+lage bare klassemetoder i Java. Koden refererer ikke til objekter.</p>
+<p>Vi definerer de enkle variablene <code>a</code> og <code>c</code>, samt en tabell <code>b</code> med tre elementer. Uten å initiere
+variablene, skrives de ut. Utskriften kan bli som følger:</p>
+<div class="highlight highlight-source-c++"><pre>a = <span class="pl-c1">256</span>, c = <span class="pl-c1">6.95322e-310</span>
+i = <span class="pl-c1">0</span> tabellelement: <span class="pl-c1">2304</span>
+i = <span class="pl-c1">1</span> tabellelement: <span class="pl-c1">3840</span>
+i = <span class="pl-c1">2</span> tabellelement: <span class="pl-c1">5376</span>
+i = <span class="pl-c1">3</span> tabellelement: <span class="pl-c1">6912</span>
+i = <span class="pl-c1">4</span> tabellelement: <span class="pl-c1">8448</span></pre></div>
+<p>Kompilatoren kan gi advarsler for linje 10, linjen der <code>a</code> og <code>c</code> skrives ut:</p>
+<pre><code>variable 'a' is uninitialized when used here
+variable 'c' is uninitialized when used here
+</code></pre>
+<p>Hvilke konklusjoner kan vi trekke fra dette?</p>
+<ul>
+<li>Utskriften viser at variablene og tabell-elementene ikke er initiert til noen bestemt verdi.</li>
+<li>Vi får ingen advarsler eller feilmeldinger selv om vi skriver ut <code>b[3]</code> og <code>b[4]</code>, som ligger
+utenfor minneområdet til tabellen.</li>
+</ul>
+<hr>
+<p>Dette lille eksemplet bør vise at vi må være påpasselige med alltid å initiere variabler, og vi må
+også selv passe på at vi ikke beveger oss utenfor det området i minnet som er satt av til en tabell.</p>
+<p>C++-tabeller er ikke objekter, og de lages ikke med <code>new</code>, slik du er vant med. En tabell er rett og
+slett en samling variabler av samme type, som ligger ved siden av hverandre i minnet. Tabellen
+kjenner ikke sin egen lengde. Den enkelte variabelen når du ved å bruke indeksen, slik du er vant
+med fra Java. Navnet på tabellen gir deg adressen til begynnelsen av minneområdet.</p>
+<hr>
+<p>I C++ 98 fikk vi klasse-templaten <code>vector</code>, og i C++ 11 fikk vi <code>array</code>. Førstnevnte ligner på
+<code>ArrayList</code> i Java, mens <code>array</code> i praksis fungerer som en Java-tabell, det vil si at tabellen er
+pakket inn i et objekt som kjenner sin egen lengde. Inntil videre skal vi imidlertid jobbe med
+"rå-tabellene", det vil si tabeller slik de alltid har vært, både i C og i C++.</p>
+<p>Du vil nok oppdage at det kan være mye vanskeligere å finne feil i et C++-program enn i et
+Java-program. En av årsakene er selvfølgelig at det er nytt, men på grunn av forhold som påpekt
+foran, er det objektivt sett mye vanskeligere. Og da har vi ennå ikke begynt å se på pekere …</p>
+<p>Du bør bruke litt tid på å lære deg å bruke debuggeren i det verktøyet du bruker. Det vil spare deg
+for masse tid og bekymringer senere.</p>
+<h3><a id="user-content-utviklingsmiljø-lærebok-og-c-referanser" class="anchor" aria-hidden="true" href="#utviklingsmiljø-lærebok-og-c-referanser"><span aria-hidden="true" class="octicon octicon-link"></span></a>Utviklingsmiljø, lærebok og C++ referanser</h3>
+<p>Det anbefales at du jobber i Linux og bruker utviklingsmiljøet
+<a href="https://gitlab.com/cppit/jucipp" rel="nofollow">juCi++</a> i dette faget. Dette utviklingsmiljøet er svært enkelt å
+bruke, og støtter samtidig de nyeste C++ standardene bedre enn andre utviklingsmiljøer. I tillegg er
+utviklingsmiljøet skrevet i nyere C++, og er av den grunn svært stabilt og lite ressurskrevende.
+Utviklingsmiljøet er åpen kildekode, og baserer seg på rundt 100 åpen kildekode biblioteker, og
+dermed har tusenvis av svært flinke utviklere bidratt til at dette utviklingsmiljøet har blitt en
+realitet. Du kan selv bidra ved å registrere eventuelle problemer som <em>issues</em> på nettsiden
+<a href="https://gitlab.com/cppit/jucipp" rel="nofollow">https://gitlab.com/cppit/jucipp</a>.</p>
+<p>Læreboken, Bjarne Stroustrup: A Tour of C++ Second Edition, er støttelitteratur til leksjonene dere
+finner på Blackboard. Det er ikke påkrevd at dere leser i læreboken, men det anbefales for å få mest
+ut av dette kurset. Hvis mulig, oppgir vi kapitler i læreboken som er aktuelle for det vi skriver om
+i leksjonene. Merk at boken er skrevet rettet mot utviklere som har erfaring fra andre
+programmeringsspråk, og i tillegg er rettet mot den nyeste C++ standarden c++17. Du kan selv
+aktivere den nyeste C++ standarden i juCi++ ved å endre <code>c++1y</code> til <code>c++1z</code> i <code>CMakeLists.txt</code> under
+en C++ prosjektmappe. Merk at da kreves det at du bruker en Linux distribusjon med nyere pakker som
+støtter den nyeste C++ standarden, som for eksempel Manjaro Linux. MacOS har også nyere pakker.</p>
+<p>Det finnes også ressurser på nettet som kan være aktuelle å bruke når du programmerer C++. Det er
+hovedsaklig to nettsider som inneholder forklaringer med eksempler på innholdet i C++
+standardbiblioteket: <a href="https://en.cppreference.com/w/" rel="nofollow">https://en.cppreference.com/w/</a> og <a href="http://www.cplusplus.com/" rel="nofollow">http://www.cplusplus.com/</a>. I juCi++, kan du
+gå til dokumentasjonen for funksjonen eller klassen du har markøren på (eller markert i
+<em>completions</em>) ved hjelp av Find Documentation i Source-menyen.</p>
+<h2><a id="user-content-nullterminerte-tekststrenger" class="anchor" aria-hidden="true" href="#nullterminerte-tekststrenger"><span aria-hidden="true" class="octicon octicon-link"></span></a>Nullterminerte tekststrenger</h2>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> eksempel.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> include refererer til biblioteker</span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>cctype<span class="pl-pds">&gt;</span></span>   <span class="pl-c"><span class="pl-c">//</span> char-behandling</span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>cstring<span class="pl-pds">&gt;</span></span>  <span class="pl-c"><span class="pl-c">//</span> strengbehandling</span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span> <span class="pl-c"><span class="pl-c">//</span> innlesing/utskrift</span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span> <span class="pl-c"><span class="pl-c">//</span> bruker standard navnerom</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {                <span class="pl-c"><span class="pl-c">//</span> ikke void her!</span>
+  <span class="pl-k">char</span> text[<span class="pl-c1">5</span>];             <span class="pl-c"><span class="pl-c">//</span> en streng med maks lengde 5</span>
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Skriv et ord: <span class="pl-pds">"</span></span>; <span class="pl-c"><span class="pl-c">//</span> utskrift, bruker &lt;iostream&gt;</span>
+  cin &gt;&gt; text;              <span class="pl-c"><span class="pl-c">//</span> innlesing, bruker &lt;iostream&gt;</span>
+
+  <span class="pl-k">for</span> (<span class="pl-k">int</span> i = <span class="pl-c1">0</span>; i &lt; <span class="pl-c1">strlen</span>(text); i++) { <span class="pl-c"><span class="pl-c">//</span> strlen() fins i &lt;cstring&gt;</span>
+    text[i] = <span class="pl-c1">toupper</span>(text[i]);            <span class="pl-c"><span class="pl-c">//</span> gjør om til store bokstaver, bruker &lt;cctype&gt;</span>
+  }
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Bare store bokstaver: <span class="pl-pds">"</span></span> &lt;&lt; text &lt;&lt; endl;
+
+  <span class="pl-k">for</span> (<span class="pl-k">int</span> j = <span class="pl-c1">0</span>; j &lt; <span class="pl-c1">strlen</span>(text); j++) {
+    text[j] = <span class="pl-c1">tolower</span>(text[j]); <span class="pl-c"><span class="pl-c">//</span> gjør om til små bokstaver, bruker &lt;cctype&gt;</span>
+  }
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Bare små bokstaver: <span class="pl-pds">"</span></span> &lt;&lt; text &lt;&lt; endl;
+}
+
+<span class="pl-c"><span class="pl-c">/*</span> Kjøring av programmet:</span>
+<span class="pl-c">Skriv et ord: test</span>
+<span class="pl-c">Bare store bokstaver: TEST</span>
+<span class="pl-c">Bare små bokstaver: test</span>
+<span class="pl-c"><span class="pl-c">*/</span></span></pre></div>
+<p>Sørg for at du får til å kompilere og kjøre dette programmet. Kildekoden finner du sammen med
+leksjonen. Du får et par advarsler ved kompilering, de skal vi komme tilbake til.</p>
+<p>Studer koden sammen med kommentarene som kort forklarer hva som skjer på de enkelte linjene.</p>
+<p>Programmet leser inn et ord og lagrer det i en såkalt nullterminert tekststreng (<code>char text[5]</code>).
+Prøv ut hva som skjer dersom du leser inn et ord med lengde større eller lik 5. Det går sikkert helt
+greit, kjøresystemet forsyner seg bare av den plassen som ligger utenfor tabellområdet. Men det går
+bare bra så lenge det ikke ligger andre data der, og det har du ingen kontroll med.</p>
+<p>Strenger lagres i <code>char</code>-tabeller, og avslutningen av strengen markeres med tegnet ‘\0’. I tabellen
+<code>char text[5]</code> er det derfor plass til en tekst med maks lengde 4.</p>
+<p>Programmet bruker tre biblioteksfunksjoner (en funksjon i C++ er det samme som en metode i Java),
+<code>strlen()</code>, <code>toupper()</code> og <code>tolower()</code>. Funksjonene anropes uten at de kvalifiseres med objekt-
+eller klassenavn. I praksis fungerer de som klassemetoder i Java.</p>
+<p>Biblioteksfunksjonene er deklarert i filene <code>iostream</code>, <code>cstring</code> og <code>cctype</code>, og disse tas inn via
+preprosessordirektivet <code>include</code>. Symbolet <code>#</code> forteller at nå kommer det en preprosessordirektivet,
+og slike kommandoer utføres før kompilering ("pre" "processing"). I dette tilfellet settes innholdet
+i de nevnte filene inn i koden ("inkluderes") på den plassen der direktivet står, slik at
+funksjonsdeklarasjonene blir med i kompileringen.</p>
+<p>Tilbake til advarselen som kommer ved kompilering:</p>
+<pre><code>comparison of integers of different signs: 'int' and 'size_t' (aka 'unsigned
+long')
+</code></pre>
+<p>Dette gjelder linjene som ser slik ut:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">for</span> (<span class="pl-k">int</span> i = <span class="pl-c1">0</span>; i &lt; strlen(text); i++) {</pre></div>
+<p>Returtypen fra <code>strlen()</code> er <code>size_t</code>. Og hva er så det? Det er et synonym for en ikke-negativ
+heltallstype, eksempelvis <code>unsigned int</code> eller <code>unsigned short</code>. Eksakt hvilken type som brukes er
+kompilatoravhengig og definert i en av include-filene.</p>
+<p>Du kan unngå advarselen ved å skrive om setningen:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">for</span> (<span class="pl-c1">size_t</span> i = <span class="pl-c1">0</span>; i &lt; strlen(text); i++) {</pre></div>
+<p>Men det er nok slik at de aller fleste C++-programmere lever godt med denne advarselen og bruker int
+i eksempler som dette. Dog er læreboka ganske flink til å bruke <code>size_t</code>.</p>
+<p>Lek deg gjerne litt med dette programmet før du går videre. Gjør endringer og utvidelser.</p>
+<h2><a id="user-content-enkel-filbehandling" class="anchor" aria-hidden="true" href="#enkel-filbehandling"><span aria-hidden="true" class="octicon octicon-link"></span></a>Enkel filbehandling</h2>
+<p>Følgende program leser tall fra en datafil. Programmet leser fram til filslutt. Studer kommentarene.</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span>--------------------------------------------------------------------</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> tallfil.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> Programmet leser tall fra fil og skriver summen av tallene til skjermen.</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>cstdlib<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>fstream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-k">const</span> <span class="pl-k">char</span> filename[] = <span class="pl-s"><span class="pl-pds">"</span>tallfil.dat<span class="pl-pds">"</span></span>;
+  ifstream file;       <span class="pl-c"><span class="pl-c">//</span> definerer filvariabel</span>
+  file.<span class="pl-c1">open</span>(filename); <span class="pl-c"><span class="pl-c">//</span> åpner filen</span>
+  <span class="pl-k">if</span> (!file) {         <span class="pl-c"><span class="pl-c">//</span> innfil kan brukes som et logisk uttrykk</span>
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Feil ved åpning av innfil.<span class="pl-pds">"</span></span> &lt;&lt; endl;
+    <span class="pl-c1">exit</span>(EXIT_FAILURE); <span class="pl-c"><span class="pl-c">//</span> uthopp fra programmet</span>
+  }
+
+  <span class="pl-k">int</span> number;
+  <span class="pl-k">int</span> sum = <span class="pl-c1">0</span>;
+  <span class="pl-k">while</span> (file &gt;&gt; number) { <span class="pl-c"><span class="pl-c">//</span> leser fram til filslutt</span>
+    sum += number;
+  }
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Summen er <span class="pl-pds">"</span></span> &lt;&lt; sum &lt;&lt; endl;
+  file.<span class="pl-c1">close</span>();
+}
+
+<span class="pl-c"><span class="pl-c">/*</span> Eksempel på kjøring:</span>
+<span class="pl-c">Datafil:</span>
+<span class="pl-c">3 4 5 5</span>
+<span class="pl-c">17</span>
+<span class="pl-c"></span>
+<span class="pl-c">Utskrift:</span>
+<span class="pl-c">Summen er 34</span>
+<span class="pl-c"><span class="pl-c">*/</span></span></pre></div>
+<p>Hvor skal filen det leses fra plasseres? Du kan for eksempel sette opp absolutte sti i et filnavn
+ved å bruke /, for eksempel:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">const</span> <span class="pl-k">char</span> filename[] = <span class="pl-s"><span class="pl-pds">"</span>/home/ole/toerpot.dat<span class="pl-pds">"</span></span>;</pre></div>
+<p>Neste program viser utskrift til fil. Formateringen <code>setw(4)</code> betyr at tallet etterpå skrives ut
+høyrejustert over fire kolonner.</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span>-------------------------------------------------------------------</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> toerpot.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> Programmet skriver toerpotenser til fil.</span>
+<span class="pl-c"><span class="pl-c">//</span> Alle toerpotenser mindre enn halvparten av</span>
+<span class="pl-c"><span class="pl-c">//</span> maksimalverdien til "long int" skrives ut.</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>climits<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>cstdlib<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>fstream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iomanip<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-k">const</span> <span class="pl-k">char</span> filename[] = <span class="pl-s"><span class="pl-pds">"</span>toerpot.dat<span class="pl-pds">"</span></span>;
+  ofstream file;
+  file.<span class="pl-c1">open</span>(filename);
+  <span class="pl-k">if</span> (!file) {
+    cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Feil ved åpning av utfil.<span class="pl-pds">"</span></span> &lt;&lt; endl;
+    <span class="pl-c1">exit</span>(EXIT_FAILURE);
+  }
+  <span class="pl-k">long</span> <span class="pl-k">int</span> product = <span class="pl-c1">1L</span>;
+  <span class="pl-k">int</span> exponent = <span class="pl-c1">0</span>;
+  <span class="pl-k">while</span> (product &lt;= LONG_MAX / <span class="pl-c1">2L</span>) {
+    exponent++;
+    product *= <span class="pl-c1">2L</span>;
+    file &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>2 opphøyd i <span class="pl-pds">"</span></span> &lt;&lt; <span class="pl-c1">setw</span>(<span class="pl-c1">4</span>) &lt;&lt; exponent &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> er <span class="pl-pds">"</span></span>
+         &lt;&lt; product &lt;&lt; endl;
+  }
+  file.<span class="pl-c1">close</span>();
+}
+
+<span class="pl-c"><span class="pl-c">/*</span> Filen ser slik ut:</span>
+<span class="pl-c">2 opphøyd i    1 er 2</span>
+<span class="pl-c">2 opphøyd i    2 er 4</span>
+<span class="pl-c">2 opphøyd i    3 er 8</span>
+<span class="pl-c">...</span>
+<span class="pl-c">2 opphøyd i   28 er 268435456</span>
+<span class="pl-c">2 opphøyd i   29 er 536870912</span>
+<span class="pl-c">2 opphøyd i   30 er 1073741824</span>
+<span class="pl-c"><span class="pl-c">*/</span></span></pre></div>
+<p>Vi ser at vi leser og skriver mot fil akkurat på samme måte som vi leser og skriver mot tastatur og
+skjerm.</p>
+<h2><a id="user-content-å-bruke--og-getline-om-hverandre" class="anchor" aria-hidden="true" href="#å-bruke--og-getline-om-hverandre"><span aria-hidden="true" class="octicon octicon-link"></span></a>Å bruke <code>&lt;&lt;</code> og <code>getline()</code> om hverandre</h2>
+<p>Dette er ikke noe du trenger i øvingen i dag, men det tas med her da det ofte er en aktuell
+problemstilling som medfører mye frustrasjon.</p>
+<p>Vi bruker <code>&lt;&lt;</code> til å lese inn ett ord (fra tastatur eller fra datafil). Ordet tolkes som tall eller
+tekst i henhold til datatypen til variablene vi leser inn i.</p>
+<p>Vi bruker funksjonen <code>getline()</code> for å lese inn en linje. Eksempel:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-k">char</span> text[<span class="pl-c1">100</span>];
+cout &lt;&lt; ”Skriv en tekst: ”;
+cin.getline(text, <span class="pl-c1">100</span>); <span class="pl-c"><span class="pl-c">//</span> maks 100 tegn leses inn, inkl. ’\0’</span></pre></div>
+<p>Inndataene vil gjerne være en blanding av tall og tekst. Tallene, ofte flere pr. linje, ønsker vi å
+lese inn med <code>cin &gt;&gt;</code>, mens vi vil lese inn teksten linjevis med <code>cin.getline()</code>.</p>
+<p><code>&gt;&gt;</code> hopper over ordskiller, inkludert linjeskift. Funksjonen <code>getline()</code> søker etter linjeskift og
+avslutter innlesingen når et slikt påtreffes. Linjeskiftet leses altså ikke inn.</p>
+<p>Øverst på figuren under er det vist hva som skjer hvis programmet etter å ha lest inn et tall
+(<code>age</code>) med <code>cin &gt;&gt;</code>, leser inn en tekst (<code>position</code>) med <code>cin.getline()</code>. Pilene viser hvor langt i
+inn-bufferet programkontrollen er kommet etter at de to setningene er utført. <code>position</code> blir tom.</p>
+<p><a target="_blank" rel="noopener noreferrer" href="cin_ignore.png"><img src="cin_ignore.png" alt="" style="max-width: 100%;"></a></p>
+<p>Funksjonen <code>get()</code> henter et tegn i inn-bufferet, og gjør det dermed mulig å hoppe over tegn i
+inn-bufferet.</p>
+<p>Programmet nedenfor viser eksemplet fra figuren satt inn i en sammenheng.</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span>-------------------------------------------------------------------</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> person.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> Prøver getline() og ignore()</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">const</span> <span class="pl-k">int</span> max_line_length = <span class="pl-c1">81</span>;
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-k">char</span> name[max_line_length];
+  <span class="pl-k">char</span> address[max_line_length];
+  <span class="pl-k">int</span> age;
+  <span class="pl-k">char</span> position[max_line_length];
+
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Navn: <span class="pl-pds">"</span></span>;
+  cin.<span class="pl-c1">getline</span>(name, max_line_length);
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Adresse: <span class="pl-pds">"</span></span>;
+  cin.<span class="pl-c1">getline</span>(address, max_line_length);
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Alder: <span class="pl-pds">"</span></span>;
+  cin &gt;&gt; age;
+  cin.<span class="pl-c1">get</span>(); <span class="pl-c"><span class="pl-c">//</span> Tar bort newline ('\n')</span>
+  cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>Stilling: <span class="pl-pds">"</span></span>;
+  cin.<span class="pl-c1">getline</span>(position, max_line_length);
+
+  cout &lt;&lt; name &lt;&lt; endl &lt;&lt; address &lt;&lt; endl &lt;&lt; age &lt;&lt; endl &lt;&lt; position &lt;&lt; endl;
+}
+
+<span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c">Kjøring av programmet:</span>
+<span class="pl-c"></span>
+<span class="pl-c">Uten get():</span>
+<span class="pl-c"></span>
+<span class="pl-c">Navn: Kari Ås</span>
+<span class="pl-c">Adresse: Storgt 17, 7000 Trondheim</span>
+<span class="pl-c">Alder: 26</span>
+<span class="pl-c">Stilling: Kari Ås</span>
+<span class="pl-c">Storgt 17, 7000 Trondheim</span>
+<span class="pl-c">26</span>
+<span class="pl-c"></span>
+<span class="pl-c">Med get():</span>
+<span class="pl-c"></span>
+<span class="pl-c">Navn: Kari Ås</span>
+<span class="pl-c">Adresse: Storgt 17, 7000 Trondheim</span>
+<span class="pl-c">Alder: 25</span>
+<span class="pl-c">Stilling: Frisør</span>
+<span class="pl-c">Kari Ås</span>
+<span class="pl-c">Storgt 17, 7000 Trondheim</span>
+<span class="pl-c">25</span>
+<span class="pl-c">Frisør</span>
+<span class="pl-c"><span class="pl-c">*/</span></span></pre></div>
+<p>Programmet er kjørt med og uten <code>get()</code>-setningen. Det første eksemplet viser kjøring uten <code>get()</code>.
+Etter ledeteksten Stilling: begynner utskriften. Setningen</p>
+<div class="highlight highlight-source-c++"><pre>cin.getline(position, max_line_length);</pre></div>
+<p>fører bare til at tegnet <code>\n</code> i inn-bufferet hoppes over. <code>position</code> blir en tom tekststreng, noe vi
+ser av at kjøreutskriften ikke viser noe etter at alderen (26) er skrevet ut.</p>
+
+                      </article>
+                    </div>
+                  </div>
+
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

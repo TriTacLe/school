@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title> </title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_tritanopia-2171ea0f078b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/code-3d7b701fc6eb.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_dimmed-0adfa28f0e68.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_high_contrast-1c8575b36644.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light-5178aee0ee76.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_tritanopia-cdd88f146bf7.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/global-afe5b3f5ff2d.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-251065160b09.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_colorblind-5113d2be20b0.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_colorblind-c96add742484.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark-217d4f9c8e70.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-0e158a2f5ddd.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_high_contrast-290f92f5e867.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+      margin-bottom: 21px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+    <main id="js-repo-pjax-container">
+      <div class="clearfix new-discussion-timeline container-xl px-3 px-md-4 px-lg-5">
+        <div class="repository-content">
+          <div class="clearfix">
+            <div class="Layout Layout--flowRow-until-md Layout--sidebarPosition-end Layout--sidebarPosition-flowRow-end">
+              <div class="Layout-main">
+
+                
+
+                  <div id="readme" class="Box md Box--responsive">
+                    
+                      <div class="Box-header d-flex border-bottom-0 flex-items-center flex-justify-between color-bg-default rounded-top-2">
+                        <div class="d-flex flex-items-center">
+                          <h2 class="Box-title">
+                             
+                          </h2>
+                        </div>
+                      </div>
+                    
+                    <div class="Box-body px-5 pb-5">
+                      <article id="grip-content" class="markdown-body entry-content container-lg">
+                        <h1><a id="user-content-smarte-pekere-og-polymorfi-i-rust" class="anchor" aria-hidden="true" href="#smarte-pekere-og-polymorfi-i-rust"><span aria-hidden="true" class="octicon octicon-link"></span></a>Smarte pekere og polymorfi i Rust</h1>
+<h2><a id="user-content-introduksjon" class="anchor" aria-hidden="true" href="#introduksjon"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduksjon</h2>
+<p>Denne leksjonen fokuserer kun på Rust. Det er mulig å oppnå polymorfi i C, for eksempel bruker GUI
+biblioteket GTK dette, men polymorfi i C er komplisert og utenfor pensum for dette emnet.
+Interesserte kan likevel lese om dette for eksempel her:
+<a href="https://chris-wood.github.io/2016/02/12/Polymorphism-in-C.html" rel="nofollow">Polymorphism in C</a>.</p>
+<h2><a id="user-content-smart-pekere" class="anchor" aria-hidden="true" href="#smart-pekere"><span aria-hidden="true" class="octicon octicon-link"></span></a>Smart pekere</h2>
+<p>Direkte oppretting av verdier i det frie lageret i Rust krever i utgangspunktet <em>unsafe</em>-blokker:</p>
+<div class="highlight highlight-source-rust"><pre><span class="pl-k">use</span> std<span class="pl-kos">::</span>alloc<span class="pl-kos">::</span><span class="pl-kos">{</span>alloc<span class="pl-kos">,</span> dealloc<span class="pl-kos">,</span> <span class="pl-v">Layout</span><span class="pl-kos">}</span><span class="pl-kos">;</span>
+
+<span class="pl-k">fn</span> <span class="pl-en">main</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">let</span> layout = <span class="pl-smi">Layout</span><span class="pl-kos">::</span><span class="pl-en">new</span><span class="pl-kos">::</span><span class="pl-kos">&lt;</span><span class="pl-smi">i32</span><span class="pl-kos">&gt;</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Type of value to be created in the heap</span>
+    <span class="pl-k">unsafe</span> <span class="pl-kos">{</span>
+        <span class="pl-k">let</span> ptr = <span class="pl-en">alloc</span><span class="pl-kos">(</span>layout<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Create memory range for an integer in the heap</span>
+
+        <span class="pl-c1">*</span>ptr = <span class="pl-c1">42</span><span class="pl-kos">;</span> <span class="pl-c">// Store the value 42 on the heap</span>
+
+        <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, *ptr<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Outputs 42</span>
+        <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{:p}"</span>, ptr<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Outputs address of the value in the heap</span>
+
+        <span class="pl-en">dealloc</span><span class="pl-kos">(</span>ptr<span class="pl-kos">,</span> layout<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Free the memory ptr points to</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>Men Rust har som i C++ også smarte pekere. Typen i Rust som er mest lik <code>std::unique_ptr</code> i C++ er
+<code>Box</code>, og bruken av smarte pekere krever ikke <em>unsafe</em>-blokker:</p>
+<div class="highlight highlight-source-rust"><pre><span class="pl-k">fn</span> <span class="pl-en">main</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">let</span> ptr = <span class="pl-smi">Box</span><span class="pl-kos">::</span><span class="pl-en">new</span><span class="pl-kos">(</span><span class="pl-c1">42</span><span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Store the value 42 in the heap</span>
+    <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, *ptr<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Outputs 42</span>
+    <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{:p}"</span>, ptr<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Outputs address of the value in the heap</span>
+    <span class="pl-c">// The memory ptr points to is freed at end of scope</span>
+<span class="pl-kos">}</span></pre></div>
+<h2><a id="user-content-polymorfi" class="anchor" aria-hidden="true" href="#polymorfi"><span aria-hidden="true" class="octicon octicon-link"></span></a>Polymorfi</h2>
+<p>Studer først følgende eksempel i C++:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>vector<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">class</span> <span class="pl-en">Surface</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">Surface</span>(<span class="pl-k">double</span> length_, <span class="pl-k">double</span> width_) : length(length_), width(width_) {}
+
+  <span class="pl-k">double</span> length;
+  <span class="pl-k">double</span> width;
+
+  <span class="pl-k">double</span> <span class="pl-en">area</span>() {
+    <span class="pl-k">return</span> length * width;
+  }
+
+  <span class="pl-k">virtual</span> std::string <span class="pl-en">string</span>() {
+    <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">"</span>length: <span class="pl-pds">"</span></span> + <span class="pl-c1">to_string</span>(length) + <span class="pl-s"><span class="pl-pds">"</span>, width: <span class="pl-pds">"</span></span> + <span class="pl-c1">to_string</span>(width) +
+           <span class="pl-s"><span class="pl-pds">"</span>, area: <span class="pl-pds">"</span></span> + <span class="pl-c1">to_string</span>(<span class="pl-c1">area</span>());
+  }
+};
+
+<span class="pl-k">class</span> <span class="pl-en">ColoredSurface</span> : <span class="pl-k">public</span> <span class="pl-en">Surface</span> {
+<span class="pl-k">public:</span>
+  <span class="pl-en">ColoredSurface</span>(<span class="pl-k">double</span> length, <span class="pl-k">double</span> width, <span class="pl-k">double</span> red_, <span class="pl-k">double</span> green_, <span class="pl-k">double</span> blue_)
+      : Surface(length, width), red(red_), green(green_), blue(blue_) {}
+
+  <span class="pl-k">double</span> red;
+  <span class="pl-k">double</span> green;
+  <span class="pl-k">double</span> blue;
+
+  std::string <span class="pl-en">string</span>() <span class="pl-k">override</span> {
+    <span class="pl-k">return</span> <span class="pl-c1">Surface::string</span>() +
+           <span class="pl-s"><span class="pl-pds">"</span>, color: (<span class="pl-pds">"</span></span> + <span class="pl-c1">to_string</span>(red) + <span class="pl-s"><span class="pl-pds">"</span>, <span class="pl-pds">"</span></span> + <span class="pl-c1">to_string</span>(green) + <span class="pl-s"><span class="pl-pds">"</span>, <span class="pl-pds">"</span></span> + <span class="pl-c1">to_string</span>(blue) + <span class="pl-s"><span class="pl-pds">"</span>)<span class="pl-pds">"</span></span>;
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  vector&lt;std::unique_ptr&lt;Surface&gt;&gt; surfaces;
+
+  surfaces.<span class="pl-c1">emplace_back</span>(<span class="pl-k">new</span> <span class="pl-c1">Surface</span>(<span class="pl-c1">2.0</span>, <span class="pl-c1">3.0</span>));
+  surfaces.<span class="pl-c1">emplace_back</span>(<span class="pl-k">new</span> <span class="pl-c1">ColoredSurface</span>(<span class="pl-c1">2.0</span>, <span class="pl-c1">3.0</span>, <span class="pl-c1">0.0</span>, <span class="pl-c1">0.0</span>, <span class="pl-c1">1.0</span>));
+
+  <span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;surface : surfaces) {
+    cout &lt;&lt; surface-&gt;<span class="pl-smi">width</span> &lt;&lt; endl;    <span class="pl-c"><span class="pl-c">//</span> Outputs 3</span>
+    cout &lt;&lt; surface-&gt;<span class="pl-c1">area</span>() &lt;&lt; endl;   <span class="pl-c"><span class="pl-c">//</span> Outputs 6</span>
+    cout &lt;&lt; surface-&gt;<span class="pl-c1">string</span>() &lt;&lt; endl; <span class="pl-c"><span class="pl-c">//</span> Outputs length: 2, width: 3, area: 6, and color for ColoredSurface objects</span>
+
+    <span class="pl-k">if</span> (<span class="pl-k">auto</span> colored_surface = <span class="pl-k">dynamic_cast</span>&lt;ColoredSurface *&gt;(surface.<span class="pl-c1">get</span>()))
+      cout &lt;&lt; colored_surface-&gt;<span class="pl-smi">blue</span> &lt;&lt; endl; <span class="pl-c"><span class="pl-c">//</span> For ColoredSurface objects only: outputs 1</span>
+  }
+}</pre></div>
+<p>Vi kan implementere dette eksempelet i Rust, men det krever litt ekstra kode:</p>
+<div class="highlight highlight-source-rust"><pre><span class="pl-k">use</span> std<span class="pl-kos">::</span>any<span class="pl-kos">::</span><span class="pl-v">Any</span><span class="pl-kos">;</span>
+
+<span class="pl-k">struct</span> <span class="pl-smi">Surface</span> <span class="pl-kos">{</span>
+    <span class="pl-c1">width</span><span class="pl-kos">:</span> <span class="pl-smi">f64</span><span class="pl-kos">,</span> <span class="pl-c">// f64 corresponds to double in Rust</span>
+    <span class="pl-c1">length</span><span class="pl-kos">:</span> <span class="pl-smi">f64</span><span class="pl-kos">,</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-k">trait</span> <span class="pl-smi">GeometricQuantities</span> <span class="pl-kos">{</span>
+    <span class="pl-k">fn</span> <span class="pl-en">area</span><span class="pl-kos">(</span><span class="pl-smi">self</span><span class="pl-kos">:</span> <span class="pl-c1">&amp;</span><span class="pl-smi">Self</span><span class="pl-kos">)</span> -&gt; <span class="pl-smi">f64</span><span class="pl-kos">;</span> <span class="pl-c">// self is a reference to the calling Surface instance</span>
+    <span class="pl-k">fn</span> <span class="pl-en">string</span><span class="pl-kos">(</span><span class="pl-smi">self</span><span class="pl-kos">:</span> <span class="pl-c1">&amp;</span><span class="pl-smi">Self</span><span class="pl-kos">)</span> -&gt; <span class="pl-smi">String</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-k">impl</span> <span class="pl-smi">GeometricQuantities</span> <span class="pl-k">for</span> <span class="pl-smi">Surface</span> <span class="pl-kos">{</span>
+    <span class="pl-c">// All functions in the trait GeometricQuantities must be implemented here,</span>
+    <span class="pl-c">// and only functions in GeometricQuantities can be implemented.</span>
+    <span class="pl-k">fn</span> <span class="pl-en">area</span><span class="pl-kos">(</span><span class="pl-smi">self</span><span class="pl-kos">:</span> <span class="pl-c1">&amp;</span><span class="pl-smi">Self</span><span class="pl-kos">)</span> -&gt; <span class="pl-smi">f64</span> <span class="pl-kos">{</span>
+        <span class="pl-k">return</span> <span class="pl-smi">self</span><span class="pl-kos">.</span><span class="pl-c1">width</span> <span class="pl-c1">*</span> <span class="pl-smi">self</span><span class="pl-kos">.</span><span class="pl-c1">length</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span>
+
+    <span class="pl-k">fn</span> <span class="pl-en">string</span><span class="pl-kos">(</span><span class="pl-c1">&amp;</span><span class="pl-smi">self</span><span class="pl-kos">)</span> -&gt; <span class="pl-smi">String</span> <span class="pl-kos">{</span>
+        <span class="pl-k">return</span> <span class="pl-en">format</span><span class="pl-en">!</span><span class="pl-kos">(</span>
+            <span class="pl-s">"length: {}, width: {}, area: {}"</span>,
+            <span class="pl-smi">self</span>.length,
+            <span class="pl-smi">self</span>.width,
+            <span class="pl-smi">self</span>.area<span class="pl-kos">(</span><span class="pl-kos">)</span>
+        <span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-k">struct</span> <span class="pl-smi">ColoredSurface</span> <span class="pl-kos">{</span>
+    <span class="pl-c1">surface</span><span class="pl-kos">:</span> <span class="pl-smi">Surface</span><span class="pl-kos">,</span> <span class="pl-c">// Extend Surface struct by adding a Surface object</span>
+    <span class="pl-c1">red</span><span class="pl-kos">:</span> <span class="pl-smi">f64</span><span class="pl-kos">,</span>
+    <span class="pl-c1">green</span><span class="pl-kos">:</span> <span class="pl-smi">f64</span><span class="pl-kos">,</span>
+    <span class="pl-c1">blue</span><span class="pl-kos">:</span> <span class="pl-smi">f64</span><span class="pl-kos">,</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-k">impl</span> <span class="pl-smi">GeometricQuantities</span> <span class="pl-k">for</span> <span class="pl-smi">ColoredSurface</span> <span class="pl-kos">{</span>
+    <span class="pl-c">// All functions in the trait GeometricQuantities must be implemented here,</span>
+    <span class="pl-c">// and only functions in GeometricQuantities can be implemented.</span>
+    <span class="pl-k">fn</span> <span class="pl-en">area</span><span class="pl-kos">(</span><span class="pl-smi">self</span><span class="pl-kos">:</span> <span class="pl-c1">&amp;</span><span class="pl-smi">Self</span><span class="pl-kos">)</span> -&gt; <span class="pl-smi">f64</span> <span class="pl-kos">{</span>
+        <span class="pl-k">return</span> <span class="pl-smi">self</span><span class="pl-kos">.</span><span class="pl-c1">surface</span><span class="pl-kos">.</span><span class="pl-en">area</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span>
+
+    <span class="pl-k">fn</span> <span class="pl-en">string</span><span class="pl-kos">(</span><span class="pl-c1">&amp;</span><span class="pl-smi">self</span><span class="pl-kos">)</span> -&gt; <span class="pl-smi">String</span> <span class="pl-kos">{</span>
+        <span class="pl-k">return</span> <span class="pl-en">format</span><span class="pl-en">!</span><span class="pl-kos">(</span>
+            <span class="pl-s">"{}, color: ({}, {}, {})"</span>,
+            <span class="pl-smi">self</span>.surface.string<span class="pl-kos">(</span><span class="pl-kos">)</span>,
+            <span class="pl-smi">self</span>.red,
+            <span class="pl-smi">self</span>.green,
+            <span class="pl-smi">self</span>.blue
+        <span class="pl-kos">)</span><span class="pl-kos">;</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span>
+
+<span class="pl-k">fn</span> <span class="pl-en">main</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">let</span> <span class="pl-k">mut</span> surfaces = <span class="pl-smi">Vec</span><span class="pl-kos">::</span><span class="pl-kos">&lt;</span><span class="pl-smi">Box</span><span class="pl-kos">&lt;</span><span class="pl-k">dyn</span> <span class="pl-smi">Any</span><span class="pl-kos">&gt;</span><span class="pl-kos">&gt;</span><span class="pl-kos">::</span><span class="pl-en">new</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+    surfaces<span class="pl-kos">.</span><span class="pl-en">push</span><span class="pl-kos">(</span><span class="pl-smi">Box</span><span class="pl-kos">::</span><span class="pl-en">new</span><span class="pl-kos">(</span><span class="pl-smi">Surface</span> <span class="pl-kos">{</span>
+        <span class="pl-c1">width</span><span class="pl-kos">:</span> <span class="pl-c1">2.0</span><span class="pl-kos">,</span>
+        <span class="pl-c1">length</span><span class="pl-kos">:</span> <span class="pl-c1">3.0</span><span class="pl-kos">,</span>
+    <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+    surfaces<span class="pl-kos">.</span><span class="pl-en">push</span><span class="pl-kos">(</span><span class="pl-smi">Box</span><span class="pl-kos">::</span><span class="pl-en">new</span><span class="pl-kos">(</span><span class="pl-smi">ColoredSurface</span> <span class="pl-kos">{</span>
+        <span class="pl-c1">surface</span><span class="pl-kos">:</span> <span class="pl-smi">Surface</span> <span class="pl-kos">{</span>
+            <span class="pl-c1">width</span><span class="pl-kos">:</span> <span class="pl-c1">2.0</span><span class="pl-kos">,</span>
+            <span class="pl-c1">length</span><span class="pl-kos">:</span> <span class="pl-c1">3.0</span><span class="pl-kos">,</span>
+        <span class="pl-kos">}</span><span class="pl-kos">,</span>
+        <span class="pl-c1">red</span><span class="pl-kos">:</span> <span class="pl-c1">0.0</span><span class="pl-kos">,</span>
+        <span class="pl-c1">green</span><span class="pl-kos">:</span> <span class="pl-c1">0.0</span><span class="pl-kos">,</span>
+        <span class="pl-c1">blue</span><span class="pl-kos">:</span> <span class="pl-c1">1.0</span><span class="pl-kos">,</span>
+    <span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+
+    <span class="pl-k">for</span> surface <span class="pl-k">in</span> <span class="pl-c1">&amp;</span>surfaces <span class="pl-kos">{</span>
+        <span class="pl-c">// If surface is of type Surface:</span>
+        <span class="pl-k">if</span> <span class="pl-k">let</span> <span class="pl-v">Some</span><span class="pl-kos">(</span>surface<span class="pl-kos">)</span> = surface<span class="pl-kos">.</span><span class="pl-en">downcast_ref</span><span class="pl-kos">::</span><span class="pl-kos">&lt;</span><span class="pl-smi">Surface</span><span class="pl-kos">&gt;</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+            <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, surface.width<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Outputs 2</span>
+            <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, surface.area<span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Outputs 6</span>
+            <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, surface.string<span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Outputs length: 2, width: 3, area: 6</span>
+        <span class="pl-kos">}</span>
+        <span class="pl-c">// If surface is of type ColoredSurface:</span>
+        <span class="pl-k">else</span> <span class="pl-k">if</span> <span class="pl-k">let</span> <span class="pl-v">Some</span><span class="pl-kos">(</span>colored_surface<span class="pl-kos">)</span> = surface<span class="pl-kos">.</span><span class="pl-en">downcast_ref</span><span class="pl-kos">::</span><span class="pl-kos">&lt;</span><span class="pl-smi">ColoredSurface</span><span class="pl-kos">&gt;</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+            <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, colored_surface.surface.width<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Outputs 2</span>
+            <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, colored_surface.area<span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Outputs 6</span>
+            <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, colored_surface.string<span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Outputs length: 2, width: 3, area: 6, color: (0, 0, 1)</span>
+
+            <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, colored_surface.blue<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Outputs 1</span>
+        <span class="pl-kos">}</span>
+    <span class="pl-kos">}</span>
+<span class="pl-kos">}</span></pre></div>
+<p>For å lagre flere forskjellige overflatetyper i en <code>Vec</code> må vi lagre overflatene som <code>Box</code> pekere.
+Dette likner slik vi gjør det i C++ med <code>unique_ptr</code>. Derimot må typen til <code>Box</code> være en <code>Any</code>
+<em>trait</em> for å kunne utføre dynamisk <em>cast</em>. Da må vi utføre <em>casting</em> for både <code>Surface</code> og
+<code>ColoredSurface</code> objekter.</p>
+<p>Rust har noen mangler når det kommer til objektorientert programmering, men det samme har Java i
+forhold til C++, for eksempel <em>multiple inheritance</em>. Det finnes som regel måter å oppnå ønsket
+funksjonalitet, selv om det kan være litt mer tungvindt. I Rust er det vanligst å prøve å unngå å
+bruke arv og polymorfi, og heller se etter alternative løsninger.</p>
+
+                      </article>
+                    </div>
+                  </div>
+
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

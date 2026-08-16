@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title> </title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_tritanopia-2171ea0f078b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/code-3d7b701fc6eb.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_dimmed-0adfa28f0e68.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_high_contrast-1c8575b36644.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light-5178aee0ee76.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_tritanopia-cdd88f146bf7.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/global-afe5b3f5ff2d.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-251065160b09.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_colorblind-5113d2be20b0.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_colorblind-c96add742484.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark-217d4f9c8e70.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-0e158a2f5ddd.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_high_contrast-290f92f5e867.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+      margin-bottom: 21px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+    <main id="js-repo-pjax-container">
+      <div class="clearfix new-discussion-timeline container-xl px-3 px-md-4 px-lg-5">
+        <div class="repository-content">
+          <div class="clearfix">
+            <div class="Layout Layout--flowRow-until-md Layout--sidebarPosition-end Layout--sidebarPosition-flowRow-end">
+              <div class="Layout-main">
+
+                
+
+                  <div id="readme" class="Box md Box--responsive">
+                    
+                      <div class="Box-header d-flex border-bottom-0 flex-items-center flex-justify-between color-bg-default rounded-top-2">
+                        <div class="d-flex flex-items-center">
+                          <h2 class="Box-title">
+                             
+                          </h2>
+                        </div>
+                      </div>
+                    
+                    <div class="Box-body px-5 pb-5">
+                      <article id="grip-content" class="markdown-body entry-content container-lg">
+                        <h1><a id="user-content-pekere-og-referanser-i-rust" class="anchor" aria-hidden="true" href="#pekere-og-referanser-i-rust"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pekere og referanser i Rust</h1>
+<h2><a id="user-content-forberedelser" class="anchor" aria-hidden="true" href="#forberedelser"><span aria-hidden="true" class="octicon octicon-link"></span></a>Forberedelser</h2>
+<p>Om du bruker <a href="https://gitlab.com/cppit/jucipp" rel="nofollow">juCi++</a> kan du lage et nytt Rust prosjekt ved å velge
+File, Create Project, Rust i menyen. Da vil du også få spørsmål om å installere både Rust og
+rust-analyzer om du ikke allerede har installert disse programmene. Rust-analyzer er et program,
+nærmere bestemt en <em>language server</em>, som gir utvidet IDE støtte for Rust. Merk at noen feil og
+advarsler blir kun vist når du lagrer Rust filene. Dette er noe som vil bli forbedret i
+rust-analyzer i fremtiden.</p>
+<h2><a id="user-content-introduksjon" class="anchor" aria-hidden="true" href="#introduksjon"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduksjon</h2>
+<p>Rust har blitt det tredje systemprogrammeringsspråket i tillegg til C og C++, som vi kan benytte når
+vi trenger å lage ressurseffektive programmer eller programvarebiblioteker. I forhold til C og C++,
+som har blitt brukt i flere tiår, er Rust svært nytt. Versjon 1.0 av Rust ble utgitt i 2015, men har
+blitt relativt populært som systemprogrammeringsspråk i noen miljøer, spesielt der det er ekstra
+fokus på sikkerhet.</p>
+<p>Ulempen med C og C++ er at det er svært lett for nye programmerere å gjøre feil. Det blir
+tilgjengelig bedre og bedre analyseverktøy for å finne feil i C og C++ kildekode, men disse
+programmeringsspråkene er ikke designet spesielt for dette, og det finnes feil som er svært
+vanskelig å oppdage automatisk. Rust er et forsøk på å forbedre denne situasjonen, og er laget for
+at det skal være lettere å oppdage feil i kildekoden samtidig som at ressursbruken i Rust programmer
+skal være bortimot lik programvaren skrevet i C og C++.</p>
+<p>Før vi ser på Rust kode, skal vi se på pekere og referanser i C og C++. I C har vi pekere, og C++
+utvidet dette konseptet med referanser. En C peker trenger ikke å peke til noe, men en C++ referanse
+er alltidt knyttet til en variabel. Vi kan bruke både pekere (<code>ptr</code>) og referanser (<code>ref</code>) i C++:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-k">int</span> value;                     <span class="pl-c"><span class="pl-c">//</span> Depending on compiler implementation, a random value is possibly stored at some memory address,</span>
+                                 <span class="pl-c"><span class="pl-c">//</span> and 4 bytes are typically needed to store an int value</span>
+  value = <span class="pl-c1">2</span>;                     <span class="pl-c"><span class="pl-c">//</span> The value 2 is stored at the same memory address</span>
+  cout &lt;&lt; &amp;value &lt;&lt; endl;        <span class="pl-c"><span class="pl-c">//</span> Outputs the start of the memory address where the value 2 is stored</span>
+  cout &lt;&lt; <span class="pl-k">sizeof</span>(value) &lt;&lt; endl; <span class="pl-c"><span class="pl-c">//</span> Outputs how many bytes are needed to store an int value at the current system</span>
+
+  <span class="pl-k">int</span> *ptr;              <span class="pl-c"><span class="pl-c">//</span> Depending on compiler implementation, might point to a random memory address</span>
+  cout &lt;&lt; *ptr &lt;&lt; endl;  <span class="pl-c"><span class="pl-c">//</span> Outputs the int value stored at possibly a random memory address. Might cause segmentation fault.</span>
+  ptr = <span class="pl-c1">nullptr</span>;         <span class="pl-c"><span class="pl-c">//</span> Pointer now points to the memory address 0. This indicates that ptr does not point to a valid address.</span>
+  ptr = &amp;value;          <span class="pl-c"><span class="pl-c">//</span> Pointer now points to memory address of the value 2</span>
+  cout &lt;&lt; value &lt;&lt; endl; <span class="pl-c"><span class="pl-c">//</span> Outputs the value 2</span>
+  *ptr = <span class="pl-c1">4</span>;              <span class="pl-c"><span class="pl-c">//</span> Change value at address ptr to 4.</span>
+  cout &lt;&lt; *ptr &lt;&lt; endl;  <span class="pl-c"><span class="pl-c">//</span> Outputs 4</span>
+  cout &lt;&lt; value &lt;&lt; endl; <span class="pl-c"><span class="pl-c">//</span> Outputs 4</span>
+
+  <span class="pl-c"><span class="pl-c">//</span> int &amp;ref;         // Does not compile, a reference must refer to a value</span>
+  <span class="pl-k">int</span> &amp;ref = value;    <span class="pl-c"><span class="pl-c">//</span> ref is now reference to value, and can be used as the value variable can be used.</span>
+  cout &lt;&lt; ref &lt;&lt; endl; <span class="pl-c"><span class="pl-c">//</span> Outputs 4</span>
+  ref = <span class="pl-c1">6</span>;
+  cout &lt;&lt; ref &lt;&lt; endl;   <span class="pl-c"><span class="pl-c">//</span> Outputs 6</span>
+  cout &lt;&lt; value &lt;&lt; endl; <span class="pl-c"><span class="pl-c">//</span> Outputs 6</span>
+}</pre></div>
+<h2><a id="user-content-pekere-i-rust" class="anchor" aria-hidden="true" href="#pekere-i-rust"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pekere i Rust</h2>
+<p>Det anbefales ikke å jobbe med rene pekere i Rust, men om en må bruke de kreves det at en legger noe
+av koden i <code>unsafe</code>-blokker:</p>
+<div class="highlight highlight-source-rust"><pre><span class="pl-k">fn</span> <span class="pl-en">main</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">let</span> <span class="pl-k">mut</span> value = <span class="pl-c1">2</span><span class="pl-kos">;</span> <span class="pl-c">// Create a 32-bit (4 byte) integer (i32 type in Rust)</span>
+                       <span class="pl-c">// The mut (mutable) keyword makes value alterable (non-const)</span>
+                       <span class="pl-c">// In C and C++ variables are non-const (mut) by default, while in Rust the variables are const.</span>
+    <span class="pl-k">let</span> ptr<span class="pl-kos">:</span> <span class="pl-c1">*</span><span class="pl-k">mut</span> <span class="pl-smi">i32</span> = <span class="pl-c1">&amp;</span><span class="pl-k">mut</span> value<span class="pl-kos">;</span>
+    <span class="pl-k">unsafe</span> <span class="pl-kos">{</span>
+        <span class="pl-c1">*</span>ptr = <span class="pl-c1">4</span><span class="pl-kos">;</span> <span class="pl-c">// Changes value to 4. This statement must be in an unsafe block</span>
+        <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, *ptr<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Output 4. This statement must be in an unsafe block.</span>
+    <span class="pl-kos">}</span>
+    <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, value<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Output 4</span>
+<span class="pl-kos">}</span></pre></div>
+<p>Det er svært få tilfeller at en behøver å bruke <code>unsafe</code>-blokker i Rust, og det er derfor et mål å
+prøve å unngå disse. Dette oppnås blant annet ved å bruke refereranser i stedet.</p>
+<h2><a id="user-content-referanser-i-rust" class="anchor" aria-hidden="true" href="#referanser-i-rust"><span aria-hidden="true" class="octicon octicon-link"></span></a>Referanser i Rust</h2>
+<p>Syntaksen for referanser i Rust er svært lik pekersyntaksen:</p>
+<div class="highlight highlight-source-rust"><pre><span class="pl-k">fn</span> <span class="pl-en">main</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">let</span> <span class="pl-k">mut</span> value = <span class="pl-c1">2</span><span class="pl-kos">;</span>
+    <span class="pl-k">let</span> value_ref<span class="pl-kos">:</span> <span class="pl-c1">&amp;</span><span class="pl-k">mut</span> <span class="pl-smi">i32</span> = <span class="pl-c1">&amp;</span><span class="pl-k">mut</span> value<span class="pl-kos">;</span> <span class="pl-c">// Note that &amp;mut i32 (reference) is used instead of *mut i32 (pointer)</span>
+                                          <span class="pl-c">// : &amp;mut i32 is not needed</span>
+    <span class="pl-c1">*</span>value_ref = <span class="pl-c1">4</span><span class="pl-kos">;</span> <span class="pl-c">// Changes value to 4</span>
+    <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, *value_ref<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Output 4. Could also write println!("{}", value_ref); here.</span>
+    <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, value<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Output 4</span>
+<span class="pl-kos">}</span></pre></div>
+<p>Derimot er bruken av referanser mye strengere i Rust enn i C++, og dette er grunnen til at det er
+tryggere å jobbe med for eksempel referanser i Rust enn i C++. Det første eksempelet er likt det
+forrige, men rekkefølgen på <code>println!</code>-kallene er endret:</p>
+<div class="highlight highlight-source-rust"><pre><span class="pl-k">fn</span> <span class="pl-en">main</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">let</span> <span class="pl-k">mut</span> value = <span class="pl-c1">2</span><span class="pl-kos">;</span>
+    <span class="pl-k">let</span> value_ref = <span class="pl-c1">&amp;</span><span class="pl-k">mut</span> value<span class="pl-kos">;</span>
+    <span class="pl-c1">*</span>value_ref = <span class="pl-c1">4</span><span class="pl-kos">;</span>
+    <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, value<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Compile error since value_ref is reffering to value and will be used after this statement.</span>
+    <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, *value_ref<span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-kos">}</span></pre></div>
+<p>I Rust er det altså ikke lov å bruke en verdi hvis det fortsatt er en referanse som refererer til
+denne verdien, og denne referansen vil bli brukt senere. Om du prøver å kompilere koden over selv
+vil du se følgende feilmelding: "cannot borrow <code>value</code> as immutable because it is also borrowed as
+mutable". Denne feilmeldingen er vanskelig å forstå i starten, men vi skal se nærmere på hva dette
+betyr.</p>
+<p>Selv om en jobber med referanser i Rust, har Rust lagt til et ekstra hjelpesystem for å gjøre det
+tryggere å jobbe med referanser i Rust. Det er dette hjelpesystemet som bruker konseptet <em>borrow</em>
+(lån).</p>
+<p>Først skal vi se på et eksempel i C++ der referanser blir brukt på feilaktig måte som kan føre til
+programvarefeil:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>vector<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  vector&lt;<span class="pl-k">int</span>&gt; vec = {<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>}; <span class="pl-c"><span class="pl-c">//</span> Create dynamic array</span>
+  <span class="pl-k">for</span> (<span class="pl-k">auto</span> e : vec)
+    cout &lt;&lt; e &lt;&lt; endl; <span class="pl-c"><span class="pl-c">//</span> Outputs 1\n2\n3\n</span>
+
+  <span class="pl-k">auto</span> &amp;ref = vec[<span class="pl-c1">0</span>];
+  cout &lt;&lt; ref &lt;&lt; endl; <span class="pl-c"><span class="pl-c">//</span> Outputs 1</span>
+
+  vec.<span class="pl-c1">clear</span>(); <span class="pl-c"><span class="pl-c">//</span> Erase all elements in vec</span>
+
+  cout &lt;&lt; ref &lt;&lt; endl; <span class="pl-c"><span class="pl-c">//</span> Depending on compiler implementation, might cause segmentation fault</span>
+
+  <span class="pl-k">for</span> (<span class="pl-k">auto</span> e : vec)
+    cout &lt;&lt; e &lt;&lt; endl; <span class="pl-c"><span class="pl-c">//</span> No output</span>
+}</pre></div>
+<p>Hvis vi prøver å gjøre det samme i Rust vil vi få feilmelding ved kompilering:</p>
+<div class="highlight highlight-source-rust"><pre><span class="pl-k">fn</span> <span class="pl-en">main</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-kos">{</span>
+    <span class="pl-k">let</span> <span class="pl-k">mut</span> vec = <span class="pl-en">vec</span><span class="pl-en">!</span><span class="pl-kos">[</span><span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span><span class="pl-kos">]</span><span class="pl-kos">;</span> <span class="pl-c">// Create dynamic array</span>
+    <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{:?}"</span>, vec<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Outputs [1, 2, 3]</span>
+
+    <span class="pl-k">let</span> element_ref = <span class="pl-c1">&amp;</span><span class="pl-k">mut</span> vec<span class="pl-kos">[</span><span class="pl-c1">0</span><span class="pl-kos">]</span><span class="pl-kos">;</span> <span class="pl-c">// Reference to first element in vec</span>
+    <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, element_ref<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Outputs 1</span>
+
+    vec<span class="pl-kos">.</span><span class="pl-en">clear</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Erase all elements in vec</span>
+
+    <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{}"</span>, element_ref<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Compilation error: cannot borrow `vec` as mutable more than once at a time</span>
+
+    <span class="pl-en">println</span><span class="pl-en">!</span><span class="pl-kos">(</span><span class="pl-s">"{:?}"</span>, vec<span class="pl-kos">)</span><span class="pl-kos">;</span> <span class="pl-c">// Outputs []</span>
+<span class="pl-kos">}</span></pre></div>
+<p>Igjen er feilmeldingen litt vanskelig å forstå, men <em>borrow</em>-systemet tillater ikke at <code>element_ref</code>
+blir brukt etter at <code>vec</code> blir brukt i <code>vec.clear()</code>. Merk at dette gjelder uansett hva <code>vec</code> blir
+brukt til. For eksempel om vi erstatter <code>vec.clear()</code> med <code>println!("{:?}", vec);</code> så ville vi fått
+liknende feilmelding selv om denne operasjonen er trygg. Du mister litt frihet i Rust, men dette
+fører igjen til at det er litt tryggere å kode i Rust enn i C og C++.</p>
+
+                      </article>
+                    </div>
+                  </div>
+
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

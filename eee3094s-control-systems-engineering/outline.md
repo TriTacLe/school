@@ -1,0 +1,221 @@
+- generic [active] [ref=f14e1]:
+  - banner [ref=f14e2]:
+    - navigation "Main" [ref=f14e3]:
+      - generic [ref=f14e4]:
+        - link "skip to main content" [ref=f14e5] [cursor=pointer]:
+          - /url: javascript:void(0);
+        - generic:
+          - generic [ref=f14e10]:
+            - generic [ref=f14e12]:
+              - link "My Home" [ref=f14e14] [cursor=pointer]:
+                - /url: /d2l/lp/ouHome/defaultHome.d2l
+                - img "My Home" [ref=f14e17]
+              - link "EEE3094S 2026 | Control Systems Engineering" [ref=f14e21] [cursor=pointer]:
+                - /url: /d2l/home/159798
+            - generic [ref=f14e22]:
+              - button "Select a course..." [ref=f14e25] [cursor=pointer]
+              - generic [ref=f14e31]:
+                - button "Message alerts" [ref=f14e34] [cursor=pointer]
+                - button "Subscription alerts" [ref=f14e39] [cursor=pointer]
+                - generic [ref=f14e43]:
+                  - button "Update alerts" [ref=f14e44] [cursor=pointer]
+                  - generic: Update alerts - You have new alerts
+              - button "Tri Le, avatar" [ref=f14e54] [cursor=pointer]:
+                - generic: TL
+          - list [ref=f14e63]:
+            - listitem [ref=f14e64]:
+              - link "Course Home" [ref=f14e65] [cursor=pointer]:
+                - /url: /d2l/home/159798
+            - listitem [ref=f14e66]:
+              - link "Content" [ref=f14e67] [cursor=pointer]:
+                - /url: /d2l/le/lessons/159798
+            - listitem [ref=f14e68]:
+              - button "Activities" [ref=f14e70]
+            - listitem [ref=f14e74]:
+              - button "Course Info" [ref=f14e76]
+            - listitem [ref=f14e80]:
+              - link "Grades" [ref=f14e81] [cursor=pointer]:
+                - /url: /d2l/lms/grades/index.d2l?ou=159798
+            - listitem [ref=f14e82]:
+              - button "Help" [ref=f14e84]
+  - main [ref=f14e88]:
+    - iframe [ref=f14e91]:
+      - generic [ref=f15e6]:
+        - generic [ref=f15e8]:
+          - generic [ref=f15e13]:
+            - searchbox "Search titles and descriptions" [ref=f15e14]
+            - button "Search" [ref=f15e17] [cursor=pointer]
+          - application [ref=f15e23]:
+            - generic:
+              - row [ref=f15e24]:
+                - gridcell "Course Outline 6 out of 6 topics completed Course Outline" [ref=f15e25]:
+                  - link "Course Outline 6 out of 6 topics completed" [ref=f15e29] [cursor=pointer]:
+                    - /url: /d2l/le/lessons/159798/units/3569359
+                    - generic [ref=f15e36]:
+                      - generic [ref=f15e37]: Course Outline
+                      - generic "6 out of 6 topics completed" [ref=f15e42]:
+                        - generic [ref=f15e43]: 6/6
+                        - generic [ref=f15e44]: Completed
+                  - button "Course Outline" [expanded] [ref=f15e49] [cursor=pointer]
+                  - application [ref=f15e57]:
+                    - generic:
+                      - row "Staff and Communication Completed" [ref=f15e58]:
+                        - gridcell "Staff and Communication Completed" [ref=f15e59]:
+                          - link "Staff and Communication Completed" [ref=f15e62] [cursor=pointer]:
+                            - /url: /d2l/le/lessons/159798/topics/3569375
+                            - generic [ref=f15e70]:
+                              - generic [ref=f15e71]: Staff and Communication
+                              - generic "Completed" [ref=f15e76]
+                      - row "Activities and Scheduling Completed" [ref=f15e79]:
+                        - gridcell "Activities and Scheduling Completed" [ref=f15e80]:
+                          - link "Activities and Scheduling Completed" [ref=f15e83] [cursor=pointer]:
+                            - /url: /d2l/le/lessons/159798/topics/3569376
+                            - generic [ref=f15e91]:
+                              - generic [ref=f15e92]: Activities and Scheduling
+                              - generic "Completed" [ref=f15e97]
+                      - row "Assessment Strategy Completed" [ref=f15e100]:
+                        - gridcell "Assessment Strategy Completed" [ref=f15e101]:
+                          - link "Assessment Strategy Completed" [ref=f15e104] [cursor=pointer]:
+                            - /url: /d2l/le/lessons/159798/topics/3569380
+                            - generic [ref=f15e112]:
+                              - generic [ref=f15e113]: Assessment Strategy
+                              - generic "Completed" [ref=f15e118]
+                      - row "Academic and Support Services Completed" [ref=f15e121]:
+                        - gridcell "Academic and Support Services Completed" [ref=f15e122]:
+                          - link "Academic and Support Services Completed" [ref=f15e125] [cursor=pointer]:
+                            - /url: /d2l/le/lessons/159798/topics/3569377
+                            - generic [ref=f15e133]:
+                              - generic [ref=f15e134]: Academic and Support Services
+                              - generic "Completed" [ref=f15e139]
+                      - row "Academic Integrity Completed" [ref=f15e142]:
+                        - gridcell "Academic Integrity Completed" [ref=f15e143]:
+                          - link "Academic Integrity Completed" [ref=f15e146] [cursor=pointer]:
+                            - /url: /d2l/le/lessons/159798/topics/3569373
+                            - generic [ref=f15e154]:
+                              - generic [ref=f15e155]: Academic Integrity
+                              - generic "Completed" [ref=f15e160]
+                      - row "Course Handout Completed" [ref=f15e163]:
+                        - gridcell "Course Handout Completed" [ref=f15e164]:
+                          - link "Course Handout Completed" [ref=f15e167] [cursor=pointer]:
+                            - /url: /d2l/le/lessons/159798/topics/4120035
+                            - generic [ref=f15e175]:
+                              - generic [ref=f15e176]: Course Handout
+                              - generic "Completed" [ref=f15e181]
+              - row [ref=f15e184]:
+                - gridcell "Modules 18 out of 73 topics completed Modules" [ref=f15e185]:
+                  - link "Modules 18 out of 73 topics completed" [ref=f15e189] [cursor=pointer]:
+                    - /url: /d2l/le/lessons/159798/units/3569360
+                    - generic [ref=f15e196]:
+                      - generic [ref=f15e197]: Modules
+                      - generic "18 out of 73 topics completed" [ref=f15e202]:
+                        - generic [ref=f15e203]: 18/73
+                        - generic [ref=f15e204]: Completed
+                  - button "Modules" [ref=f15e209] [cursor=pointer]
+              - row [ref=f15e212]:
+                - gridcell "Tutorials 2 out of 6 topics completed Tutorials" [ref=f15e213]:
+                  - link "Tutorials 2 out of 6 topics completed" [ref=f15e217] [cursor=pointer]:
+                    - /url: /d2l/le/lessons/159798/units/3569361
+                    - generic [ref=f15e224]:
+                      - generic [ref=f15e225]: Tutorials
+                      - generic "2 out of 6 topics completed" [ref=f15e230]:
+                        - generic [ref=f15e231]: 2/6
+                        - generic [ref=f15e232]: Completed
+                  - button "Tutorials" [ref=f15e237] [cursor=pointer]
+              - row [ref=f15e240]:
+                - gridcell "Labs 2 out of 13 topics completed Labs" [ref=f15e241]:
+                  - link "Labs 2 out of 13 topics completed" [ref=f15e245] [cursor=pointer]:
+                    - /url: /d2l/le/lessons/159798/units/3569362
+                    - generic [ref=f15e252]:
+                      - generic [ref=f15e253]: Labs
+                      - generic "2 out of 13 topics completed" [ref=f15e258]:
+                        - generic [ref=f15e259]: 2/13
+                        - generic [ref=f15e260]: Completed
+                  - button "Labs" [ref=f15e265] [cursor=pointer]
+              - row [ref=f15e268]:
+                - gridcell "Lecture Recordings 1 out of 1 topics completed Lecture Recordings" [ref=f15e269]:
+                  - link "Lecture Recordings 1 out of 1 topics completed" [ref=f15e273] [cursor=pointer]:
+                    - /url: /d2l/le/lessons/159798/units/3565654
+                    - generic [ref=f15e280]:
+                      - generic [ref=f15e281]: Lecture Recordings
+                      - generic "1 out of 1 topics completed" [ref=f15e286]:
+                        - generic [ref=f15e287]: 1/1
+                        - generic [ref=f15e288]: Completed
+                  - button "Lecture Recordings" [ref=f15e293] [cursor=pointer]
+              - row [ref=f15e296]:
+                - gridcell "Practice Problems 0 out of 8 topics completed Practice Problems" [ref=f15e297]:
+                  - link "Practice Problems 0 out of 8 topics completed" [ref=f15e301] [cursor=pointer]:
+                    - /url: /d2l/le/lessons/159798/units/3569368
+                    - generic [ref=f15e308]:
+                      - generic [ref=f15e309]: Practice Problems
+                      - generic "0 out of 8 topics completed" [ref=f15e314]:
+                        - generic [ref=f15e315]: 0/8
+                        - generic [ref=f15e316]: Completed
+                  - button "Practice Problems" [ref=f15e321] [cursor=pointer]
+              - row [ref=f15e324]:
+                - gridcell "Past Papers 1 out of 45 topics completed Past Papers" [ref=f15e325]:
+                  - link "Past Papers 1 out of 45 topics completed" [ref=f15e329] [cursor=pointer]:
+                    - /url: /d2l/le/lessons/159798/units/3569364
+                    - generic [ref=f15e336]:
+                      - generic [ref=f15e337]: Past Papers
+                      - generic "1 out of 45 topics completed" [ref=f15e342]:
+                        - generic [ref=f15e343]: 1/45
+                        - generic [ref=f15e344]: Completed
+                  - button "Past Papers" [ref=f15e349] [cursor=pointer]
+              - row [ref=f15e352]:
+                - gridcell "Supplementary Resources 0 out of 20 topics completed Supplementary Resources" [ref=f15e353]:
+                  - link "Supplementary Resources 0 out of 20 topics completed" [ref=f15e357] [cursor=pointer]:
+                    - /url: /d2l/le/lessons/159798/units/3569363
+                    - generic [ref=f15e364]:
+                      - generic [ref=f15e365]: Supplementary Resources
+                      - generic "0 out of 20 topics completed" [ref=f15e370]:
+                        - generic [ref=f15e371]: 0/20
+                        - generic [ref=f15e372]: Completed
+                  - button "Supplementary Resources" [ref=f15e377] [cursor=pointer]
+              - row [ref=f15e380]:
+                - gridcell "Textbook Questions 2 out of 4 topics completed Textbook Questions" [ref=f15e381]:
+                  - link "Textbook Questions 2 out of 4 topics completed" [ref=f15e385] [cursor=pointer]:
+                    - /url: /d2l/le/lessons/159798/units/3569367
+                    - generic [ref=f15e392]:
+                      - generic [ref=f15e393]: Textbook Questions
+                      - generic "2 out of 4 topics completed" [ref=f15e398]:
+                        - generic [ref=f15e399]: 2/4
+                        - generic [ref=f15e400]: Completed
+                  - button "Textbook Questions" [ref=f15e405] [cursor=pointer]
+              - row [ref=f15e408]:
+                - gridcell "Legacy Lecture Recordings 0 out of 3 topics completed Legacy Lecture Recordings" [ref=f15e409]:
+                  - link "Legacy Lecture Recordings 0 out of 3 topics completed" [ref=f15e413] [cursor=pointer]:
+                    - /url: /d2l/le/lessons/159798/units/3569358
+                    - generic [ref=f15e420]:
+                      - generic [ref=f15e421]: Legacy Lecture Recordings
+                      - generic "0 out of 3 topics completed" [ref=f15e426]:
+                        - generic [ref=f15e427]: 0/3
+                        - generic [ref=f15e428]: Completed
+                  - button "Legacy Lecture Recordings" [ref=f15e433] [cursor=pointer]
+              - row [ref=f15e436]:
+                - gridcell "Course Evaluation Not available yet Availability starts October 19, 2026 12:01 AM 0 out of 1 topics completed The module and all its activities are not available Course Evaluation" [ref=f15e437]:
+                  - link "Course Evaluation Not available yet Availability starts October 19, 2026 12:01 AM 0 out of 1 topics completed The module and all its activities are not available" [ref=f15e441] [cursor=pointer]:
+                    - /url: /d2l/le/lessons/159798/units/3569365
+                    - generic [ref=f15e446]:
+                      - generic [ref=f15e448]:
+                        - generic [ref=f15e449]: Course Evaluation
+                        - generic [ref=f15e452]: Not available yet
+                        - generic "Availability starts October 19, 2026 12:01 AM" [ref=f15e455]:
+                          - button "Starts Oct 19" [ref=f15e456]
+                        - generic "0 out of 1 topics completed" [ref=f15e459]:
+                          - generic [ref=f15e460]: 0/1
+                          - generic [ref=f15e461]: Completed
+                      - generic "The module and all its activities are not available" [ref=f15e462]
+                  - button "Course Evaluation" [ref=f15e467] [cursor=pointer]
+        - generic [ref=f15e470]:
+          - generic [ref=f15e473]:
+            - button "Download" [ref=f15e475] [cursor=pointer]
+            - generic [ref=f15e479]:
+              - button "Previous" [disabled] [ref=f15e481]
+              - button "Next" [ref=f15e485] [cursor=pointer]
+          - generic [ref=f15e489]:
+            - heading "Course Outline" [level=1] [ref=f15e490]
+            - generic [ref=f15e492]:
+              - heading [level=2] [ref=f15e493]:
+                - strong [ref=f15e494]: Welcome to EEE3094S
+              - heading "CONTROL SYSTEMS ENGINEERING" [level=3] [ref=f15e495]
+              - paragraph [ref=f15e496]: "This course aims to develop the understanding of open and closed loop configurations, block diagrams, dynamic system modelling, transient response, steady state error criterion. System stability: Routh Hurwitz criterion, Root Locus. Frequency responses. Nyquist plots, Bode diagrams, Nichols Charts. Compensation: Lead-lag circuits, minor loops, feedforward and three-term controllers. Sensitivity functions, minimum prototype response controllers, bilinear transformation, frequency response methods. State variables, state space models and design methods. Robustness, observability controllability, stability and performance."

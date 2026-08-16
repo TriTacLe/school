@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title> </title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark-a167e256da9c.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light-0eace2597ca3.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-711f412bb361.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-primitives-2ef2a46b27ee.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-f4d857cbc96a.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/global-8215aa0ce496.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_high_contrast-ea7373db06c8.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_tritanopia-5cb699a7e247.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_colorblind-afa99dcf40f7.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_dimmed-d11f2cf8009b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_colorblind-af6c685139ba.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_high_contrast-578cdbc8a5a9.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/repository-6247ca238fd4.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_tritanopia-9b32204967c6.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/code-36b3bf8f5e76.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+      margin-bottom: 21px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+    <main id="js-repo-pjax-container">
+      <div class="clearfix new-discussion-timeline container-xl px-3 px-md-4 px-lg-5">
+        <div class="repository-content">
+          <div class="clearfix">
+            <div class="Layout Layout--flowRow-until-md Layout--sidebarPosition-end Layout--sidebarPosition-flowRow-end">
+              <div class="Layout-main">
+
+                
+
+                  <div id="readme" class="Box md Box--responsive">
+                    
+                      <div class="Box-header d-flex border-bottom-0 flex-items-center flex-justify-between color-bg-default rounded-top-2">
+                        <div class="d-flex flex-items-center">
+                          <h2 class="Box-title">
+                             
+                          </h2>
+                        </div>
+                      </div>
+                    
+                    <div class="Box-body px-5 pb-5">
+                      <article id="grip-content" class="markdown-body entry-content container-lg">
+                        <div class="markdown-heading"><h1 class="heading-element">Introduksjon til CMake for C++ prosjekter</h1><a id="user-content-introduksjon-til-cmake-for-c-prosjekter" class="anchor" aria-label="Permalink: Introduksjon til CMake for C++ prosjekter" href="#introduksjon-til-cmake-for-c-prosjekter"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>CMake er et mye brukt verktøy for å handtere platformuavhengig oppsett av C++ prosjekter. Dette
+verktøyet kan blant annet hjelpe oss å finne programvarebiblioteker på ulike plattformer, og hjelpe
+oss med å kompilere C++ filer til kjørbare filer.</p>
+<p>Et enkelt C++ program i filen <code>main.cpp</code>:</p>
+<div class="highlight highlight-source-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>hello<span class="pl-pds">"</span></span> &lt;&lt; std::endl;
+}</pre></div>
+<p>kan kompileres i en terminal på Unix-lignende systemer som MacOS og Linux:</p>
+<div class="highlight highlight-source-shell"><pre>g++ main.cpp</pre></div>
+<p>Dette resulterer i en kjørbar fil som heter <code>o.out</code> i samme katalog.</p>
+<p>Når vi bruker CMake må vi først ha en <code>CMakeLists.txt</code> fil, for eksempel opprettet av juCi++:</p>
+<div class="highlight highlight-source-cmake"><pre><span class="pl-c1">cmake_minimum_required</span>(<span class="pl-c1">VERSION</span> <span class="pl-s">3.10</span>)
+
+<span class="pl-c1">project</span>(<span class="pl-s">hello</span>)
+
+<span class="pl-c1">set</span>(<span class="pl-s">CMAKE_CXX_FLAGS</span> <span class="pl-s">"<span class="pl-smi">${CMAKE_CXX_FLAGS}</span> -std=c++1y -Wall -Wextra"</span>)
+
+<span class="pl-c1">add_executable</span>(<span class="pl-s">hello</span> <span class="pl-s">main.cpp</span>)</pre></div>
+<p>Her settes i tillegg flaggene <code>-std=c++1y -Wall -Wextra</code> som aktiverer c++14 standarden og ekstra
+advarsler (<code>-Wall</code> og <code>-Wextra</code>). Med <code>add_executable()</code> sier vi at <code>main.cpp</code> skal kompileres til
+den kjørbare filen <code>hello</code>.</p>
+<p>En kan kjøre cmake i terminalen mot katalogen der <code>CMakeLists.txt</code> filen ligger, og den kjørbare
+filen <code>hello</code> blir opprettet:</p>
+<div class="highlight highlight-source-shell"><pre>mkdir build
+<span class="pl-c1">cd</span> build
+cmake .. <span class="pl-c"><span class="pl-c">#</span> Prepare project for compilcation</span>
+make     <span class="pl-c"><span class="pl-c">#</span> Compile project and make executable</span>
+./hello  <span class="pl-c"><span class="pl-c">#</span> Run hello executable</span></pre></div>
+<p>Det er vanlig å gjøre dette i en egen byggekatalog <code>build</code> siden byggeprosessen kan opprette flere
+filer du ikke ønsker sammen med kildefilene.</p>
+<p>Merk at IDE'er som juCi++ gjør dette for deg når du velger å kjøre et prosjekt.</p>
+<p>Når du kjører <code>make</code> blir en kommando som tilsvarer følgende kjørt:</p>
+<div class="highlight highlight-source-shell"><pre><span class="pl-c"><span class="pl-c">#</span> in build folder:</span>
+g++ -std=c++1y -Wall -Wextra ../main.cpp -o hello</pre></div>
+<div class="markdown-heading"><h2 class="heading-element">Flere kjørbare filer</h2><a id="user-content-flere-kjørbare-filer" class="anchor" aria-label="Permalink: Flere kjørbare filer" href="#flere-kjørbare-filer"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Om du ønsker to eller flere kjørbare filer i samme prosjekt kan du legge til flere
+<code>add_executable()</code>-kall i CMakeLists.txt filen. For eksempel med disse kildefilene:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span> hello1.cpp</span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span> &lt;&lt; std::endl;
+}</pre></div>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span> hello2.cpp</span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>2<span class="pl-pds">"</span></span> &lt;&lt; std::endl;
+}</pre></div>
+<p>kan du lage to kjørbare filer <code>hello1</code> og <code>hello2</code> med følgende CMakeLists.txt:</p>
+<div class="highlight highlight-source-cmake"><pre><span class="pl-c1">cmake_minimum_required</span>(<span class="pl-c1">VERSION</span> <span class="pl-s">3.10</span>)
+
+<span class="pl-c1">project</span>(<span class="pl-s">hello</span>)
+
+<span class="pl-c1">set</span>(<span class="pl-s">CMAKE_CXX_FLAGS</span> <span class="pl-s">"<span class="pl-smi">${CMAKE_CXX_FLAGS}</span> -std=c++1y -Wall -Wextra"</span>)
+
+<span class="pl-c1">add_executable</span>(<span class="pl-s">hello1</span> <span class="pl-s">hello1.cpp</span>)
+<span class="pl-c1">add_executable</span>(<span class="pl-s">hello2</span> <span class="pl-s">hello2.cpp</span>)</pre></div>
+<p>og kjøre <code>make</code> igjen i <code>build</code>-katalogen.</p>
+<p>Når du velger <em>Compile and Run</em> i <em>Project</em> menyen i juCi++ kjøres den kjørbare filen som er knyttet
+opp mot kildefilen du jobber med i IDE'en. Du kan også velge <em>Start/Continue</em> i <em>Debug</em> menyen om du
+ønsker å debugge programmet ved å sette <em>breakpoints</em> og se på verdier i variabler når debuggeren
+stopper ved et <em>breakpoint</em>.</p>
+<div class="markdown-heading"><h2 class="heading-element">Kompilering av flere kildefiler til en kjørbar fil</h2><a id="user-content-kompilering-av-flere-kildefiler-til-en-kjørbar-fil" class="anchor" aria-label="Permalink: Kompilering av flere kildefiler til en kjørbar fil" href="#kompilering-av-flere-kildefiler-til-en-kjørbar-fil"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>I C++ er det vanlig å dele opp kildekoden i flere filer. Du trenger ikke gjøre det i dette kurset
+med mindre øvingsteksten ber om det, men det kan likevel være nyttig å vite hvordan dette kan gjøres
+med CMake.</p>
+<p>I eksempelet under er kildekoden delt opp i tre filer <code>main.cpp</code>, <code>answer.hpp</code> og <code>answer.cpp</code>:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span> main.cpp</span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">"</span>answer.hpp<span class="pl-pds">"</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>2<span class="pl-pds">"</span></span> &lt;&lt; std::endl;
+}</pre></div>
+<p>I <code>main.cpp</code> ligger <code>main()</code>-funksjonen som kjøres først i den kjørbare filen som til slutt skal
+lages.</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span> answer.hpp</span>
+#<span class="pl-k">pragma</span> once
+
+<span class="pl-k">int</span> <span class="pl-en">answer</span>();</pre></div>
+<p>I <code>answer.hpp</code> ligger signaturen til en funksjon <code>answer()</code> slik at kompilatoren kan sjekke at
+<code>answer()</code> blir brukt riktig i for eksempel <code>main.cpp</code>-filen. Slike signaturer legges i <em>header</em>
+filer som for eksempel slutter med <code>.hpp</code>.</p>
+<p>Selve implementasjonen av <code>answer()</code>-funksjonen kan legges i en egen <code>cpp</code>-fil som her heter
+<code>answer.cpp</code>:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span> answer.cpp</span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">"</span>answer.hpp<span class="pl-pds">"</span></span>
+
+<span class="pl-k">int</span> <span class="pl-en">answer</span>() {
+  <span class="pl-k">return</span> <span class="pl-c1">42</span>;
+}</pre></div>
+<p>For å kompilere de to kildefilene <code>main.cpp</code> og <code>answer.cpp</code> til en kjørbar fil kan vi bruke
+følgende CMakeLists.txt:</p>
+<div class="highlight highlight-source-cmake"><pre><span class="pl-c1">cmake_minimum_required</span>(<span class="pl-c1">VERSION</span> <span class="pl-s">3.10</span>)
+
+<span class="pl-c1">project</span>(<span class="pl-s">hello</span>)
+
+<span class="pl-c1">set</span>(<span class="pl-s">CMAKE_CXX_FLAGS</span> <span class="pl-s">"<span class="pl-smi">${CMAKE_CXX_FLAGS}</span> -std=c++1y -Wall -Wextra"</span>)
+
+<span class="pl-c1">add_executable</span>(<span class="pl-s">hello</span> <span class="pl-s">main.cpp</span> <span class="pl-s">answer.cpp</span>)</pre></div>
+<p>Begge kildefilene <code>main.cpp</code> og <code>answer.cpp</code> er her lagt til i <code>add_executable()</code>-kallet.</p>
+
+                      </article>
+                    </div>
+                  </div>
+
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title> </title>
+  <link rel="icon" href="/eidheim/grip/static/favicon.ico" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_tritanopia-2171ea0f078b.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/code-3d7b701fc6eb.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_dimmed-0adfa28f0e68.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_high_contrast-1c8575b36644.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light-5178aee0ee76.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_tritanopia-cdd88f146bf7.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/global-afe5b3f5ff2d.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/github-251065160b09.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark_colorblind-5113d2be20b0.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_colorblind-c96add742484.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/dark-217d4f9c8e70.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/primer-0e158a2f5ddd.css" />
+  <link rel="stylesheet" href="/eidheim/grip/asset/light_high_contrast-290f92f5e867.css" />
+  <link rel="stylesheet" href="/eidheim/grip/static/octicons/octicons.css" />
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+      margin-bottom: 21px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="">
+    <main id="js-repo-pjax-container">
+      <div class="clearfix new-discussion-timeline container-xl px-3 px-md-4 px-lg-5">
+        <div class="repository-content">
+          <div class="clearfix">
+            <div class="Layout Layout--flowRow-until-md Layout--sidebarPosition-end Layout--sidebarPosition-flowRow-end">
+              <div class="Layout-main">
+
+                
+
+                  <div id="readme" class="Box md Box--responsive">
+                    
+                      <div class="Box-header d-flex border-bottom-0 flex-items-center flex-justify-between color-bg-default rounded-top-2">
+                        <div class="d-flex flex-items-center">
+                          <h2 class="Box-title">
+                             
+                          </h2>
+                        </div>
+                      </div>
+                    
+                    <div class="Box-body px-5 pb-5">
+                      <article id="grip-content" class="markdown-body entry-content container-lg">
+                        <h1><a id="user-content-leksjon-8-templates" class="anchor" aria-hidden="true" href="#leksjon-8-templates"><span aria-hidden="true" class="octicon octicon-link"></span></a>Leksjon 8: Templates</h1>
+<p>Vi skal i denne leksjonen se på en spesiell teknikk (<em>template</em>) som gjør at vi kan lage kode som er
+anvendelig til mange forskjellige formål. Standard Template Library (STL) har brukt denne teknikken
+til å lage et klassebibliotek med mange nyttige klasser. Poenget med template er at du kan lage
+klasser og/eller funksjoner som fungerer uavhengig av hvilke(n) datatype(r) de skal jobbe med. Vi
+lager en generell algoritme eller klasse, og kan seinere anvende den på de dataene vi måtte ønske.</p>
+<p>Skrevet av Mildrid Ljosland, Else Lervik, Tore Berg Hansen og Ole Christian Eidheim.</p>
+<p>Eksemplene for denne leksjonen finner du her: <a href="https://gitlab.com/ntnu-iini4003/examples8" rel="nofollow">https://gitlab.com/ntnu-iini4003/examples8</a></p>
+<p>Støttelitteratur:</p>
+<ul>
+<li>Bjarne Stroustrup: A Tour of C++, Second Edition
+<ul>
+<li>kap. 6</li>
+</ul>
+</li>
+</ul>
+<h2><a id="user-content-funksjonstemplate" class="anchor" aria-hidden="true" href="#funksjonstemplate"><span aria-hidden="true" class="octicon octicon-link"></span></a>Funksjonstemplate</h2>
+<p>Vi starter med å se på et eksempel der vi lager en funksjon som template.</p>
+<p>Vi ønsker å sortere en tabell. Algoritmen for sortering er den samme uansett om det er heltall,
+desimaltall, navn eller hva som helst annet som skal sorteres. Det eneste kravet vi må stille, er at
+dataene har innbyrdes rekkefølge, slik at det er mulig å avgjøre om et element er større, lik eller
+mindre enn et annet element.</p>
+<p>Vi bruker følgende sorteringsalgoritme:</p>
+<p>Først finner vi minste element og plasserer det først, deretter finner vi nest minste og plasserer
+det som nummer to, osv. til vi har plassert alle elementene.</p>
+<p>Her er koden:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> sort() fra sort.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+
+<span class="pl-k">template </span>&lt;<span class="pl-k">typename</span> Type&gt;
+<span class="pl-k">void</span> <span class="pl-en">sort</span>(Type &amp;data) {
+  <span class="pl-k">for</span> (<span class="pl-c1">size_t</span> i = <span class="pl-c1">0</span>; i &lt; data.<span class="pl-c1">size</span>(); ++i) {
+    <span class="pl-k">int</span> smallest = i;
+    <span class="pl-k">for</span> (<span class="pl-c1">size_t</span> j = i + <span class="pl-c1">1</span>; j &lt; data.<span class="pl-c1">size</span>(); ++j) {
+      <span class="pl-k">if</span> (data[j] &lt; data[smallest])
+        smallest = j;
+    }
+    <span class="pl-k">auto</span> help = data[i];
+    data[i] = data[smallest];
+    data[smallest] = help;
+  }
+}</pre></div>
+<p><code>Type</code> er betegnelsen for template-typen, det vi kaller den generiske typen.
+<code>template &lt;typename Type&gt;</code> forteller kompilatoren at vi har en template, og at vi ønsker å kalle den
+generiske typen for <code>Type</code>. Vi kunne ha brukt et hvilket som helst syntaktisk lovlig navn, i
+litteraturen brukes ofte navnet <code>T</code> for den generiske typen. Av historiske årsaker kan vi i stedet
+for <code>typename</code> også skrive <code>class</code>, men <code>typename</code> er mest vanlig å bruke i nyere kode.</p>
+<p>Anta nå at vi ønsker å sortere en tabell av desimaltall. Da tar vi i bruk (<em>instansierer</em>)
+templaten.</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> main() fra sort.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  std::default_random_engine generator;
+  std::uniform_real_distribution&lt;<span class="pl-k">double</span>&gt; <span class="pl-c1">distribution</span>(<span class="pl-c1">0.0</span>, <span class="pl-c1">10.0</span>);
+
+  vector&lt;<span class="pl-k">double</span>&gt; table;
+  <span class="pl-k">for</span> (<span class="pl-c1">size_t</span> i = <span class="pl-c1">0</span>; i &lt; <span class="pl-c1">10</span>; ++i)
+    table.<span class="pl-c1">emplace_back</span>(<span class="pl-c1">distribution</span>(generator));
+
+  <span class="pl-c1">sort</span>(table);
+
+  <span class="pl-k">for</span> (<span class="pl-k">auto</span> &amp;e : table)
+    cout &lt;&lt; e &lt;&lt; endl;
+}
+
+<span class="pl-c"><span class="pl-c">/*</span>Eksempel kjøring av programmet:</span>
+<span class="pl-c">0.850324</span>
+<span class="pl-c">1.8969</span>
+<span class="pl-c">3.98008</span>
+<span class="pl-c">5.11713</span>
+<span class="pl-c">5.6039</span>
+<span class="pl-c">7.43512</span>
+<span class="pl-c">8.09567</span>
+<span class="pl-c">8.91611</span>
+<span class="pl-c">9.66611</span>
+<span class="pl-c">9.95085</span>
+<span class="pl-c"><span class="pl-c">*/</span></span></pre></div>
+<p>Funksjonen <code>sort()</code> kalles på samme måte som en helt vanlig funksjon. Kompilatoren finner selv ut at
+det er en template-funksjon, og at <code>table</code> er <code>vector&lt;double&gt;</code>, slik at <code>Type</code> skal erstattes med
+<code>vector&lt;double&gt;</code> i dette tilfellet.</p>
+<p>Ved instansieringen lager kompilatoren en “ekte” funksjon ved å erstatte den generiske typen med den
+typen vi bruker i funksjonskallet. Kjør eksemplet.</p>
+<p>Vi kan også lage en template for å søke i en tabell:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> search() fra search.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-k">template </span>&lt;<span class="pl-k">typename</span> Type&gt;
+<span class="pl-c1">size_t</span> <span class="pl-en">search</span>(<span class="pl-k">const</span> vector&lt;Type&gt; &amp;table, Type search_element) {
+  <span class="pl-c1">size_t</span> pos = <span class="pl-c1">0</span>;
+  <span class="pl-k">while</span> (pos &lt; table.<span class="pl-c1">size</span>() &amp;&amp; table[pos] != search_element)
+    ++pos;
+  <span class="pl-k">if</span> (pos &lt; table.<span class="pl-c1">size</span>())
+    <span class="pl-k">return</span> pos;
+  <span class="pl-k">else</span>
+    <span class="pl-k">return</span> -<span class="pl-c1">1</span>;
+}</pre></div>
+<p>Her bruker vi den generiske typen to ganger i argumentlista, og må derfor passe på å bruke samme
+type til begge de aktuelle argumentene i funksjonskallet:</p>
+<div class="highlight highlight-source-c++"><pre>vector&lt;<span class="pl-k">double</span>&gt; table;
+<span class="pl-k">auto</span> pos = search(table, <span class="pl-c1">0.5</span>);</pre></div>
+<p>Skriver vi i stedet</p>
+<div class="highlight highlight-source-c++"><pre>vector&lt;<span class="pl-k">double</span>&gt; table;
+<span class="pl-k">auto</span> pos = search(table, <span class="pl-c1">1</span>); <span class="pl-c"><span class="pl-c">//</span> feil, fordi 1 er av typen int</span></pre></div>
+<p>får vi kompileringsfeil fordi <code>double</code> og <code>int</code> er forskjellige typer.</p>
+<p>Men denne setningen fungerer:</p>
+<div class="highlight highlight-source-c++"><pre>vector&lt;<span class="pl-k">double</span>&gt; table;
+<span class="pl-k">auto</span> pos = search(table, <span class="pl-k">static_cast</span>&lt;<span class="pl-k">double</span>&gt;(<span class="pl-c1">1</span>));</pre></div>
+<hr>
+<p>Bruk helst <code>static_cast/dynamic_cast</code> i stedet for <em>C-style cast</em> som for eksempel: <code>(double)1</code>.
+Fordelen med <code>static_cast</code> og <code>dynamic_cast</code> er at de gir feilmeldinger ved kompilering.
+<code>static_cast</code> er den enkleste som er mest vanlig å bruke, mens <code>dynamic_cast</code> brukes ved polymorfi
+som vi har sett eksempler på tidligere.</p>
+<hr>
+<p>Det er imidlertid ingenting i veien for å bruke to eller flere generiske typer i en template. Da
+lister vi dem opp med komma mellom:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> print.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">template </span>&lt;<span class="pl-k">typename</span> Type1, <span class="pl-k">typename</span> Type2&gt;
+<span class="pl-k">void</span> <span class="pl-en">print</span>(<span class="pl-k">const</span> Type1 &amp;first, <span class="pl-k">const</span> Type2 &amp;second) {
+  cout &lt;&lt; first &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span> &lt;&lt; second &lt;&lt; endl;
+}
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  <span class="pl-k">int</span> number = <span class="pl-c1">5</span>;
+  <span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">"</span>Svaret er <span class="pl-pds">"</span></span>, number);
+  <span class="pl-c1">print</span>(<span class="pl-c1">100</span>, <span class="pl-c1">0.05</span>);
+  <span class="pl-c1">print</span>(<span class="pl-s"><span class="pl-pds">'</span><span class="pl-cce">\n</span><span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Hallo<span class="pl-pds">"</span></span>);
+}
+
+<span class="pl-c"><span class="pl-c">/*</span> Kjøring av programmet:</span>
+<span class="pl-c"></span>
+<span class="pl-c">Svaret er  5</span>
+<span class="pl-c">100 0.05</span>
+<span class="pl-c"></span>
+<span class="pl-c"> Hallo</span>
+<span class="pl-c"><span class="pl-c">*/</span></span></pre></div>
+<p>Pass på at du oppgir alle de generiske typene i argumentlista til funksjonen. Gjør du ikke det, kan
+ikke kompilatoren vite hvilken du ønsker å bruke, og gir derfor kompileringsfeil. Trenger du en egen
+type til returverdien eller til en intern variabel, må du lage et ekstra argument av denne typen, og
+sette inn en eller annen verdi (likegyldig hvilken verdi, men riktig type) når du kaller funksjonen.</p>
+<p>Template er en måte å lage polymorfe funksjoner på, dvs. funksjoner som oppfører seg forskjellig
+avhengig av hvordan de brukes. Arvede (virtuelle) funksjoner og <em>overloadede</em> funksjoner er andre
+eksempler på polymorfe funksjoner.</p>
+<p>I arvede funksjoner må argumenttypene være de samme fra funksjonskall til funksjonskall, mens
+innholdet (algoritmen) kan være forskjellig. I template er det motsatt, algoritmen er fast, men
+argumenttypene kan variere. I <em>overloadede</em> funksjoner må argumenttypene (og/eller antall
+argumenter) variere fra prototyp til prototyp, men innholdet kan være likt eller forskjellig.</p>
+<p>Template er en automatisert måte å lage <em>overloadede</em> funksjoner på. Vi lager en mal som
+kompilatoren bruker til å lage de virkelige funksjonene. Men den lager (instansierer) bare de
+versjonene den finner ut at den trenger.</p>
+<p>Hvordan finner så kompilatoren ut hvilke versjoner den trenger?</p>
+<p>Når den treffer på et funksjonskall vil den sjekke hvilke typer de aktuelle argumentene har.
+Deretter vil den undersøke om det finnes en prototyp som passer akkurat, dvs. slik at argumenttypene
+stemmer overens uten at noen av dem behøver å omformes. I så fall brukes den, og den tilhørende
+funksjonsdefinisjon lenkes inn. Finnes ikke en slik funksjon, prøver den template-definisjonen. Også
+her er det et krav at argumenttypene skal passe akkurat når de(n) generiske typen(e) erstattes med
+de(n) aktuelle. Finner kompilatoren fortsatt ingen funksjon som passer, går den tilbake til de
+“vanlige” funksjonene, og prøver å finne en som passer akseptabelt godt, dvs. som passer etter at
+argumenttypene er omformet etter bestemte regler (f.eks. kan <code>int</code> omformes til <code>double</code>). Finnes
+heller ikke en slik, gir kompilatoren opp, og genererer en feilmelding. Den gir også feilmelding
+hvis den på noen av de tre stadiene finner mer enn en funksjon som passer.</p>
+<p>Dette kan vi utnytte hvis vi ønsker å ha en template-funksjon som dekker de fleste datatypene, men
+en spesialversjon for noen få datatyper. Da kan vi definere en (eller flere) "vanlig(e)"
+funksjon(er) for de(n) datatypen(e) vi ønsker spesialversjon, og en template-funskjon med samme navn
+for standardversjonen. Kompilatoren vil først prøve spesialversjonen, bare hvis den ikke passer,
+prøver den standardversjonen.</p>
+<p>Generelt: Når du lager en template, tenk over om det er noen datatyper den ikke passer for. Angi
+eventuelle begrensninger i hodekommentaren, eller lag flere versjoner, slik at alle tilfeller blir
+dekket.</p>
+<h2><a id="user-content-klassetemplate" class="anchor" aria-hidden="true" href="#klassetemplate"><span aria-hidden="true" class="octicon octicon-link"></span></a>Klassetemplate</h2>
+<p>Når vi definerer en klasse som en template, kan vi definere datamedlemmer med generisk type i
+tillegg til at medlemsfunksjonene kan ha argumenter med generisk type. For eksempel slik:</p>
+<div class="highlight highlight-source-c++"><pre><span class="pl-c"><span class="pl-c">//</span></span>
+<span class="pl-c"><span class="pl-c">//</span> point.cpp</span>
+<span class="pl-c"><span class="pl-c">//</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">using</span> <span class="pl-k">namespace</span> <span class="pl-en">std</span><span class="pl-k">;</span>
+
+<span class="pl-k">template </span>&lt;<span class="pl-k">typename</span> Type&gt;
+<span class="pl-k">class</span> <span class="pl-en">Point</span> {
+<span class="pl-k">public:</span>
+  Type x, y, z;
+
+  <span class="pl-en">Point</span>(Type x, Type y, Type z) : x(x), y(y), z(z) {}
+
+  <span class="pl-c1">Point</span> <span class="pl-k">operator</span>+(<span class="pl-k">const</span> <span class="pl-c1">Point</span> &amp;other) {
+    <span class="pl-c1">Point</span> point = *<span class="pl-c1">this</span>;
+    point.<span class="pl-smi">x</span> += other.<span class="pl-smi">x</span>;
+    point.<span class="pl-smi">y</span> += other.<span class="pl-smi">y</span>;
+    point.<span class="pl-smi">z</span> += other.<span class="pl-smi">z</span>;
+    <span class="pl-k">return</span> point;
+  }
+
+  <span class="pl-k">friend</span> ostream &amp;<span class="pl-k">operator</span>&lt;&lt;(ostream &amp;os, <span class="pl-k">const</span> <span class="pl-c1">Point</span> &amp;punkt) {
+    <span class="pl-k">return</span> os &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>(<span class="pl-pds">"</span></span> &lt;&lt; punkt.<span class="pl-smi">x</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>, <span class="pl-pds">"</span></span> &lt;&lt; punkt.<span class="pl-smi">y</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>, <span class="pl-pds">"</span></span> &lt;&lt; punkt.<span class="pl-smi">z</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>)<span class="pl-pds">"</span></span>;
+  }
+};
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>() {
+  {
+    <span class="pl-c1">Point</span>&lt;<span class="pl-k">int</span>&gt; <span class="pl-c1">p1</span>(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>), <span class="pl-c1">p2</span>(<span class="pl-c1">2</span>, <span class="pl-c1">2</span>, <span class="pl-c1">2</span>);
+
+    cout &lt;&lt; (p1 + p2) &lt;&lt; endl;
+  }
+  {
+    <span class="pl-c1">Point</span>&lt;<span class="pl-k">double</span>&gt; <span class="pl-c1">p1</span>(<span class="pl-c1">1.5</span>, <span class="pl-c1">2.5</span>, <span class="pl-c1">3.5</span>), <span class="pl-c1">p2</span>(<span class="pl-c1">2.0</span>, <span class="pl-c1">2.0</span>, <span class="pl-c1">2.0</span>);
+
+    cout &lt;&lt; (p1 + p2) &lt;&lt; endl;
+  }
+}
+<span class="pl-c"><span class="pl-c">/*</span> Utskrift:</span>
+<span class="pl-c">(3, 4, 5)</span>
+<span class="pl-c">(3.5, 4.5, 5.5)</span>
+<span class="pl-c"><span class="pl-c">*/</span></span></pre></div>
+
+                      </article>
+                    </div>
+                  </div>
+
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+</body>
+</html>
