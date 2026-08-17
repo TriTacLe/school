@@ -22,6 +22,11 @@ DESIGN.md
 .mcp.json
 .playwright-mcp/
 
+# Sweep scratch artifacts (Canvas/Blackboard/catalog scrapes, not coursework)
+/bb-tree.json
+/canvas-*.json
+/ntnu-nettbasert-*.json
+
 # OS junk
 .DS_Store
 ._*
