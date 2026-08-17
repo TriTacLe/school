@@ -80,17 +80,45 @@ Three labs building to a controller for a "kittycopter":
 2. Proportional controller design and system ID of the kittycopter
 3. First-order compensator design
 Control lab open Mon to Fri 9:00 to 17:00, walk-in help from Mr De Maar. Book 1-hour slots under the Groups tab. Exemptions are all three labs or none, repeating students only.
-## Attendance submissions
-Attendance is a weekly Amathuba assignment on top of the Kam Cam register, one folder per teaching week, each due Sunday 23:59. Submit the group photo with yourself circled and label which photo is the Monday lecture, the Wednesday tut and the Thursday lecture. DP needs 90% attendance, so a missed submission costs.
+## What counts toward the mark
+The handout prints the assessment table as `Labs (2*0.375 + 0.375, capped 0.75) * 20/40`, `Tests 2*0.125 * 20/40`, `Exam 80/60 in student's favour`. In words: the class mark is three quarters labs and one quarter written assessment, and the class mark itself is worth either 40 or 20 depending on whether the exam is weighted 60 or 80, whichever comes out better for you.
 
-| Folder | Due |
-|---|---|
-| Attendance Week 1 | Sun 2 Aug 23:59 |
-| Attendance Week 2 | Sun 9 Aug 23:59 |
-| Attendance Week 3 | Sun 16 Aug 23:59 |
-| Attendance Week 4 | Sun 23 Aug 23:59 |
+| Split | Labs | Written assessment | Exam |
+|---|---|---|---|
+| Exam 60 | 30 | 10 | 60 |
+| Exam 80 | 15 | 5 | 80 |
 
-Later weeks are not posted yet. Assume the same Sunday 23:59 pattern and check Amathuba each Monday.
+The 30/10 and 15/5 figures are read off the formula rather than stated in words anywhere, so treat them as the shape of the thing, not gospel. What is stated plainly: labs are the bulk of the class mark and the exam can carry 80.
+
+### Labs, three quarters of the class mark
+Labs 1 and 2 each carry 0.375 of the class mark. Lab 3 is optional extra credit worth another 0.375, but the lab total is capped at 0.75, so lab 3 only helps if labs 1 or 2 went badly. Late penalty is 20% per day. Labs 1 and 2 must be submitted for DP. Exemptions are all three or none, repeating students only, and an exemption carries last year's marks across.
+
+### Written assessment, one quarter of the class mark
+Best two of these four, at 0.125 each:
+1. Class test 1
+2. Class test 2
+3. Aggregate of your best 4 tutorial tests
+4. The exam
+
+Six tut tests run over the semester, so two can be written off before the aggregate suffers. Missing a class test is not fatal either, since only the best two of the four count. The corollary: if both class tests go well the tut tests stop mattering, and if they do not, the tut test aggregate is your safety net.
+
+## Attendance
+Not marked, but a DP requirement: 90% of lectures and tutorials. It runs as a weekly Amathuba assignment on top of the Kam Cam register, due Sunday 23:59. Submit the group photo with yourself circled and label which photo is the Monday lecture, the Wednesday tut and the Thursday lecture.
+
+The gradebook publishes the session count per week, which fixes the denominator:
+
+| Week | Sessions | Note |
+|---|---|---|
+| 1 | 1 | No tutorial in week 1 |
+| 2 | 3 | |
+| 3 | 2 | Mon 10 Aug public holiday |
+| 4 to 12 | 3 each | Consolidation weeks 6 and 9 count in full |
+
+That is 33 sessions. 90% of 33 is 29.7, so 30 must be attended and **three may be missed**. A missed weekly submission costs the whole week, three sessions, so it burns the entire budget in one go.
+
+Adjustments are only allowed for a medical certificate covering 3 or more consecutive days or any day with a class test or exam, death of a parent or sibling, or a pre-arranged absence representing a university, provincial or national team.
+
+Folder due dates so far: week 1 Sun 2 Aug, week 2 Sun 9 Aug, week 3 Sun 16 Aug, week 4 Sun 23 Aug. Later weeks are not posted yet, so check each Monday.
 
 Other dated items: the "What do we want covered on Monday" survey closes 28 Aug 10:00. The Lab Exemption Requests folder closed 7 Aug.
 
