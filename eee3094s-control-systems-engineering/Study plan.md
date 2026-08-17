@@ -80,6 +80,21 @@ Three labs building to a controller for a "kittycopter":
 2. Proportional controller design and system ID of the kittycopter
 3. First-order compensator design
 Control lab open Mon to Fri 9:00 to 17:00, walk-in help from Mr De Maar. Book 1-hour slots under the Groups tab. Exemptions are all three labs or none, repeating students only.
+## Attendance submissions
+Attendance is a weekly Amathuba assignment on top of the Kam Cam register, one folder per teaching week, each due Sunday 23:59. Submit the group photo with yourself circled and label which photo is the Monday lecture, the Wednesday tut and the Thursday lecture. DP needs 90% attendance, so a missed submission costs.
+
+| Folder | Due |
+|---|---|
+| Attendance Week 1 | Sun 2 Aug 23:59 |
+| Attendance Week 2 | Sun 9 Aug 23:59 |
+| Attendance Week 3 | Sun 16 Aug 23:59 |
+| Attendance Week 4 | Sun 23 Aug 23:59 |
+
+Later weeks are not posted yet. Assume the same Sunday 23:59 pattern and check Amathuba each Monday.
+
+Other dated items: the "What do we want covered on Monday" survey closes 28 Aug 10:00. The Lab Exemption Requests folder closed 7 Aug.
+
+Lab 1 is submitted on Gradescope through the LTI link in the Lab 1 folder, not an Amathuba dropbox, so its cut-off does not show up in the assignment list. Report under 5 pages excluding cover, contents and appendices, and never over 8 pages of content. LaTeX template is in the Lab 1 folder and presentation carries marks. Tutors are only in the lab in week 6.
 ## Books
 No prescribed textbook. Shield recommends, in her order of preference: Nise Control Systems Engineering, Ogata Modern Control Engineering, D'Azzo/Houpis/Sheldon Linear Control System Analysis and Design with Matlab, Dorf and Bishop Modern Control. The course handout PDF lists Nise 5th ed (ISBN 9780470169971).
 
