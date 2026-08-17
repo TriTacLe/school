@@ -18,3 +18,4 @@ NTNU, høst 2026. Vurderingsmeldt høst 2026 (valgemne).
 - [[syllabus]] - emneinformasjon fra Canvas
 - [[lenker]] - eksterne lenker fra Canvas
 - `notes/` - egne notater, en per leksjon 1 til 10
+- `code/` - eget git-repo med løsningene (github.com/TriTacLe/inft2503-cpp), exercise-01 til 10, egen remote, ignorert av school-repoet

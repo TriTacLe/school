@@ -162,8 +162,8 @@ Data: 24 past launches with temperature and whether O-ring failure occurred ($y 
 
 Logit model relates temperature to probability of failure:
 $$\log\left(\frac{p_i}{1-p_i}\right) = \beta_0 + \beta_1 (\text{Temperature})$$
-### Logistic Regression Analysis with Example (p10-24)
-**Slide: Performing logistic regression in R (p11)**
+### Logistic Regression Analysis with Example  
+**Performing logistic regression in R**
 ```R
 orings$Temperature <- ((orings$Temperature - 32) * 5) / 9  # convert F to C first
 fit <- glm(Failure ~ Temperature, data = orings, family = "binomial")
@@ -179,13 +179,13 @@ $$\log\left(\frac{p_i}{1-p_i}\right) = 5.3941 - 0.3084 (\text{Temperature})$$
 - $\hat{\beta}_0 = 5.3941$ (intercept, on log-odds scale)
 - $\hat{\beta}_1 = -0.3084$ (slope, on log-odds scale)
 
-**Slide: Interpreting beta coefficients (p12)**
+**Interpreting $\beta$ coefficients**
 Interpretation changes depending on scale:
 
-**On log-odds scale**: 
+On log-odds scale: 
 - On average, log-odds of O-ring failure decrease by 0.3084 units for each 1°C increase in temperature
 
-**On odds scale** (exponentiate): $e^{\hat{\beta}_1} = e^{-0.3084} = 0.73$
+On odds scale (exponentiate): $e^{\hat{\beta}_1} = e^{-0.3084} = 0.73$
 - On average, odds of O-ring failure **change by a factor of** 0.73 for each 1°C increase in temperature
 - Translates to 27% $((1 - 0.73) \times 100)$ decrease in odds of failure per 1°C increase
 
