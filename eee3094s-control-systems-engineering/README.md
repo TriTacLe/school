@@ -12,31 +12,38 @@ UCT, second semester 2026. No prescribed textbook; Nise, Control Systems Enginee
 
 ## Map
 
-- `notes/` - own study notes, written by hand
-  - [[00 System modelling]] - modelling, block diagrams, module 1
-  - [[01 Intro revision]] - signals, impulse response, LTI, Fourier
-- [[Study plan]] - week-by-week plan from the Amathuba course outline, chapter to notes to book mapping
-- `lecture-notes/` - course PDF notes, one folder per module (complete set from Amathuba)
-  - `01 intro revision/`
-  - `02 time response/`
-  - `03 s-plane/`
-  - `04 root locus/`
-  - `05 frequency response/`
-  - `08 compensation/`
-- `whiteboards/` - lecture whiteboard captures (2026 modules + 2025 archive, test breakdowns)
-- `past-papers/`
-  - `tut-tests/` - tut tests 1 to 6 with memos
-  - `class-tests/` - class tests 2020 to 2025 with memos
-  - `exams/` - exams, supp and deferred, 2020 to 2024 with memos
-- `tutorials/` - weekly tutorial sheets as they release (memo posted after each session)
-- `practice-problems/` - problem sets 1 to 7.1 with solutions
-- `textbook-questions/` - Nise question sets per topic
-- `materials/` - course handout, DP list, formula sheet, Braae and Tsoeu texts, Nichols templates
+The numbered folders mirror the Amathuba Content units, in Amathuba's own order and using its own titles, so anything you find on Amathuba has one obvious place here.
 
-Known gaps (not on Amathuba either): class test 2 2024 paper (memo only), class test 1 2020 memo, no 2021 papers.
+| Folder | Amathuba unit |
+|---|---|
+| `01 Course Outline/` | Course Outline |
+| `02 Modules/` | Modules, one folder per chapter |
+| `03 Tutorials/` | Tutorials |
+| `04 Labs/` | Labs, one folder per lab |
+| `05 Lecture Recordings/` | Lecture Recordings, not mirrored, see the README inside |
+| `06 Practice Problems/` | Practice Problems |
+| `07 Past Papers/` | Past Papers, grouped by year like Amathuba |
+| `08 Supplementary Resources/` | Supplementary Resources, including Whiteboards |
+| `09 Textbook Questions/` | Textbook Questions |
+
+Two folders are not part of the mirror:
+
+- `notes/` - everything written by hand. See [[notes/README|the notes index]]
+- `Extra - not on Amathuba/` - files that are not in this year's Amathuba shell, kept so the mirror stays honest
+
+`Study plan.md` holds the week-by-week schedule, the chapter to deck to book mapping, and the calendar blocks.
 
 ## Conventions
 
-- Lecturer PDFs go under `lecture-notes/NN topic/` named `N.N Title.pdf`
-- Own markdown notes go in `notes/` named `NN Topic.md`
-- Papers named `Type N YYYY.pdf`, memo as `... memo.pdf` next to its paper
+- A file lives where Amathuba lists it. Decks 5_1 and 5_2 are listed under both Module 1 Chapter 3 and Module 2 Chapter 2; they are stored once, under Module 1 Chapter 3
+- Decks are renamed from Amathuba's `notes 5_2 bode plots.pdf` to `5.2 Bode plots.pdf`. Each note in `notes/decks/` carries both names so the mapping is never guesswork
+- Practice problems and past papers from earlier years that this year's shell does not list sit in a `Not listed on Amathuba 2026` subfolder rather than mixed in
+- Papers are named `Type N YYYY.pdf`, with the memo as `... memo.pdf` beside its paper
+
+## Known gaps
+
+Not on Amathuba either: class test 2 2024 paper (memo only), class test 1 2020 memo, no 2021 papers.
+
+`Tut 4 tracking and proportional control.pdf` is listed under Tutorials but the link is broken, no file attached, last modified 2023. Worth asking for a reupload.
+
+Lecture videos are not mirrored. 32 files, about 5.4 GB.
