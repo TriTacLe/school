@@ -25,6 +25,7 @@ Decks covered:
 - Thursday: root locus starts
 - Tutorial 3: system ID in the frequency domain
 - Tut test 1 on Wed 19 Aug, on time domain system ID, that is tutorial 2 content
+- Attendance Week 4 assignment due Sun 23 Aug 23:59. Group photo with yourself circled, label each photo Monday lecture, Wednesday tut or Thursday lecture
 
 **To do**
 - Problem set 3.1
