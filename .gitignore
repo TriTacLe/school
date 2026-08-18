@@ -32,7 +32,11 @@ DESIGN.md
 /bb-tree.json
 /canvas-*.json
 /ntnu-nettbasert-*.json
+/open-courses.json
 
 # OS junk
 .DS_Store
 ._*
+
+# R session logs
+*.Rhistory

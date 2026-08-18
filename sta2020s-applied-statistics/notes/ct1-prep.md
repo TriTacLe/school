@@ -107,7 +107,7 @@ Read [[week-03-model-building-logistic-regression]] second half. Concept and int
 - Prediction is two steps: log-odds by plugging in, then probability $p = \frac{1}{1+e^{-LO}}$. Both steps carry marks.
 - Classification: threshold $\pi$ (default 0.5). Confusion matrix metrics: sensitivity (true positives caught), specificity (true negatives caught), PPV, NPV. Lower threshold raises sensitivity, lowers specificity.
 - `glm(y ~ x, data = d, family = "binomial")`, `predict(fit, newdata, type = "response")` for probabilities, `type = "link"` for log-odds.
-- [ ] Drill: $\log\frac{p}{1-p} = 5.3941 - 0.3084 \cdot \text{Temp}$. Compute the odds ratio per degree, the predicted probability at Temp 20, and interpret $\hat{\beta}_1$ on the odds scale. Answers: 0.73, 0.315, "odds of failure decrease about 27 percent per degree."
+- [ ] Drill: $\log\frac{p}{1-p} = 5.3931 - 0.3084 \cdot \text{Temp}$. Compute the odds ratio per degree, the predicted probability at Temp 20, and interpret $\hat{\beta}_1$ on the odds scale. Answers: 0.73, 0.315, "odds of failure decrease about 27 percent per degree."
 ## R drills
 Coding marks are weeks 1 and 2 only: fit a model on a supplied dataset, read the output. The whole game is `lm` plus `summary` plus `predict`. Work in `r/STA2020S.Rproj`, one script `ct1-drills.R`.
 ### Drill 1 (Tue): SLR end to end
