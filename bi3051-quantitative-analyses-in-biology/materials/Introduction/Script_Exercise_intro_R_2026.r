@@ -1,101 +1,333 @@
+#BI 3051 Evolutionary Analysis - C. Pelabon - Update September 2026#
+#PART 1: Getting started with R#
+
+# 1) WORKING DIRECTORY ---------
+
+# Set working directory!
+setwd("/Volumes/pelabon/Teaching/BI 3051/2026")# This is an example, you have to set your own working directory
+
+#Example of script - building a simple data set----
+
+ind<-1:10
+cat<-rep(1:2, each=5)
+mass<-c(2, 2.3, 2.4, 1.4, 1.5, 2, 2.3, 4, 2.1, 3)
+data1<-cbind(ind,cat,mass)
+data1<-data.frame(data1)
+
+with(data1, mean(mass[cat=="2"]))
 
 
-<!-- Copyright (C) Microsoft Corporation. All rights reserved. -->
-<!DOCTYPE html>
-<html dir="ltr" class="" lang="en">
-<head>
-    <title>Sign in to your account</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="-1">
-    <link rel="preconnect" href="https://aadcdn.msauth.net" crossorigin>
-<meta http-equiv="x-dns-prefetch-control" content="on">
-<link rel="dns-prefetch" href="//aadcdn.msauth.net">
-<link rel="dns-prefetch" href="//aadcdn.msftauth.net">
-
-    <meta name="PageID" content="ConvergedSignIn" />
-    <meta name="SiteID" content="" />
-    <meta name="ReqLC" content="1033" />
-    <meta name="LocLC" content="en-US" />
-
-        <meta name="referrer" content="origin" />
-
-        <meta name="format-detection" content="telephone=no" />
-
-    <noscript>
-        <meta http-equiv="Refresh" content="0; URL=https://login.microsoftonline.com/jsdisabled" />
-    </noscript>
-
-    
-    
-<meta name="robots" content="none" />
-
-<script type="text/javascript" nonce='eyMPm7skJZvVdVW1ajcjMA'>//<![CDATA[
-$Config={"fShowPersistentCookiesWarning":false,"urlMsaSignUp":"https://login.live.com/oauth20_authorize.srf?scope=openid+profile+email+offline_access\u0026response_type=code\u0026client_id=51483342-085c-4d86-bf88-cf50c7252078\u0026response_mode=form_post\u0026redirect_uri=https%3a%2f%2flogin.microsoftonline.com%2fcommon%2ffederation%2foauth2msa\u0026state=rQQIARAA42KwUswoKSmw0tfPK8kr1cvMKy4pKk0uKS1K1UvOz9UvTszNMSoS4hL48qlywdHFn7yXs_UkbS2155vFyBmfk1kGVrWKUR1kRjEuQ3Ly0zPzwEYdYlSNTzY1NExLMTfRTTZMStI1MTIz1k1KMjPXTTZOTTEzMzROtUixvMDI-IKR8RYTazDI_l9MpqVFeVb5icWZxVZ5ibmpxVYlyVbBjr4-VoZ6hmCRzBTdtPyi3MQSq9K84oLU5My0zNSUTcwqBpaJhgZm5ka6FkZGabomJmbmuommSYm6pklJxuamlmbmyQamF1h4frAwLmIV4hIoU7MQvqdY5bRya2JG9plrDKdY9SsjzMr9_SNT0jJLU8zMnUwrfKqyQoMLghNDK8NTisxCQj1c_VJN9KNyjYttza0MJ7DxnmJj-MDG2MHOMIudYRcnsUGzgYfxAC_DD761r1ZemrR7_3uPV_w6-uYGwcElvkYenllFZZUhSTlGBoWhXvm-5SUWpiH5mU4uiSn6zm6GBUVm5bYbBBgeCDA8EGT4IcjQIcQAAA2\u0026estsfed=1\u0026uaid=a079f2f4a3c54bf2a7068c62b5753f0e\u0026signup=1\u0026lw=1\u0026fl=easi2\u0026fci=http%3a%2f%2fntnu.instructure.com%2fsaml2","urlMsaLogout":"https://login.live.com/logout.srf?iframed_by=https%3a%2f%2flogin.microsoftonline.com","urlOtherIdpForget":"https://login.live.com/forgetme.srf?iframed_by=https%3a%2f%2flogin.microsoftonline.com","showCantAccessAccountLink":true,"arrExternalTrustedRealmFederatedIdps":[{"IdpType":400,"IdpSignInUrl":"https://login.live.com/oauth20_authorize.srf?scope=openid+profile+email+offline_access\u0026response_type=code\u0026client_id=51483342-085c-4d86-bf88-cf50c7252078\u0026response_mode=form_post\u0026redirect_uri=https%3a%2f%2flogin.microsoftonline.com%2fcommon%2ffederation%2foauth2msa\u0026state=rQQIARAA42KwUswoKSmw0tfPK8kr1cvMKy4pKk0uKS1K1UvOz9UvTszNMSoS4hL48qlywdHFn7yXs_UkbS2155vFyBmfk1kGVrWKUR1kRjEuQ3Ly0zPzwEYdYlSNTzY1NExLMTfRTTZMStI1MTIz1k1KMjPXTTZOTTEzMzROtUixvMDI-IKR8RYTazDI_l9MpqVFeVb5icWZxVZ5ibmpxVYlyVbBjr4-VoZ6hmCRzBTdtPyi3MQSq9K84oLU5My0zNSUTcwqBpaJhgZm5ka6FkZGabomJmbmuommSYm6pklJxuamlmbmyQamF1h4frAwLmIV4hIoU7MQvqdY5bRya2JG9plrDKdY9SsjzMr9_SNT0jJLU8zMnUwrfKqyQoMLghNDK8NTisxCQj1c_VJN9KNyjYttza0MJ7DxnmJj-MDG2MHOMIudYRcnsUGzgYfxAC_DD761r1ZemrR7_3uPV_w6-uYGwcElvkYenllFZZUhSTlGBoWhXvm-5SUWpiH5mU4uiSn6zm6GBUVm5bYbBBgeCDA8EGT4IcjQIcQAAA2\u0026estsfed=1\u0026uaid=a079f2f4a3c54bf2a7068c62b5753f0e\u0026fci=http%3a%2f%2fntnu.instructure.com%2fsaml2\u0026idp_hint=github.com","DisplayName":"GitHub","Promoted":false}],"fEnableShowResendCode":true,"iShowResendCodeDelay":90000,"sSMSCtryPhoneData":"AF~Afghanistan~93!!!AX~Åland Islands~358!!!AL~Albania~355!!!DZ~Algeria~213!!!AS~American Samoa~1!!!AD~Andorra~376!!!AO~Angola~244!!!AI~Anguilla~1!!!AG~Antigua and Barbuda~1!!!AR~Argentina~54!!!AM~Armenia~374!!!AW~Aruba~297!!!AC~Ascension Island~247!!!AU~Australia~61!!!AT~Austria~43!!!AZ~Azerbaijan~994!!!BS~Bahamas~1!!!BH~Bahrain~973!!!BD~Bangladesh~880!!!BB~Barbados~1!!!BY~Belarus~375!!!BE~Belgium~32!!!BZ~Belize~501!!!BJ~Benin~229!!!BM~Bermuda~1!!!BT~Bhutan~975!!!BO~Bolivia~591!!!BQ~Bonaire~599!!!BA~Bosnia and Herzegovina~387!!!BW~Botswana~267!!!BR~Brazil~55!!!IO~British Indian Ocean Territory~246!!!VG~British Virgin Islands~1!!!BN~Brunei~673!!!BG~Bulgaria~359!!!BF~Burkina Faso~226!!!BI~Burundi~257!!!CV~Cabo Verde~238!!!KH~Cambodia~855!!!CM~Cameroon~237!!!CA~Canada~1!!!KY~Cayman Islands~1!!!CF~Central African Republic~236!!!TD~Chad~235!!!CL~Chile~56!!!CN~China~86!!!CX~Christmas Island~61!!!CC~Cocos (Keeling) Islands~61!!!CO~Colombia~57!!!KM~Comoros~269!!!CG~Congo~242!!!CD~Congo (DRC)~243!!!CK~Cook Islands~682!!!CR~Costa Rica~506!!!CI~Côte d\u0027Ivoire~225!!!HR~Croatia~385!!!CU~Cuba~53!!!CW~Curaçao~599!!!CY~Cyprus~357!!!CZ~Czechia~420!!!DK~Denmark~45!!!DJ~Djibouti~253!!!DM~Dominica~1!!!DO~Dominican Republic~1!!!EC~Ecuador~593!!!EG~Egypt~20!!!SV~El Salvador~503!!!GQ~Equatorial Guinea~240!!!ER~Eritrea~291!!!EE~Estonia~372!!!ET~Ethiopia~251!!!FK~Falkland Islands~500!!!FO~Faroe Islands~298!!!FJ~Fiji~679!!!FI~Finland~358!!!FR~France~33!!!GF~French Guiana~594!!!PF~French Polynesia~689!!!GA~Gabon~241!!!GM~Gambia~220!!!GE~Georgia~995!!!DE~Germany~49!!!GH~Ghana~233!!!GI~Gibraltar~350!!!GR~Greece~30!!!GL~Greenland~299!!!GD~Grenada~1!!!GP~Guadeloupe~590!!!GU~Guam~1!!!GT~Guatemala~502!!!GG~Guernsey~44!!!GN~Guinea~224!!!GW~Guinea-Bissau~245!!!GY~Guyana~592!!!HT~Haiti~509!!!HN~Honduras~504!!!HK~Hong Kong SAR~852!!!HU~Hungary~36!!!IS~Iceland~354!!!IN~India~91!!!ID~Indonesia~62!!!IR~Iran~98!!!IQ~Iraq~964!!!IE~Ireland~353!!!IM~Isle of Man~44!!!IL~Israel~972!!!IT~Italy~39!!!JM~Jamaica~1!!!JP~Japan~81!!!JE~Jersey~44!!!JO~Jordan~962!!!KZ~Kazakhstan~7!!!KE~Kenya~254!!!KI~Kiribati~686!!!KR~Korea~82!!!KW~Kuwait~965!!!KG~Kyrgyzstan~996!!!LA~Laos~856!!!LV~Latvia~371!!!LB~Lebanon~961!!!LS~Lesotho~266!!!LR~Liberia~231!!!LY~Libya~218!!!LI~Liechtenstein~423!!!LT~Lithuania~370!!!LU~Luxembourg~352!!!MO~Macao SAR~853!!!MG~Madagascar~261!!!MW~Malawi~265!!!MY~Malaysia~60!!!MV~Maldives~960!!!ML~Mali~223!!!MT~Malta~356!!!MH~Marshall Islands~692!!!MQ~Martinique~596!!!MR~Mauritania~222!!!MU~Mauritius~230!!!YT~Mayotte~262!!!MX~Mexico~52!!!FM~Micronesia~691!!!MD~Moldova~373!!!MC~Monaco~377!!!MN~Mongolia~976!!!ME~Montenegro~382!!!MS~Montserrat~1!!!MA~Morocco~212!!!MZ~Mozambique~258!!!MM~Myanmar~95!!!NA~Namibia~264!!!NR~Nauru~674!!!NP~Nepal~977!!!NL~Netherlands~31!!!NC~New Caledonia~687!!!NZ~New Zealand~64!!!NI~Nicaragua~505!!!NE~Niger~227!!!NG~Nigeria~234!!!NU~Niue~683!!!NF~Norfolk Island~672!!!KP~North Korea~850!!!MK~North Macedonia~389!!!MP~Northern Mariana Islands~1!!!NO~Norway~47!!!OM~Oman~968!!!PK~Pakistan~92!!!PW~Palau~680!!!PS~Palestinian Authority~970!!!PA~Panama~507!!!PG~Papua New Guinea~675!!!PY~Paraguay~595!!!PE~Peru~51!!!PH~Philippines~63!!!PL~Poland~48!!!PT~Portugal~351!!!PR~Puerto Rico~1!!!QA~Qatar~974!!!RE~Réunion~262!!!RO~Romania~40!!!RU~Russia~7!!!RW~Rwanda~250!!!BL~Saint Barthélemy~590!!!KN~Saint Kitts and Nevis~1!!!LC~Saint Lucia~1!!!MF~Saint Martin~590!!!PM~Saint Pierre and Miquelon~508!!!VC~Saint Vincent and the Grenadines~1!!!WS~Samoa~685!!!SM~San Marino~378!!!ST~São Tomé and Príncipe~239!!!SA~Saudi Arabia~966!!!SN~Senegal~221!!!RS~Serbia~381!!!SC~Seychelles~248!!!SL~Sierra Leone~232!!!SG~Singapore~65!!!SX~Sint Maarten~1!!!SK~Slovakia~421!!!SI~Slovenia~386!!!SB~Solomon Islands~677!!!SO~Somalia~252!!!ZA~South Africa~27!!!SS~South Sudan~211!!!ES~Spain~34!!!LK~Sri Lanka~94!!!SH~St Helena, Ascension, and Tristan da Cunha~290!!!SD~Sudan~249!!!SR~Suriname~597!!!SJ~Svalbard~47!!!SZ~Swaziland~268!!!SE~Sweden~46!!!CH~Switzerland~41!!!SY~Syria~963!!!TW~Taiwan~886!!!TJ~Tajikistan~992!!!TZ~Tanzania~255!!!TH~Thailand~66!!!TL~Timor-Leste~670!!!TG~Togo~228!!!TK~Tokelau~690!!!TO~Tonga~676!!!TT~Trinidad and Tobago~1!!!TA~Tristan da Cunha~290!!!TN~Tunisia~216!!!TR~Turkey~90!!!TM~Turkmenistan~993!!!TC~Turks and Caicos Islands~1!!!TV~Tuvalu~688!!!VI~U.S. Virgin Islands~1!!!UG~Uganda~256!!!UA~Ukraine~380!!!AE~United Arab Emirates~971!!!GB~United Kingdom~44!!!US~United States~1!!!UY~Uruguay~598!!!UZ~Uzbekistan~998!!!VU~Vanuatu~678!!!VA~Vatican City~39!!!VE~Venezuela~58!!!VN~Vietnam~84!!!WF~Wallis and Futuna~681!!!YE~Yemen~967!!!ZM~Zambia~260!!!ZW~Zimbabwe~263","fUseInlinePhoneNumber":true,"fDetectBrowserCapabilities":true,"fUseMinHeight":true,"fShouldSupportTargetCredentialForRecovery":true,"fAvoidNewOtcGenerationWhenAlreadySent":true,"fEnableProofTypeValidation":true,"fUseCertificateInterstitialView":true,"fIsPasskeySupportEnabled":true,"arrPromotedFedCredTypes":[],"fShowUserAlreadyExistErrorHandling":true,"fBlockOnAppleEmailClaimError":true,"fIsVerifiableCredentialsSupportEnabled":true,"iVerifiableCredentialPresentationPollingIntervalSeconds":0.5,"iVerifiableCredentialPresentationPollingTimeoutSeconds":300,"fIsQrPinEnabled":true,"fPasskeyAssertionRedirect":true,"fShowProgressForPasskeyAutofill":true,"fFixUrlExternalIdpFederation":true,"fEnableBackButtonBugFix":true,"fEnableTotalLossRecovery":true,"fUpdatePromotedCredTypesOrder":true,"fUseNewPromotedCredsComponent":true,"fEnableGctCredentialTelemetry":true,"urlSessionState":"https://login.microsoftonline.com/common/DeviceCodeStatus","urlResetPassword":"https://passwordreset.microsoftonline.com/?ru=https%3a%2f%2flogin.microsoftonline.com%2f09a10672-822f-4467-a5ba-5bb375967c05%2freprocess%3fctx%3drQQIARAA42KwUswoKSmw0tfPK8kr1cvMKy4pKk0uKS1K1UvOz9UvTszNMSoS4hL48qlywdHFn7yXs_UkbS2151vFqA7SV4xLY05-emYeWPshRtX4ZFNDw7QUcxPdZMOkJF0TIzNj3aQkM3PdZOPUFDMzQ-NUixTLC4yMLxgZbzGxBoPs_MVkWlqUZ5WfWJxZbJWXmJtabFWSbBXs6OtjZahnCBbJTNFNyy_KTSyxKs0rLkhNzkzLTE3ZxKxiYJloaGBmbqRrYWSUpmtiYmaum2ialKhrmpRkbG5qaWaebGB6gYXnBwvjIlYhLoEyNQvhe4pVTiu3JmZkn7nGcIpVvzLCrNzfPzIlLbM0xczcybTCpyorNLggODG0MjylyCwk1MPVL9VEPyrXuNjW3MpwAhvvKTaGD2yMHewMs9gZdnESGzQHeBl-8K19tfLSpN3733u84tfRNzcIDi7xNfLwzCoqqwxJyjEyKAz1yvctL7EwDcnPdHJJTNF3djMsKDIrt90gwPBAgOGBIMMPQYYOIQYA0\u0026mkt=en-US\u0026hosted=0","urlMsaResetPassword":"https://account.live.com/password/reset?wreply=https%3a%2f%2flogin.microsoftonline.com%2f09a10672-822f-4467-a5ba-5bb375967c05%2freprocess%3fctx%3drQQIARAA42KwUswoKSmw0tfPK8kr1cvMKy4pKk0uKS1K1UvOz9UvTszNMSoS4hL48qlywdHFn7yXs_UkbS2151vFqA7SV4xLY05-emYeWPshRtX4ZFNDw7QUcxPdZMOkJF0TIzNj3aQkM3PdZOPUFDMzQ-NUixTLC4yMLxgZbzGxBoPs_MVkWlqUZ5WfWJxZbJWXmJtabFWSbBXs6OtjZahnCBbJTNFNyy_KTSyxKs0rLkhNzkzLTE3ZxKxiYJloaGBmbqRrYWSUpmtiYmaum2ialKhrmpRkbG5qaWaebGB6gYXnBwvjIlYhLoEyNQvhe4pVTiu3JmZkn7nGcIpVvzLCrNzfPzIlLbM0xczcybTCpyorNLggODG0MjylyCwk1MPVL9VEPyrXuNjW3MpwAhvvKTaGD2yMHewMs9gZdnESGzQHeBl-8K19tfLSpN3733u84tfRNzcIDi7xNfLwzCoqqwxJyjEyKAz1yvctL7EwDcnPdHJJTNF3djMsKDIrt90gwPBAgOGBIMMPQYYOIQYA0\u0026mkt=en-US","fFixUrlResetPassword":true,"urlGetCredentialType":"https://login.microsoftonline.com/common/GetCredentialType?mkt=en-US","urlGetRecoveryCredentialType":"https://login.microsoftonline.com/common/getrecoverycredentialtype?mkt=en-US","urlGetOneTimeCode":"https://login.microsoftonline.com/common/GetOneTimeCode","urlLogout":"https://login.microsoftonline.com/09a10672-822f-4467-a5ba-5bb375967c05/uxlogout","urlForget":"https://login.microsoftonline.com/forgetuser","urlDisambigRename":"https://go.microsoft.com/fwlink/p/?LinkID=733247","urlGoToAADError":"https://login.live.com/oauth20_authorize.srf?scope=openid+profile+email+offline_access\u0026response_type=code\u0026client_id=51483342-085c-4d86-bf88-cf50c7252078\u0026response_mode=form_post\u0026redirect_uri=https%3a%2f%2flogin.microsoftonline.com%2fcommon%2ffederation%2foauth2msa\u0026state=rQQIARAA42KwUswoKSmw0tfPK8kr1cvMKy4pKk0uKS1K1UvOz9UvTszNMSoS4hL48qlywdHFn7yXs_UkbS2155vFyBmfk1kGVrWKUR1kRjEuQ3Ly0zPzwEYdYlSNTzY1NExLMTfRTTZMStI1MTIz1k1KMjPXTTZOTTEzMzROtUixvMDI-IKR8RYTazDI_l9MpqVFeVb5icWZxVZ5ibmpxVYlyVbBjr4-VoZ6hmCRzBTdtPyi3MQSq9K84oLU5My0zNSUTcwqBpaJhgZm5ka6FkZGabomJmbmuommSYm6pklJxuamlmbmyQamF1h4frAwLmIV4hIoU7MQvqdY5bRya2JG9plrDKdY9SsjzMr9_SNT0jJLU8zMnUwrfKqyQoMLghNDK8NTisxCQj1c_VJN9KNyjYttza0MJ7DxnmJj-MDG2MHOMIudYRcnsUGzgYfxAC_DD761r1ZemrR7_3uPV_w6-uYGwcElvkYenllFZZUhSTlGBoWhXvm-5SUWpiH5mU4uiSn6zm6GBUVm5bYbBBgeCDA8EGT4IcjQIcQAAA2\u0026estsfed=1\u0026uaid=a079f2f4a3c54bf2a7068c62b5753f0e\u0026fci=http%3a%2f%2fntnu.instructure.com%2fsaml2","urlDeviceFingerprinting":"","urlPIAEndAuth":"https://login.microsoftonline.com/common/PIA/EndAuth","urlStartTlr":"https://login.microsoftonline.com/09a10672-822f-4467-a5ba-5bb375967c05/tlr/start","fKMSIEnabled":false,"iLoginMode":1,"fAllowPhoneSignIn":true,"fAllowPhoneInput":true,"fAllowSkypeNameLogin":true,"iMaxPollErrors":5,"iPollingTimeout":300,"srsSuccess":true,"fShowSwitchUser":true,"arrValErrs":["50058"],"sErrorCode":"50058","sWAMExtension":"ppnbnpeolgkicgegkbkbjmhlideopiji","sWAMChannel":"53ee284d-920a-4b59-9d30-a60315b26836","sErrTxt":"","sResetPasswordPrefillParam":"username","onPremPasswordValidationConfig":{"isUserRealmPrecheckEnabled":true},"fSwitchDisambig":true,"iRemoteNgcPollingType":2,"fUseNewNoPasswordTypes":true,"urlAadSignup":"https://signup.microsoft.com/signup?sku=teams_commercial_trial\u0026origin=ests\u0026culture=en-US","sCloudInstanceName":"microsoftonline.com","fShowSignInOptionsAsButton":true,"fUseNewPhoneSignInError":true,"fIsUpdatedAutocompleteEnabled":true,"fActivateFocusOnApprovalNumberRemoteNGC":true,"fIsPasskey":true,"fEnableDFPIntegration":true,"fEnableCenterFocusedApprovalNumber":true,"fShowPassKeyErrorUCP":true,"fFixPhoneDisambigSignupRedirect":true,"fEnableQrCodeA11YFixes":true,"fEnablePasskeyAwpError":true,"fEnableAuthenticatorTimeoutFix":true,"fEnablePasskeyAutofillUI":true,"sCrossDomainCanary":"PAQABDgEAAAAdDD7nC9b5Q7JPd_okEQRFRXZvU3RzQXJ0aWZhY3RzCAAAAAAAx9I6l_qbhGCGkaZuRBYWPgRqwORVMNVQXMaXe8l1hwHgFqWGeBQhYm_deuyy5wZTHC-VMKFDuxxStcSoDJfabRNnGDF5Qtw0PfCpXVuIhRNQwfKGatljado_0z1iY_t34yq1lnS1LtIRuDWsjcMtKS4dypXxdIOmCh9qb3dNWrnVpDr91BKo9K4f177QZ_wKWu4RmKhUjRePl60Qhwyk4iAA","arrExcludedDisplayNames":["unknown"],"fFixShowRevealPassword":true,"fRemoveTLRFragment":true,"fEnableCredentialPickerBranding":true,"fWaitForCustomStringsBeforeRender":true,"iMaxStackForKnockoutAsyncComponents":10000,"fShowButtons":true,"urlCdn":"https://aadcdn.msauth.net/shared/1.0/","urlDefaultFavicon":"https://aadcdn.msauth.net/shared/1.0/content/images/favicon_a_eupayfgghqiai7k9sol6lg2.ico","urlFooterTOU":"https://www.microsoft.com/en-US/servicesagreement/","urlFooterPrivacy":"https://privacy.microsoft.com/en-US/privacystatement","urlPost":"/09a10672-822f-4467-a5ba-5bb375967c05/login","urlRefresh":"https://login.microsoftonline.com/09a10672-822f-4467-a5ba-5bb375967c05/reprocess?ctx=rQQIARAA42KwUswoKSmw0tfPK8kr1cvMKy4pKk0uKS1K1UvOz9UvTszNMSoS4hL48qlywdHFn7yXs_UkbS2151vFqA7SV4xLY05-emYeWPshRtX4ZFNDw7QUcxPdZMOkJF0TIzNj3aQkM3PdZOPUFDMzQ-NUixTLC4yMLxgZbzGxBoPs_MVkWlqUZ5WfWJxZbJWXmJtabFWSbBXs6OtjZahnCBbJTNFNyy_KTSyxKs0rLkhNzkzLTE3ZxKxiYJloaGBmbqRrYWSUpmtiYmaum2ialKhrmpRkbG5qaWaebGB6gYXnBwvjIlYhLoEyNQvhe4pVTiu3JmZkn7nGcIpVvzLCrNzfPzIlLbM0xczcybTCpyorNLggODG0MjylyCwk1MPVL9VEPyrXuNjW3MpwAhvvKTaGD2yMHewMs9gZdnESGzQHeBl-8K19tfLSpN3733u84tfRNzcIDi7xNfLwzCoqqwxJyjEyKAz1yvctL7EwDcnPdHJJTNF3djMsKDIrt90gwPBAgOGBIMMPQYYOIQYA0","urlCancel":"https://ntnu.instructure.com/login/saml?error=access_denied\u0026error_subcode=cancel","urlResume":"https://login.microsoftonline.com/09a10672-822f-4467-a5ba-5bb375967c05/resume?ctx=rQQIARAA42KwUswoKSmw0tfPK8kr1cvMKy4pKk0uKS1K1UvOz9UvTszNMSoS4hL48qlywdHFn7yXs_UkbS2151vFqA7SV4xLY05-emYeWPshRtX4ZFNDw7QUcxPdZMOkJF0TIzNj3aQkM3PdZOPUFDMzQ-NUixTLC4yMLxgZbzGxBoPs_MVkWlqUZ5WfWJxZbJWXmJtabFWSbBXs6OtjZahnCBbJTNFNyy_KTSyxKs0rLkhNzkzLTE3ZxKxiYJloaGBmbqRrYWSUpmtiYmaum2ialKhrmpRkbG5qaWaebGB6gYXnBwvjIlYhLoEyNQvhe4pVTiu3JmZkn7nGcIpVvzLCrNzfPzIlLbM0xczcybTCpyorNLggODG0MjylyCwk1MPVL9VEPyrXuNjW3MpwAhvvKTaGD2yMHewMs9gZdnESGzQHeBl-8K19tfLSpN3733u84tfRNzcIDi7xNfLwzCoqqwxJyjEyKAz1yvctL7EwDcnPdHJJTNF3djMsKDIrt90gwPBAgOGBIMMPQYYOIQYA0","iPawnIcon":0,"iPollingInterval":1,"sPOST_Username":"","fEnableNumberMatching":true,"sFT":"BgABIQEAAAAdDD7nC9b5Q7JPd_okEQRFRXZvU3RzQXJ0aWZhY3RzAQAAAAAA55dj2fy7XuzpuLhyHlcgsC1dAGHVSdoI57tF9W5jfdQZX-tSRGL7lF6gm949lEvfcggq9fyonL2yXIZDTHUC1WUgcOV4Jl9a-rfSUa0YDavYiLpT8zVVE9r2JAJYMBJp061ZV_g1WT3L0h_ZBCBu34dCThXgpGN1wnwXrN2sQ-cywJsjvvEk00Hs3M1anVWjSlHYiIcrzPeA2PSOzX_s2xCgj-dmewHan5yLTgnNqqy4wNPg8953YXNI4c0LXd4yBlzwg1Zvc-GqiZkZOfL0A-2d1bidhph3Pto__zzHUfghuCAzY3rvcTCAB-MCBp93xD1TG_xDM621xtvvB57wGQvAWCaUcpwFHb-Hk1G5DXprmbiIz-5k1DrzTyqks-RyZf1YGd3-L08CXHZPeEU8QJf4TVI6jk_mbs32-Z_V8CcNfsXAySmtk6r_GIBVSAGD6EsbI_4pFS2BsoAuYFbOny7KK9hB_vwlEIznCzep8FDuF95T541xAsFA3nefQ4mQgxLG7pngy86bbtaRat4XLEpztPfZNVPOMu5QOQUUsUOeeGXrOrVfLqkJU6Hh8yyls3_Y8cMBsrSmkxRGsACP-Mxb3BfSMlp0pcjV9eoUWab7bJeBErS4ZFOsAAzr4Gqo96Ngm-di9p5oaE1Xz10z8H-x-3Zb9Ft81EvlZ9pS-g_uiA8RNjtP_JrgXmRIrvXY0ZWshlqdXWDFqYJkobK14rHmJKlEa6cJqHaKAyLkG5JP0E2ddPDxXEUEu-Y0zbWoK8Atx-el6l64_gt20S_83K38b4eedwVThfAAhwYDvXFxgW7kZ03A4AigbD928FppSgAs5s0sG8JdjE5GiSbOI-5MO3JBnYLKsItbooDCbU3lklfj5uIujek3iyE7m6AHsExt4KQFkUgW_jzTy7bbc6XvfDAE5hRHPb8_gcGl-CDO6rSFmzXcSkFvPXnIIfCRiGxs8OSV3tq1U-uPjVV9zX0RgFly6APD_ZzHmvvs9VPu1Z8fL01U-ANDP36YU2C1erdA3UFQisy1kBJzZxy7e7p7Gcft3kMYT-4jCNFv8sFNxK6Uxe-PYQ6_gYDucwjQaOdXQ148PMjn4dG_LGrjZtj4oUvoV-l9YQoNd4KV9QIgAA","sFTName":"flowToken","sSessionIdentifierName":"code","sCtx":"rQQIARAA42KwUswoKSmw0tfPK8kr1cvMKy4pKk0uKS1K1UvOz9UvTszNMSoS4hL48qlywdHFn7yXs_UkbS2151vFqA7SV4xLY05-emYeWPshRtX4ZFNDw7QUcxPdZMOkJF0TIzNj3aQkM3PdZOPUFDMzQ-NUixTLC4yMLxgZbzGxBoPs_MVkWlqUZ5WfWJxZbJWXmJtabFWSbBXs6OtjZahnCBbJTNFNyy_KTSyxKs0rLkhNzkzLTE3ZxKxiYJloaGBmbqRrYWSUpmtiYmaum2ialKhrmpRkbG5qaWaebGB6gYXnBwvjIlYhLoEyNQvhe4pVTiu3JmZkn7nGcIpVvzLCrNzfPzIlLbM0xczcybTCpyorNLggODG0MjylyCwk1MPVL9VEPyrXuNjW3MpwAhvvKTaGD2yMHewMs9gZdnESGzQHeBl-8K19tfLSpN3733u84tfRNzcIDi7xNfLwzCoqqwxJyjEyKAz1yvctL7EwDcnPdHJJTNF3djMsKDIrt90gwPBAgOGBIMMPQYYOIQYA0","iProductIcon":-1,"fEnableOneDSClientTelemetry":true,"fEnableWebVitalsV2":true,"staticTenantBranding":[{"Locale":0,"BannerLogo":"https://aadcdn.msauthimages.net/c1c6b6c8-9m-n5mk05fk-w24bowihsm-dsd7qk4eq-fijo-6qcmm/logintenantbranding/0/bannerlogo?ts=637540652978888760","TileLogo":"https://aadcdn.msauthimages.net/c1c6b6c8-9m-n5mk05fk-w24bowihsm-dsd7qk4eq-fijo-6qcmm/logintenantbranding/0/tilelogo?ts=637382604557335791","TileDarkLogo":"https://aadcdn.msauthimages.net/c1c6b6c8-9m-n5mk05fk-w24bowihsm-dsd7qk4eq-fijo-6qcmm/logintenantbranding/0/squarelogodark?ts=637382604569571617","Illustration":"https://aadcdn.msauthimages.net/c1c6b6c8-9m-n5mk05fk-w24bowihsm-dsd7qk4eq-fijo-6qcmm/logintenantbranding/0/illustration?ts=637382622974025910","BackgroundColor":"#FFFFFF","UserIdLabel":"user@ntnu.no","KeepMeSignedInDisabled":true,"UseTransparentLightBox":false,"AccessRecoveryLink":"https://i.ntnu.no/wiki/-/wiki/Norsk/Glemt+passord"}],"oAppCobranding":{},"iBackgroundImage":4,"arrSessions":[],"fApplicationInsightsEnabled":false,"iApplicationInsightsEnabledPercentage":0,"urlSetDebugMode":"https://login.microsoftonline.com/common/debugmode","fEnableCssAnimation":true,"fAllowGrayOutLightBox":true,"fUseMsaSessionState":true,"fIsRemoteNGCSupported":true,"urlLogin":"https://login.microsoftonline.com/09a10672-822f-4467-a5ba-5bb375967c05/reprocess?ctx=rQQIARAA42KwUswoKSmw0tfPK8kr1cvMKy4pKk0uKS1K1UvOz9UvTszNMSoS4hL48qlywdHFn7yXs_UkbS2151vFqA7SV4xLY05-emYeWPshRtX4ZFNDw7QUcxPdZMOkJF0TIzNj3aQkM3PdZOPUFDMzQ-NUixTLC4yMLxgZbzGxBoPs_MVkWlqUZ5WfWJxZbJWXmJtabFWSbBXs6OtjZahnCBbJTNFNyy_KTSyxKs0rLkhNzkzLTE3ZxKxiYJloaGBmbqRrYWSUpmtiYmaum2ialKhrmpRkbG5qaWaebGB6gYXnBwvjIlYhLoEyNQvhe4pVTiu3JmZkn7nGcIpVvzLCrNzfPzIlLbM0xczcybTCpyorNLggODG0MjylyCwk1MPVL9VEPyrXuNjW3MpwAhvvKTaGD2yMHewMs9gZdnESGzQHeBl-8K19tfLSpN3733u84tfRNzcIDi7xNfLwzCoqqwxJyjEyKAz1yvctL7EwDcnPdHJJTNF3djMsKDIrt90gwPBAgOGBIMMPQYYOIQYA0","urlDssoStatus":"https://login.microsoftonline.com/common/instrumentation/dssostatus","fUseSameSite":true,"iAllowedIdentities":2,"uiflavor":1001,"fHidePrivateBrowsingDisclaimer":true,"fLoadStringCustomizationPromises":true,"fUseAlternateTextForSwitchToCredPickerLink":true,"fOfflineAccountVisible":false,"fEnableUserStateFix":true,"fAccessPassSupported":true,"fShowAccessPassPeek":true,"fUpdateSessionPollingLogic":true,"fEnableShowPickerCredObservable":true,"fFetchSessionsSkipDsso":true,"fIsCiamUserFlowUxNewLogicEnabled":true,"fUseNonMicrosoftDefaultBrandingForCiam":true,"sCompanyDisplayName":"NTNU","fRemoveCustomCss":true,"fFixUICrashForApiRequestHandler":true,"fShowUpdatedKoreanPrivacyFooter":true,"fUsePostCssHotfix":true,"fFixUserFlowBranding":true,"fIsQrCodePinSupported":true,"fEnablePasskeyNullFix":true,"fEnableWebNativeBridgeInterstitialUx":true,"fEnableThisAppOnlyUxSupport":true,"fEnableWindowParentingFix":true,"fEnableNativeBridgeErrors":true,"fEnableNativeBridgeErrorUpn":true,"fEnableDomApiSuccessUpnFix":true,"urlAcmaServerPath":"https://login.microsoftonline.com","sTenantId":"09a10672-822f-4467-a5ba-5bb375967c05","sMkt":"en-US","fUpdateConfigInit":true,"fLogDisallowedCssProperties":true,"fDisallowExternalFonts":true,"fDisallowCssPositioning":true,"sFidoChallenge":"O.eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImZFdHFyaEtUMWJYQUdhZlNkUW9OMXZYVFJwSSJ9.eyJhdWQiOiJ1cm46bWljcm9zb2Z0OmZpZG86Y2hhbGxlbmdlIiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5taWNyb3NvZnQuY29tIiwiaWF0IjoxNzg3MTMzODI5LCJuYmYiOjE3ODcxMzM4MjksImV4cCI6MTc4NzEzNDEyOSwianRpIjoiZGlZNEU5NGhla0twdFdGb2E4eldBQSIsInNpZCI6Im1USkloTHQ4YWR1QUl2MlpnOTJvVGg5bEtxQXVqY0pSN2xJZWVtTDhLa00ifQ.J6as0N4RITzIxLDu7wJg6-qWGF0S4d5m2njNuiL6juT9u_IlR8qLv9lTfG26LvEhDSD_O7SJJ59-AbR4Qv4wgkcExkJXVrJdvZi_lnQZHPjThqgGqwnPOPiOjq500UjrI41lneCTSL9LSG5k4zblsV13DvAtHHfYlzi3pUp8FqUP0kwG4sAvd7ffibzCkgod08V4iv0uSNBZshMZU9Fz_gEoJ52azgVOapN8mwjEyyE_tg8PHIdkBjmBsP5Y_R_lkj95qNhl6Y3FioK8fuaw1y-vV0wppr-MOUvs9-l9EtQUW0zV-qgaNQLEDbjXlKdTslhMmQGT5PcvYV5uFee16g","fShowDebugDetailsAriaExpanded":true,"fPreventOtcFormDoubleSubmit":true,"fEnableWebNativeBridgeLoadFix":true,"fEnableWebNativeBridgeClientTelemetry":true,"fEnableWebAuthNTelemetry":true,"scid":1015,"hpgact":1900,"hpgid":1104,"pgid":"ConvergedSignIn","apiCanary":"PAQABDgEAAAAdDD7nC9b5Q7JPd_okEQRFRXZvU3RzQXJ0aWZhY3RzCAAAAAAAI0FRIR18cWT1INVTKptcZJ5EDOavPPXVDo9EA818JcSamjfE9bFLkmXgkTu3p5iVUFGfgPBvQ-GGCJRXZOC6zmSqTrRtjqwGAGv9jo8WRlYajFU3zH-DRbhHoYwelSs7tYVQbkMwBg4AWzHp8PQR07NdApH7O31214l_pAeRJXjQlvnCvMiUvA3DiFK9ZaH4IiIR8A6CCwAL36jxnWLKrCAA","canary":"yX6wOOYdfiud67B5xLzjUSpSaUyWdr6TUHENe4/Zm3s=7:1:CANARY:/70SStM2HIjrvyTbl20qUJoMwt85ToiBDad/CF1pr6w=","sCanaryTokenName":"canary","fSkipRenderingNewCanaryToken":false,"fEnableNewCsrfProtection":true,"correlationId":"a079f2f4-a3c5-4bf2-a706-8c62b5753f0e","sessionId":"13382676-21de-427a-a9b5-61686bccd600","sRingId":"R6","locale":{"mkt":"en-US","lcid":1033},"slMaxRetry":2,"slReportFailure":true,"strings":{"desktopsso":{"authenticatingmessage":"Trying to sign you in"}},"enums":{"ClientMetricsModes":{"None":0,"SubmitOnPost":1,"SubmitOnRedirect":2,"InstrumentPlt":4}},"urls":{"instr":{"pageload":"https://login.microsoftonline.com/common/instrumentation/reportpageload","dssostatus":"https://login.microsoftonline.com/common/instrumentation/dssostatus"}},"browser":{"ltr":1,"_Other":1,"Full":1,"RE_Other":1,"b":{"name":"Other","major":-1,"minor":-1},"os":{"name":"Unknown","version":""},"V":-1},"watson":{"url":"/common/handlers/watson","bundle":"https://aadcdn.msauth.net/ests/2.1/content/cdnbundles/watson.min_82o5oyf7tvyeotpacdeksw2.js","sbundle":"https://aadcdn.msauth.net/ests/2.1/content/cdnbundles/watsonsupportwithjquery.3.5.min_dc940oomzau4rsu8qesnvg2.js","fbundle":"https://aadcdn.msauth.net/ests/2.1/content/cdnbundles/frameworksupport.min_oadrnc13magb009k4d20lg2.js","resetErrorPeriod":5,"maxCorsErrors":-1,"maxInjectErrors":5,"maxErrors":10,"maxTotalErrors":3,"expSrcs":["https://login.microsoftonline.com","https://aadcdn.msauth.net/","https://aadcdn.msftauth.net/",".login.microsoftonline.com"],"envErrorRedirect":true,"envErrorUrl":"/common/handlers/enverror"},"loader":{"cdnRoots":["https://aadcdn.msauth.net/","https://aadcdn.msftauth.net/"],"logByThrowing":true,"tenantBrandingCdnRoots":["aadcdn.msauthimages.net","aadcdn.msftauthimages.net"]},"serverDetails":{"slc":"ProdSlices","dc":"SEC","ri":"GV2XXXX","ver":{"v":[2,1,25096,7]},"rt":"2026-08-19T10:03:49","et":30,"axv":"4.380.134"},"clientEvents":{"enabled":true,"telemetryEnabled":true,"useOneDSEventApi":true,"flush":60000,"autoPost":true,"autoPostDelay":1000,"minEvents":1,"maxEvents":1,"pltDelay":500,"appInsightsConfig":{"instrumentationKey":"b0c252808e614e949086e019ae1cb300-e0c02060-e3b3-4965-bd7c-415e1a7a9fde-6951","webAnalyticsConfiguration":{"autoCapture":{"jsError":true}}},"defaultEventName":"IDUX_ESTSClientTelemetryEvent_WebWatson","serviceID":3,"endpointUrl":"https://eu-mobile.events.data.microsoft.com/OneCollector/1.0/"},"fApplyAsciiRegexOnInput":true,"country":"ZA","fBreakBrandingSigninString":true,"bsso":{"type":"none","reason":"Chrome: Pull suppressed as UserAgent did not meet required criteria, Other: Pull suppressed as UserAgent did not meet required criteria"},"urlNoCookies":"https://login.microsoftonline.com/cookiesdisabled","fTrimChromeBssoUrl":true,"inlineMode":5,"fTenantBrandingCdnAddEventHandlers":true};
-//]]></script> 
-<script type="text/javascript" nonce='eyMPm7skJZvVdVW1ajcjMA'>//<![CDATA[
-!function(){var e=window,r=e.$Debug=e.$Debug||{},t=e.$Config||{};if(!r.appendLog){var n=[],o=0;r.appendLog=function(e){var r=t.maxDebugLog||25,i=(new Date).toUTCString()+":"+e;n.push(o+":"+i),n.length>r&&n.shift(),o++},r.getLogs=function(){return n}}}(),function(){function e(e,r){function t(i){var a=e[i];if(i<n-1){return void(o.r[a]?t(i+1):o.when(a,function(){t(i+1)}))}r(a)}var n=e.length;t(0)}function r(e,r,i){function a(){var e=!!u.method,o=e?u.method:i[0],a=u.extraArgs||[],s=n.$WebWatson;try{
-var d=t(i,!e);if(a&&a.length>0){for(var c=a.length,l=0;l<c;l++){d.push(a[l])}}o.apply(r,d)}catch(e){return void(s&&s.submitFromException&&s.submitFromException(e))}}var u=o.r&&o.r[e];return r=r||this,u&&(u.skipTimeout?a():n.setTimeout(a,0)),u}function t(e,r){return Array.prototype.slice.call(e,r?1:0)}var n=window;n.$Do||(n.$Do={"q":[],"r":[],"removeItems":[],"lock":0,"o":[]});var o=n.$Do;o.when=function(t,n){function i(e){r(e,a,u)||o.q.push({"id":e,"c":a,"a":u})}var a=0,u=[],s=1;"function"==typeof n||(a=n,
-s=2);for(var d=s;d<arguments.length;d++){u.push(arguments[d])}t instanceof Array?e(t,i):i(t)},o.register=function(e,t,n){if(!o.r[e]){o.o.push(e);var i={};if(t&&(i.method=t),n&&(i.skipTimeout=n),arguments&&arguments.length>3){i.extraArgs=[];for(var a=3;a<arguments.length;a++){i.extraArgs.push(arguments[a])}}o.r[e]=i,o.lock++;try{for(var u=0;u<o.q.length;u++){var s=o.q[u];s.id==e&&r(e,s.c,s.a)&&o.removeItems.push(s)}}catch(e){throw e}finally{if(0===--o.lock){for(var d=0;d<o.removeItems.length;d++){
-for(var c=o.removeItems[d],l=0;l<o.q.length;l++){if(o.q[l]===c){o.q.splice(l,1);break}}}o.removeItems=[]}}}},o.unregister=function(e){o.r[e]&&delete o.r[e]}}(),function(e,r){function t(){if(!a){if(!r.body){return void setTimeout(t)}a=!0,e.$Do.register("doc.ready",0,!0)}}function n(){if(!u){if(!r.body){return void setTimeout(n)}t(),u=!0,e.$Do.register("doc.load",0,!0),i()}}function o(e){(r.addEventListener||"load"===e.type||"complete"===r.readyState)&&t()}function i(){
-r.addEventListener?(r.removeEventListener("DOMContentLoaded",o,!1),e.removeEventListener("load",n,!1)):r.attachEvent&&(r.detachEvent("onreadystatechange",o),e.detachEvent("onload",n))}var a=!1,u=!1;if("complete"===r.readyState){return void setTimeout(n)}!function(){r.addEventListener?(r.addEventListener("DOMContentLoaded",o,!1),e.addEventListener("load",n,!1)):r.attachEvent&&(r.attachEvent("onreadystatechange",o),e.attachEvent("onload",n))}()}(window,document),function(){function e(){
-return(t().loader||{}).tenantBrandingCdnRoots||[]}function r(r){var t=e();if(t&&t.length>0&&r){for(var n=0;n<t.length;n++){if(t[n]&&-1!==r.indexOf(t[n])){return!0}}}return!1}function t(){return h.$Config||h.ServerData||{}}function n(e,r,t){var n=h.$Debug;n&&n.appendLog&&(r&&(e+=" '"+(r.src||r.href||"")+"'",e+=", id:"+(r.id||""),e+=", async:"+(r.async||""),e+=", defer:"+(r.defer||"")),t&&(e+=", loadDuration:"+t+"ms"),n.appendLog(e))}function o(){var e=h.$B;if(void 0===g){if(e){g=e.IE}else{
-var r=h.navigator.userAgent;g=-1!==r.indexOf("MSIE ")||-1!==r.indexOf("Trident/")}}return g}function i(){var e=h.$B;if(void 0===v){if(e){v=e.RE_Edge}else{var r=h.navigator.userAgent;v=-1!==r.indexOf("Edge")}}return v}function a(e){var r=e.indexOf("?"),t=r>-1?r:e.length,n=e.lastIndexOf(".",t);return e.substring(n,n+m.length).toLowerCase()===m}function u(){var e=t();return(e.loader||{}).slReportFailure||e.slReportFailure||!1}function s(){return(t().loader||{}).redirectToErrorPageOnLoadFailure||!1}
-function d(){return(t().loader||{}).logByThrowing||!1}function c(e){if(!o()&&!i()){return!1}var r=e.src||e.href||"";if(!r){return!0}if(a(r)){var t,n,u;try{t=e.sheet,n=t&&t.cssRules,u=!1}catch(e){u=!0}if(t&&!n&&u){return!0}if(t&&n&&0===n.length){return!0}}return!1}function l(e,r,n){var o=t(),i=o.loader||{},a=i.resourceLoadTimeout;return a>0?setTimeout(function(){r.isCircuitBreakerTriggered=!0,e&&(e.onload=null,e.onerror=null,e.onreadystatechange=null),n(),e&&(e.src&&e.removeAttribute("src"),
-e.href&&e.removeAttribute("href"),e.parentElement&&e.parentElement.removeChild(e))},a):null}function f(){function e(e){p.getElementsByTagName("head")[0].appendChild(e)}function r(e,r,t,n){var s=null;return s=a(e)?o(e):"script"===n.toLowerCase()?i(e):u(e,n),r&&(s.id=r),"function"==typeof s.setAttribute&&(s.setAttribute("crossorigin","anonymous"),t&&"string"==typeof t&&s.setAttribute("integrity",t)),s}function o(e){var r=p.createElement("link");return r.rel="stylesheet",r.type="text/css",r.href=e,r}
-function i(e){var r=p.createElement("script"),t=p.querySelector("script[nonce]");if(r.type="text/javascript",r.src=e,r.defer=!1,r.async=!1,t){var n=t.nonce||t.getAttribute("nonce");r.setAttribute("nonce",n)}return r}function u(e,r){var t=p.createElement(r);return t.src=e,t}function s(e,r){if(e&&e.length>0&&r){for(var t=0;t<e.length;t++){if(-1!==r.indexOf(e[t])){return!0}}}return!1}function d(e){if(t().fTenantBrandingCdnAddEventHandlers){var r=s(w,e)?w:E;if(!(r&&r.length>1)){return e}
-for(var n=0;n<r.length;n++){if(-1!==e.indexOf(r[n])){var o=r[n+1<r.length?n+1:0],i=e.substring(r[n].length);return"https://"!==r[n].substring(0,"https://".length)&&(o="https://"+o,i=i.substring("https://".length)),o+i}}return e}if(!(E&&E.length>1)){return e}for(var a=0;a<E.length;a++){if(0===e.indexOf(E[a])){return E[a+1<E.length?a+1:0]+e.substring(E[a].length)}}return e}function g(e,r,t,o,i){var a=0,u=$.failMessage||"Failed";if(i&&(a=Date.now()-i.startTime,
-i.id&&!i.isCircuitBreakerTriggered&&clearTimeout(i.id),i.isCircuitBreakerTriggered&&(u=$.timeoutMessage||"TimedOut")),n("[$Loader]: "+u,o,a),S[e].retry<y){return S[e].retry++,h(e,r,t),void f._ReportFailure(S[e].retry,S[e].srcPath,i)}t&&t()}function v(e,r,t,o,i){var a=0;if(c(o)){return g(e,r,t,o,i)}i&&i.id&&(clearTimeout(i.id),a=Date.now()-i.startTime),n("[$Loader]: "+($.successMessage||"Loaded"),o,a),h(e+1,r,t);var u=S[e].onSuccess;"function"==typeof u&&u(S[e].srcPath)}function h(t,o,i){if(t<S.length){
-var a=S[t];if(!a||!a.srcPath){return void h(t+1,o,i)}a.retry>0&&(a.srcPath=d(a.srcPath),a.origId||(a.origId=a.id),a.id=a.origId+"_Retry_"+a.retry);var u=r(a.srcPath,a.id,a.integrity,a.tagName),s={"id":null,"isCircuitBreakerTriggered":!1},c=function(){g(t,o,i,u,s)};u.onload=function(){v(t,o,i,u,s)},u.onerror=c,u.onreadystatechange=function(){"loaded"===u.readyState?setTimeout(function(){v(t,o,i,u,s)},500):"complete"===u.readyState&&v(t,o,i,u,s)},L&&a.retry<y&&(s.id=l(u,s,c),s.startTime=Date.now()),e(u),
-n("[$Loader]: Loading '"+(a.srcPath||"")+"', id:"+(a.id||""))}else{o&&o()}}var m=t(),y=m.slMaxRetry||2,b=m.loader||{},E=b.cdnRoots||[],L=b.enableCircuitBreaking||!1,w=b.tenantBrandingCdnRoots||[],$=this,S=[];$.retryOnError=!0,$.successMessage="Loaded",$.failMessage="Error",$.Add=function(e,r,t,n,o,i){e&&S.push({"srcPath":e,"id":r,"retry":n||0,"integrity":t,"tagName":o||"script","onSuccess":i})},$.AddForReload=function(e,r){var t=e.src||e.href||"";$.Add(t,"AddForReload",e.integrity,1,e.tagName,r)},
-$.AddIf=function(e,r,t){e&&$.Add(r,t)},$.Load=function(e,r){h(0,e,r)}}var g,v,h=window,p=h.document,m=".css";f.On=function(e,r,t){if(!e){throw"The target element must be provided and cannot be null."}r?f.OnError(e,t):f.OnSuccess(e,t)},f.OnSuccess=function(e,t){if(!e){throw"The target element must be provided and cannot be null."}if(c(e)){return f.OnError(e,t)}var o=e.src||e.href||"",i=u(),a=s();n("[$Loader]: Loaded",e);var d=new f;d.failMessage="Reload Failed",d.successMessage="Reload Success",
-d.Load(null,function(){var e=r(o);if(i&&!e){throw"Unexpected state. ResourceLoader.Load() failed despite initial load success. ['"+o+"']"}a&&!e&&(document.location.href="/error.aspx?err=504"),e&&n("[$Loader]: Silently handled tenant branding CDN failure ['"+o+"']")})},f.OnError=function(e,t,o){var i=e.src||e.href||"",a=u(),d=s();if(!e){throw"The target element must be provided and cannot be null."}n("[$Loader]: Failed",e);var c=new f;c.failMessage="Reload Failed",c.successMessage="Reload Success",
-c.AddForReload(e,t),c.Load(null,function(){var e=r(i);if(a&&!e){throw"Failed to load external resource ['"+i+"']"}d&&!e&&(document.location.href="/error.aspx?err=504"),e&&n("[$Loader]: Silently handled tenant branding CDN failure ['"+i+"']")}),f._ReportFailure(0,i,o)},f._ReportFailure=function(e,t,n){if(d()&&!o()&&!r(t)){var i="Failed to load";throw n&&n.isCircuitBreakerTriggered&&(i="Timed out while loading"),"[Retry "+e+"] "+i+" external resource ['"+t+"'], reloading from fallback CDN endpoint"}},
-h.$Loader=f}(),function(){function e(){if(!E){var e=new h.$Loader;e.AddIf(!h.jQuery,m.sbundle,"WebWatson_DemandSupport"),m.sbundle=null,delete m.sbundle,e.AddIf(!h.$Api,m.fbundle,"WebWatson_DemandFramework"),m.fbundle=null,delete m.fbundle,e.Add(m.bundle,"WebWatson_DemandLoaded"),e.Load(r,t),E=!0}}function r(){if(h.$WebWatson){if(h.$WebWatson.isProxy){return void t()}y.when("$WebWatson.full",function(){for(;b.length>0;){var e=b.shift();e&&h.$WebWatson[e.cmdName].apply(h.$WebWatson,e.args)}})}}function t(){
-if(!h.$WebWatson||h.$WebWatson.isProxy){if(!L&&JSON){try{var e=new XMLHttpRequest;e.open("POST",m.url),e.setRequestHeader("Accept","application/json"),e.setRequestHeader("Content-Type","application/json; charset=UTF-8"),e.setRequestHeader("canary",p.apiCanary),e.setRequestHeader("client-request-id",p.correlationId),e.setRequestHeader("hpgid",p.hpgid||0),e.setRequestHeader("hpgact",p.hpgact||0);for(var r=-1,t=0;t<b.length;t++){if("submit"===b[t].cmdName){r=t;break}}var o=b[r]?b[r].args||[]:[],i={"sr":m.sr,
-"ec":"Failed to load external resource [Core Watson files]","wec":55,"idx":1,"pn":p.pgid||"","sc":p.scid||0,"hpg":p.hpgid||0,"msg":"Failed to load external resource [Core Watson files]","url":o[1]||"","ln":0,"ad":0,"an":!1,"cs":"","sd":p.serverDetails,"ls":null,"diag":v(m)};e.send(JSON.stringify(i))}catch(e){}L=!0}m.loadErrorUrl&&window.location.assign(m.loadErrorUrl)}n()}function n(){b=[],h.$WebWatson=null}function o(r){return function(){var t=arguments;b.push({"cmdName":r,"args":t}),e()}}function i(){
-var e=["foundException","resetException","submit"],r=this;r.isProxy=!0;for(var t=e.length,n=0;n<t;n++){var i=e[n];i&&(r[i]=o(i))}}function a(e,r,t,n,o,i,a){var u=h.event;return i||(i=l(o||u,a?a+2:2)),h.$Debug&&h.$Debug.appendLog&&h.$Debug.appendLog("[WebWatson]:"+(e||"")+" in "+(r||"")+" @ "+(t||"??")),$.submit(e,r,t,n,o||u,i,a)}function u(e,r){return{"signature":e,"args":r,"toString":function(){return this.signature}}}function s(e){for(var r=[],t=e.split("\n"),n=0;n<t.length;n++){r.push(u(t[n],[]))}
-return r}function d(e){for(var r=[],t=e.split("\n"),n=0;n<t.length;n++){var o=u(t[n],[]);t[n+1]&&(o.signature+="@"+t[n+1],n++),r.push(o)}return r}function c(e){if(!e){return null}try{if(e.stack){return s(e.stack)}if(e.error){if(e.error.stack){return s(e.error.stack)}}else if(window.opera&&e.message){return d(e.message)}}catch(e){}return null}function l(e,r){var t=[];try{for(var n=arguments.callee;r>0;){n=n?n.caller:n,r--}for(var o=0;n&&o<w;){var i="InvalidMethod()";try{i=n.toString()}catch(e){}
-var a=[],s=n.args||n.arguments;if(s){for(var d=0;d<s.length;d++){a[d]=s[d]}}t.push(u(i,a)),n=n.caller,o++}}catch(e){t.push(u(e.toString(),[]))}var l=c(e);return l&&(t.push(u("--- Error Event Stack -----------------",[])),t=t.concat(l)),t}function f(e){if(e){try{var r=/function (.{1,})\(/,t=r.exec(e.constructor.toString());return t&&t.length>1?t[1]:""}catch(e){}}return""}function g(e){if(e){try{if("string"!=typeof e&&JSON&&JSON.stringify){var r=f(e),t=JSON.stringify(e)
-;return t&&"{}"!==t||(e.error&&(e=e.error,r=f(e)),(t=JSON.stringify(e))&&"{}"!==t||(t=e.toString())),r+":"+t}}catch(e){}}return""+(e||"")}function v(e){var r=[];try{if(jQuery?(r.push("jQuery v:"+jQuery().jquery),jQuery.easing?r.push("jQuery.easing:"+JSON.stringify(jQuery.easing)):r.push("jQuery.easing is not defined")):r.push("jQuery is not defined"),e&&e.expectedVersion&&r.push("Expected jQuery v:"+e.expectedVersion),y){var t,n="";for(t=0;t<y.o.length;t++){n+=y.o[t]+";"}for(r.push("$Do.o["+n+"]"),n="",
-t=0;t<y.q.length;t++){n+=y.q[t].id+";"}r.push("$Do.q["+n+"]")}if(h.$Debug&&h.$Debug.getLogs){var o=h.$Debug.getLogs();o&&o.length>0&&(r=r.concat(o))}if(b){for(var i=0;i<b.length;i++){var a=b[i];if(a&&"submit"===a.cmdName){try{if(JSON&&JSON.stringify){var u=JSON.stringify(a);u&&r.push(u)}}catch(e){r.push(g(e))}}}}}catch(e){r.push(g(e))}return r}var h=window,p=h.$Config||{},m=p.watson,y=h.$Do;if(!h.$WebWatson&&m){var b=[],E=!1,L=!1,w=10,$=h.$WebWatson=new i;$.CB={},$._orgErrorHandler=h.onerror,h.onerror=a,
-$.errorHooked=!0,y.when("jQuery.version",function(e){m.expectedVersion=e}),y.register("$WebWatson")}}(),function(){function e(e,r){for(var t=r.split("."),n=t.length,o=0;o<n&&null!==e&&void 0!==e;){e=e[t[o++]]}return e}function r(r){var t=null;return null===s&&(s=e(i,"Constants")),null!==s&&r&&(t=e(s,r)),null===t||void 0===t?"":t.toString()}function t(t){var n=null;return null===a&&(a=e(i,"$Config.strings")),null!==a&&t&&(n=e(a,t.toLowerCase())),null!==n&&void 0!==n||(n=r(t)),
-null===n||void 0===n?"":n.toString()}function n(e,r){var n=null;return e&&r&&r[e]&&(n=t("errors."+r[e])),n||(n=t("errors."+e)),n||(n=t("errors."+d)),n||(n=t(d)),n}function o(t){var n=null;return null===u&&(u=e(i,"$Config.urls")),null!==u&&t&&(n=e(u,t.toLowerCase())),null!==n&&void 0!==n||(n=r(t)),null===n||void 0===n?"":n.toString()}var i=window,a=null,u=null,s=null,d="GENERIC_ERROR";i.GetString=t,i.GetErrorString=n,i.GetUrl=o}(),function(){var e=window,r=e.$Config||{};e.$B=r.browser||{}}(),function(){
-function e(e,r,t){e&&e.addEventListener?e.addEventListener(r,t):e&&e.attachEvent&&e.attachEvent("on"+r,t)}function r(r,t){e(document.getElementById(r),"click",t)}function t(r,t){var n=document.getElementsByName(r);n&&n.length>0&&e(n[0],"click",t)}var n=window;n.AddListener=e,n.ClickEventListenerById=r,n.ClickEventListenerByName=t}();
-//]]></script> 
-<script type="text/javascript" nonce='eyMPm7skJZvVdVW1ajcjMA'>//<![CDATA[
-!function(e,t){function r(t){return function(){t.parentNode&&(t.onload=null,t.onerror=null,t.parentNode.removeChild(t)),e.$Loader.OnError(t,void 0,{"isCircuitBreakerTriggered":!0}),t.src&&t.removeAttribute("src"),t.href&&t.removeAttribute("href")}}function n(e,t){e.addEventListener("load",function(){clearTimeout(t)},{"once":!0}),e.addEventListener("error",function(){clearTimeout(t)},{"once":!0})}!function(){var a="function"==typeof e.MutationObserver,o=t.getElementsByTagName("head")[0]
-;if(a&&o&&e.addEventListener){var i=e.ServerData||e.$Config||{},d=i.loader||{};if(d.enableCircuitBreaking&&d.resourceLoadTimeout>0&&i.slMaxRetry>0){var u=new MutationObserver(function(e){for(var t=0;t<e.length;t++){var a=e[t];if("childList"===a.type){for(var o=0;o<a.addedNodes.length;o++){var i=a.addedNodes[o];if(i instanceof Element){var u="cdn"===i.getAttribute("data-loader");if(u){var c=setTimeout(r(i),d.resourceLoadTimeout);n(i,c)}}}}}});e.addEventListener("load",function(){u.disconnect()}),
-u.observe(o,{"childList":!0,"subtree":!1})}}}(),function(){var r=t.getElementsByTagName("head")[0];r&&r.addEventListener&&(r.addEventListener("error",function(t){null!==t.target&&"cdn"===t.target.getAttribute("data-loader")&&e.$Loader.OnError(t.target)},!0),r.addEventListener("load",function(t){null!==t.target&&"cdn"===t.target.getAttribute("data-loader")&&e.$Loader.OnSuccess(t.target)},!0))}()}(window,document);
-//]]></script>
-
-    
-        <link rel="prefetch" href="https://login.live.com/Me.htm?v=3" />
-                <link rel="shortcut icon" href="https://aadcdn.msauth.net/shared/1.0/content/images/favicon_a_eupayfgghqiai7k9sol6lg2.ico" />
-
-    <script type="text/javascript" nonce='eyMPm7skJZvVdVW1ajcjMA'>
-        ServerData = $Config;
-    </script>
-
-
-    
-    <link data-loader="cdn" crossorigin="anonymous" href="https://aadcdn.msauth.net/ests/2.1/content/cdnbundles/converged.v2.login.min_pzfy2abhlubh6bv_dyvwha2.css" rel="stylesheet" />
-
-
-    <script data-loader="cdn" crossorigin="anonymous" src="https://aadcdn.msauth.net/shared/1.0/content/js/ConvergedLogin_PCore_sCFxzv7DDXEATQ-9bLeFQQ2.js" integrity='sha384-N2xsoVLG39+Jm4SgewKV1eFfsLM8dOY1+syAs2Ko/ITKbVTuqv7rEadSaJfRJWDj' nonce='eyMPm7skJZvVdVW1ajcjMA'></script>
-
-    <script data-loader="cdn" crossorigin="anonymous" src="https://aadcdn.msauth.net/ests/2.1/content/cdnbundles/ux.converged.login.strings-en.min_lzfw9ovraljpmqc6m13khq2.js" nonce='eyMPm7skJZvVdVW1ajcjMA'></script>
+mean(data1$mass[data1$cat==2])
 
 
 
-</head>
+#Exploring data, data set management, descriptive statistics - Data: seedling----
 
-<body data-bind="defineGlobals: ServerData, bodyCssClass" class="cb" style="display: none">
-    <script type="text/javascript" nonce='eyMPm7skJZvVdVW1ajcjMA'>//<![CDATA[
-!function(){var e=window,o=e.document,i=e.$Config||{};if(e.self===e.top){o&&o.body&&(o.body.style.display="block")}else if(!i.allowFrame){try{var s=e.self.location.href,t=s.indexOf("#"),l=-1!==t,n=s.indexOf("?"),f=l?t:s.length,a=-1===n||l&&n>t?"?":"&";s=s.substr(0,f)+a+"iframe-request-id="+i.sessionId+s.substr(f),e.top.location=s}catch(e){}}}();
-//]]></script>
-    
-</body>
-</html>
+seedling<-read.table("C:\\Rdatafile\\BI3051\\seedling.txt", header=T)#read the data file seedling in the C drive
+names(seedling)#list the name of the column in seedling data file. 
+
+mean(seedling$sdwght)#calculate the mean for the variable sdwght in the data seddling
+var(seedling$sdwght)
+sd(seedling$sdwght)
+
+#Understanding the structure of the data set#
+with(seedling, length(seedset))#this will give the total number of observation
+length(seedling$seedset)#note that this command is the same as the previous one
+
+with(seedling, table(hybrid, seedcat )) # there are 4 type of cross per category of seeds, 2 hybrids and 2 non-hybrids#
+
+#distribution of the variables#
+
+par(mfrow=c(2,2))#divide the graph window into 2 columns and 2 rows
+hist(seedling$seedset)
+hist(seedling$sdwght,20)
+hist(seedling$lobe)
+hist(seedling$biomass)
+
+#explore graphically the possible correlations between response variables#
+
+dataset<-with(seedling, cbind(seedset, sdwght, lobe, biomass)) #combined the different response variables we are interested in#
+pairs(dataset)  #represent the scatterplot for each pair#
+
+#Represent the relationship between the seed mass and the plant biomass at one month for the two seed category on a single graph#
+par(mfrow=c(1,1)) #restore the single graph in the graph window
+plot(seedling$sdwght,seedling$biomass, col=as.numeric(seedling$seedcat), pch=as.numeric(seedling$seedcat), xlab="seed mass (g)", ylab="biomass (g)")
+
+# Calculate the mean and standard deviation of the seed mass for hybrids and non hybrids crosses for the two seed categories
+with(seedling, tapply(sdwght,list(seedcat, hybrid), mean, na.rm=T))
+variance<-with(seedling, tapply(sdwght,list(seedcat, hybrid), var, na.rm=T))
+samplesize<-with(seedling, tapply(sdwght,list(seedcat, hybrid), length))
+SE<-sqrt(variance/samplesize)
+SE
+
+
+#represent the change in mean according to these two variables
+
+with(seedling, interaction.plot(factor(hybrid), factor(seedcat), sdwght))
+#############################
+
+
+# PART 2 -  Data manipulation and packages (dplyr)
+
+#' author: Laura Bartra Cabre
+#' date: 2021-09-22
+#' edited by: Agnes Holstad
+#' date: 31.01.2024
+#' ----
+
+
+
+# 1) WORKING DIRECTORY -------------------------------------------------
+
+# Always set working directory!
+setwd("~/Library/CloudStorage/OneDrive-NTNU/01_PhD/Teaching/R_course-master_students/latest_versions/Session3_DataManipulation")
+
+
+
+# 2) MORE DATA FRAME MANIPULATION -------------------------------------------------
+
+example1 <- data.frame(
+  id = 1:5,
+  a = c(1, 5, 2, 3, 2),
+  b = c(8, 10, 9, 8, 7),
+  c = c(3, 7, 4, 6, 4))
+
+example2 <- data.frame(
+  id = 1:5,
+  group = c("yes", "no", "yes", "no", "no"),
+  e = c(25, 22, 24, 19, 23))
+
+# cbind() "column bind" vs merge()  
+combined <- cbind(example1, example2[ ,-1])
+combined2 <- merge(example1, example2, by = "id")
+?merge 
+# The cbind() is used to combine vectors, matrices, or data frames by adding their columns side by side. 
+# The merge() function is used to combine data frames by matching rows based on common columns (key columns). 
+# The function identifies common columns between the data frames and creates a new data frame with rows 
+# from both data frames where the values in the specified column match. 
+
+
+# Useful if the rows don't match (different order):
+example3 <- data.frame(
+  id = 5:1,
+  group = c("yes", "no", "yes", "no", "no"),
+  e = c(25, 22, 24, 19, 23))
+
+comb <- merge(example1, example3, by = "id")
+
+# Even if the number of rows differ:
+example4 <- data.frame(
+  id = 4:1,
+  group = c("yes", "no", "yes", "no"),
+  e = c(25, 22, 24, 19))
+
+comb2 <- merge(example1, example4, by = "id")
+?merge 
+comb2 <- merge(example1, example4, by = "id", all = TRUE)
+
+
+# calculate mean of a for each group (yes and no)
+aggregate(a ~ group, 
+          data = combined, 
+          FUN = mean)
+?aggregate
+# The aggregate() function is used for aggregating data within a data frame. 
+# It helps you summarize data by applying a specified function to subsets of the data based on one or more grouping factors. 
+# This is particularly useful when you want to calculate summary statistics or perform other computations on subsets of your data.
+
+
+
+# YOU TRY: calculate the total sum of b for each group (yes and no) 
+# and only for e > 20 in the data frame combined.
+?aggregate()
+
+aggregate(b ~ group, 
+          data = combined, 
+          FUN = sum,
+          subset = e > 20)
+
+
+
+
+
+# 3) LOAD, SUBSET AND SORT THE DATA -------------------------------------------------
+
+# Load the data
+moose_full <- read.csv("data/MooseData.csv")   
+
+# Subset the data
+moose <- moose_full[ ,c(1:3,6:10,11,22)]              
+head(moose)
+
+
+# Sort by Calf weight
+?order
+moose <- moose[order(moose$CalfWeight), ]
+head(moose)
+
+
+
+
+# YOU TRY: Sort Calf weight by Season in decreasing order (Winter first):
+?order
+moose[order(moose$Season, moose$CalfWeight, decreasing = c(T,F), method = "radix"), ]
+
+
+
+
+
+
+
+# 4) PACKAGES -------------------------------------------------
+
+# A package is a set of pre-written functions. 
+# Once you have installed and imported a package, you can benefit from all of its functions.
+# There are packages for everything, from importing Google Maps to converting imperial to metric to monitoring animal movement.
+.libPaths() # get library location
+library()   # see all packages installed
+search()    # see packages currently loaded
+
+
+
+# 5) dplyr -------------------------------------------------
+
+# dplyr was created to make editing and manipulating data more intuitive. 
+# Whilst everything you're about to see CAN be done without dplyr, 
+# the language and format of dplyr makes it easier.
+
+#install.packages("dplyr")
+library(dplyr)                             
+# require(dplyr) # Same
+
+
+#detach("package:dplyr", unload=TRUE)       # to detach a package
+
+# 6) Base R vs dplyr -------------------------------------------------
+
+# Bind data frames with dplyr use *_join
+combined2 <- left_join(example1, example2, by = "id")
+?left_join
+
+
+# Selecting coloumns
+moose[ ,c("OwnSex","CalfWeight")]
+moose[ ,c(6,3)]
+
+# Let's use dplyr to select certain columns. This format is simple; the first 
+# argument is the data frame you want to use, any arguments following that are 
+# the columns you want.
+select(moose, OwnSex, CalfWeight)
+select(moose, 6, 3)                            # We can also use numbers
+select(moose, OwnSex, 8)
+
+select(moose, BYrId)
+# Here you CAN mix numbers and names
+?select
+# NOTE: Unfortunately, there are multiple 'select' functions floating around in 
+# R, and sometimes you MAY get an error popping up because of this. If it 
+# happens, you can simply write 'dplyr::select' to tell R where to look for the 
+# function. Think of it as the $, but for functions instead of data.
+
+dplyr::select(moose, CalfWeight:OwnSex)
+?dplyr
+
+# Here's a good time to elaborate on the use of ':'. These essentially string 
+# anything into a sequence vector. Try 1:8. It works with OwnSex:CalfWeight 
+# because it can see that they're part of a larger pattern and includes 
+# everything between them.
+
+# The '-' also works here to exclude anything you don't need. With select(), you 
+# can use it in front of words.
+select(moose, -(3:6))
+select(moose, -(CalfWeight:OwnSex))
+
+# The slice function works the same way, except with rows instead of columns.
+slice(moose, 1:3)
+
+# Now let's try applying some filters to the data we have
+filter(moose, CalfWeight <= 68)
+# Remeber filtering in base R:
+moose[moose$CalfWeight <= 68, ]
+
+
+# YOU TRY: filter by calfweight > than 90 or smaller than 60, and only in the Summer 
+df <- filter(moose, CalfWeight > 90 | CalfWeight < 60, Season == "Summer", WeightType == "Slaughter")
+df
+
+
+
+
+# The function 'arrange' is an easy way to rearrange your data frames. It takes 
+# whatever variable you choose and arranges your data frame according to that 
+# variable.
+arrange(moose, CalfWeight)
+
+# YOU TRY: If you choose multiple variables to arrange by, R will arrange them in the 
+# order you list. Arrange by Season first, and then my calfweight
+?arrange # look at the examples!
+
+arrange(moose, Season, CalfWeight)
+
+
+# Alternative standard R code to this is as follows
+moose[order(moose$WeightType, moose$CalfWeight),]
+
+# YOU TRY: The default is low to high. To change the order they are listed in, simply 
+# use the desc() function. desc stands for descending. Arrange by age in descending order, 
+# and by weightype in ascending order
+arrange(moose, desc(Age), WeightType)
+
+
+
+
+
+# The distinct function allows you to observe all distinct data points.
+distinct(moose, Age)
+distinct(moose, Season, WeightType, Age)
+
+# The rename function renames your variables. 
+# NB: You give the existing name of the variable second.
+rename(moose, Sex = OwnSex, MotherAge = Age)
+# DO YOU remember how to do this with base R? 
+names(moose)[c(6,7)] <- c("Sex","MotherAge")
+
+
+
+
+
+# We can produce new columns using the 'mutate' function
+moose2 <- mutate(moose, Weight_log = log(CalfWeight))
+# DO YOU remember how to do this in base R?
+moose2$weight_log <- log(moose$CalfWeight)
+
+
+
+
+# And if you only want new variables, use transmute
+moose3 <- transmute(moose, BYrId,
+                    Age_plus = Age + 1,
+                    Age_log = log(Age_plus))
+
+
+# Lastly, the summarise function is very useful for determining mean, maximum
+# and minimum values (among others) from data frames.
+summarise(moose, meanWeight = mean(CalfWeight))
+
+summarise(moose,
+          meanWeight = mean(CalfWeight),
+          n_obs = n(),
+          sum = sum(CalfWeight))
+
+# YOU TRY: summarise the minimum and maximum values of age in moose (and also the number of observations)
+summarise(moose,
+          min = min(Age),
+          max = max(Age),
+          n = n())
+
+
+
+################## END ######################
+
+
+
+
