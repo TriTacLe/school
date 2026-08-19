@@ -11,6 +11,7 @@ NTNU, høsten 2025. Numerikk, lineær algebra og optimering. Kurset bruker ikke 
 - `exams/` - IMAx3011 2024 til 2026 med LF, pluss forløperne IMAx2150 og TDAT2002 tilbake til 2017
 - `code/` - Jupyter-notatbøker (fikspunkt, Jacobi/Gauss-Seidel)
 - `materials/` - formelark, Rivertz-kompendium, vektorromsaksiomene
+- `notes/` - egne løsningsforslag til sett uten fasit
 
 ## Ikke nedlastbart
 
