@@ -1,0 +1,11 @@
+# Course material is binary. Keep git from applying eol conversion to it.
+*.pdf binary
+*.pptx binary
+*.ppt binary
+*.docx binary
+*.doc binary
+*.xlsx binary
+*.zip binary
+*.mp4 binary
+*.png binary
+*.jpg binary
