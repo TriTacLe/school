@@ -60,9 +60,10 @@ Written by hand, cut across weeks. Use these for revision, use the week files du
 
 ## Assessment dates
 
-- Tut test 1: Wed 19 Aug, time domain system ID (tutorial 2 content)
-- Class Test 1: Wed 27 Aug 18:00
-- Class Test 2: Wed 7 Oct
+- Tut test 1: Wed 19 Aug, time domain system ID (tutorial 2 content). Written, out of 11
+- Tut test 2: Wed 26 Aug 14:00, Snape TS2C, expected to cover frequency domain system ID (tutorial 3 content)
+- Class Test 1: Thu 27 Aug 18:00 to 19:30, Chris Hani. Amathuba also lists a slot on Wed 2 Sep 18:00 to 21:00 at Menzies 9 and 10, unresolved
+- Class Test 2: Wed 7 Oct 18:00 to 19:30, Chris Hani. Amathuba also lists Mon 5 Oct 18:00 to 21:00 at Menzies 9 and 10
 - Lab 1 due 4 Sept, Lab 2 due 2 Oct, Lab 3 due 23 Oct. Lab 1 goes to Gradescope through the LTI link in the Lab 1 folder, not an Amathuba dropbox
 - Attendance assignment every teaching week, due Sunday 23:59. Counts toward the 90% DP requirement, see [[../Study plan]]
 

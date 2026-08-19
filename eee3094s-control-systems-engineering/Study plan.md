@@ -32,7 +32,7 @@ Reshuffled (announcement 7 Aug): Mon 10 Aug public holiday, so Wed tut slot beca
 ## Week 5 (24 to 28 Aug): PI control and Root Locus part 2
 - Chapter: Module 2 Ch 1 continued. Notes 4_2 root locus sketching, 4_3 root locus examples
 - Read: Braae ch 9, Nise ch 8.5 to 8.10
-- Tut: Proportional control. Class Test 1 on 27 Aug 18:00
+- Tut: Proportional control. Tut test 2 on Wed 26 Aug covers tut 3 content. Class Test 1 on Thu 27 Aug 18:00 to 19:30, Chris Hani
 - Do: problem sets 4.2 and 4.3, whiteboards mod2 lecture 1 and 2
 ## Week 6 (31 Aug to 4 Sept): Consolidation of Module 2
 - Lab 1 due 4 Sept
@@ -55,7 +55,7 @@ Reshuffled (announcement 7 Aug): Mon 10 Aug public holiday, so Wed tut slot beca
 ## Week 10 (5 to 9 Oct): Lead/Lag Design
 - Chapter: Module 3 Ch 1, lead compensation. Notes 8_1 basics, 8_2 lead lag, 8_3 lead via root locus, 8_6 lead via frequency domain. Video 8_10 covers PID
 - Read: Braae ch 15, Nise ch 9 and 11
-- Tut: Lead compensator. Lab 3 released. Class Test 2 on 7 Oct
+- Tut: Lead compensator. Lab 3 released. Class Test 2 on Wed 7 Oct 18:00 to 19:30, Chris Hani
 ## Week 11 (12 to 16 Oct): Lead Compensators
 - Same chapter continued, activities TBC
 - Do: whiteboards 2025 lead compensators
