@@ -302,6 +302,14 @@ tags: [uct, embedded, stm32, course]
 **Example Sequence Details**
 - Start, Address (7 bits), R/W bit (0 for write), ACK, Data byte 1 (8 bits), ACK, Data byte 2 (8 bits), ACK, Stop
 - Diagram shows gray blocks where master drives, white blocks where slave drives
+```wavedrom
+{ "signal": [
+  { "name": "SCL", "wave": "1.p......1." },
+  { "name": "SDA", "wave": "10=23=3=301",
+    "data": ["A6-A0", "W=0", "ACK", "DATA 1", "ACK", "DATA 2", "ACK"] }
+], "config": { "hscale": 2 } }
+```
+One cell per frame, not per bit: SCL clocks eight bits inside each data cell. The master drives every cell except the yellow ACKs, which the addressed slave pulls LOW. Start is the SDA fall while SCL is high, stop is the SDA rise while SCL is high.
 ### I2C Arbitration and Clock Stretching
 **Arbitration Definition**
 - With multiple masters on bus, each monitors for idle (both lines high) and only uses bus when free
@@ -445,6 +453,16 @@ tags: [uct, embedded, stm32, course]
 - Falling edge clock with data sampled on first (rising) edge: shows clock starting low, data valid at rising edges
 - Rising edge clock with data sampled on second (falling) edge: shows clock starting high, data valid at falling edges
 - Diagram shows exact timing for both modes with MOSI/MISO data lines
+```wavedrom
+{ "signal": [
+  { "name": "SS (ISS)",    "wave": "10........1." },
+  { "name": "SCLK CPOL=0", "wave": "0.p........0" },
+  { "name": "SCLK CPOL=1", "wave": "1.n........1" },
+  { "name": "MOSI",        "wave": "x.========x.", "data": ["b7","b6","b5","b4","b3","b2","b1","b0"] },
+  { "name": "MISO",        "wave": "x.========x.", "data": ["b7","b6","b5","b4","b3","b2","b1","b0"] }
+]}
+```
+CPOL only picks the idle level of SCLK, so the two clock rows are inverses of each other. Both shift the same eight bits, and MOSI and MISO move together because SPI is full duplex. CPHA then picks which of the two edges in each bit period is the sampling edge.
 ### SPI Modes
 **CPHA Clock Phase**
 - Determines at which edge data is sampled
