@@ -153,7 +153,7 @@ $0{,}0045\ \mathrm{mm} = 4{,}5\times10^{-6}\ \mathrm{m} = 4{,}5\times10^{3}\ \ma
 
 ### Type 6: masseprosent kombinert med tetthet (spørsmål 18)
 
-Dette er en toseg oppgave, og fella er å hoppe over det første steget. Prosenten
+Dette er en tostegs oppgave, og fella er å hoppe over det første steget. Prosenten
 er **av massen**, men du har fått **volum**. Tettheten er broen mellom dem.
 
 1. Volum til masse løsning: $m_{\text{løsning}} = \rho V$
@@ -177,7 +177,7 @@ annet.
 
 - Fysisk: smeltepunkt, kokepunkt, tetthet, farge, hardhet, formbarhet,
   ledningsevne, løselighet i vann uten reaksjon, klang.
-- Kjemisk: brennbarhet, rustbenhet, reaksjon med syre, reaksjon med oksygen,
+- Kjemisk: brennbarhet, det å ruste, reaksjon med syre, reaksjon med oksygen,
   giftighet, evne til å felle ut med et bestemt reagens.
 
 Testen som nesten alltid avgjør: **er det et nytt stoff etterpå?** En metallstav
@@ -185,7 +185,7 @@ som bøyes er fortsatt samme metall, altså fysisk. Et metall som løses i syre 
 utvikler gass er ikke lenger metall, gassen er hydrogen og metallet har blitt et
 salt, altså kjemisk.
 
-Vanlig feltrekk: en faseovergang eller en overgang mellom to former av samme
+Vanlig felle: en faseovergang eller en overgang mellom to former av samme
 grunnstoff er **fysisk**, selv om utseendet endrer seg dramatisk. At noe smuldrer,
 skifter farge eller skifter fase betyr ikke i seg selv at det har skjedd en
 kjemisk reaksjon.
